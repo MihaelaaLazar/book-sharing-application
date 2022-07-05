@@ -4,11 +4,14 @@ import com.endava.config.PasswordConfig;
 import com.endava.models.UserDto;
 import com.endava.repositories.UserRepo;
 import com.endava.util.JwtTokenUtil;
+import com.endava.validation.EmailValidation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -22,14 +25,23 @@ public class UserService {
     @Autowired
     private EmailService emailService;
 
-    public UserDto createUserAccount(UserDto user) throws MessagingException {
+    public ResponseEntity<?> createUserAccount(UserDto user) throws MessagingException {
         user.setPassword(passwordConfig.encoder().encode(user.getPassword()));
         user.setVerified(false);
-        String token = JwtTokenUtil.generateAccessToken(user);
-        user.setToken(token);
-        String url = "http://localhost:8080/api/users/confirmation?token=" + user.getToken();
-        emailService.sendConfirmationEmail("Please confirm your account by clicking on: " + url, user.getEmail(), "Confirm your account");
-        return userRepo.save(user);
+
+        if (userRepo.findByEmail(user.getEmail()).isPresent()) {
+            return ResponseEntity.badRequest().body("Email already exists and your account is verified");
+        } else {
+            if (!user.isVerified() && EmailValidation.isValidEmailAddress(user.getEmail())) {
+                String token = JwtTokenUtil.generateAccessToken(user);
+                user.setToken(token);
+                String url = "http://localhost:8080/api/users/confirmation?token=" + user.getToken();
+                emailService.sendConfirmationEmail("Please confirm your account by clicking on: " + url, user.getEmail(), "Confirm your account");
+                userRepo.save(user);
+                return ResponseEntity.ok(user);
+            }
+        }
+        return ResponseEntity.badRequest().body("Invalid email address");
     }
 
     public String confirmUserAccount(String token) {
@@ -43,20 +55,16 @@ public class UserService {
         }
     }
 
-    public String login(UserDto user) {
-       userRepo.findByUsernameAndPassword(user.getUsername(), user.getPassword());
-        if (passwordConfig.encoder().matches(user.getPassword(), user.getPassword())) {
-            if (user.isVerified()) {
-                return user.getToken();
-            } else {
-                return "User account not verified";
-            }
-        } else {
-            return "Invalid username or password";
-        }
+    public UserDto login(String username, String password) {
+        return userRepo.findByUsernameAndPassword(username, password);
     }
-        public List<UserDto> getAllUsers () {
-            return userRepo.findAll();
-        }
 
+    public List<UserDto> getAllUsers() {
+        return userRepo.findAll();
     }
+
+    public UserDto getUserByUserId(UUID userId) {
+        return userRepo.findByUserId(userId);
+    }
+
+}

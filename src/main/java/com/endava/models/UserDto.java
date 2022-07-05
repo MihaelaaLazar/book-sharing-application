@@ -1,7 +1,5 @@
 package com.endava.models;
 
-
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +19,6 @@ public class UserDto  implements UserDetails {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-
     @Column(name = "username")
     private String username;
     @Column(name = "email")
@@ -29,17 +26,13 @@ public class UserDto  implements UserDetails {
     @Column(name = "password")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-
     private boolean verified;
-
     public String getToken() {
         return token;
     }
-
     public void setToken(String token) {
         this.token = token;
     }
-
     private String token;
 
 

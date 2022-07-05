@@ -15,7 +15,7 @@ public class BooksForRentDto {
     private UUID bookForRentId;
 
     @JoinColumn(name = "book_ref_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private BooksRefDto bookRef;
 
     @Column(name = "rent_date")
@@ -49,7 +49,7 @@ public class BooksForRentDto {
     public String toString() {
         return "BooksForRentDto{" +
                 "bookForRentId=" + getBookForRentId() +
-                ", bookRef=" + getBookRef().getBookRefId() +
+                ", bookRefId=" + getBookRef().getBookRefId() +
                 ", rentDate=" + getRentDate() +
                 '}';
     }

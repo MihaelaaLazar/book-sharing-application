@@ -17,11 +17,11 @@ public class BooksRefDto {
     private UUID bookRefId;
 
     @JoinColumn(name = "book_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private BookDto book;
 
     @JoinColumn(name = "user_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private UserDto user;
 
     public BooksRefDto(UUID bookRefId, BookDto book, UserDto user) {
@@ -58,5 +58,14 @@ public class BooksRefDto {
 
     public void setUser(UserDto user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "BooksRefDto{" +
+                "bookRefId=" + getBookRefId() +
+                ", bookId=" + getBook() +
+                ", userId=" + getUser().getUserId() +
+                '}';
     }
 }

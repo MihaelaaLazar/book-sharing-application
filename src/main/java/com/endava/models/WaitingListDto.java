@@ -1,24 +1,22 @@
 package com.endava.models;
 
-
 import javax.persistence.*;
 import java.util.UUID;
-
 @Entity
 @Table(name = "waiting_list")
 public class WaitingListDto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "waiting_id")
     private UUID waitingId;
 
     @JoinColumn(name = "user_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private UserDto user;
 
     @JoinColumn(name = "book_ref_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private BooksRefDto  booksRefDto;
 
     public UUID getWaitingId() {
@@ -49,8 +47,8 @@ public class WaitingListDto {
     public String toString() {
         return "WaitingListDto{" +
                 "waitingId=" + getWaitingId() +
-                ", user=" + getUser().getUserId() +
-                ", booksRefDto=" + getBooksRefDto().getBookRefId() +
+                ", userId=" + getUser().getUserId() +
+                ", booksRefDtoId=" + getBooksRefDto().getBookRefId() +
                 '}';
     }
 }

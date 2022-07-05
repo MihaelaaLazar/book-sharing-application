@@ -1,7 +1,5 @@
 package com.endava.models;
 
-
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -73,11 +71,11 @@ public class BookDto {
 
     public BookDto(){}
     public BookDto(UUID bookId, String title, String author, LocalDate dateOfPublication, String description) {
-        this.bookId = bookId;
-        this.title = title;
-        this.author = author;
-        this.dateOfPublication = dateOfPublication;
-        this.description = description;
+        this.bookId = getBookId();
+        this.title = getTitle();
+        this.author = getAuthor();
+        this.dateOfPublication = getDateOfPublication();
+        this.description = getDescription();
     }
 
 }
