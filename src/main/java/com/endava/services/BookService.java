@@ -1,11 +1,14 @@
 package com.endava.services;
 
 import com.endava.models.BookDto;
+import com.endava.models.BooksForRentDto;
 import com.endava.models.BooksRefDto;
-import com.endava.models.UserDto;
 import com.endava.repositories.BookRefRepo;
 import com.endava.repositories.BookRepo;
+import com.endava.repositories.BooksForRentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,18 +26,23 @@ public class BookService {
     @Autowired
     private BookRefRepo bookRefRepo;
 
-    public void createBook(UUID userId, BookDto book, UserDto userDto) {
+    @Autowired
+    private BooksForRentRepo booksForRentRepo;
+
+    public ResponseEntity<?> createBook(UUID userId, BookDto book) {
         bookRepo.save(book);
-        bookRefRepo.save(new BooksRefDto(null, userDto.getUserId(), book.getBookId()));
+        BooksRefDto booksRefDto = new BooksRefDto(null, userId, book.getBookId());
+        bookRefRepo.save(booksRefDto);
+        booksForRentRepo.save(new BooksForRentDto(null, booksRefDto));
+        return new ResponseEntity<>("Book created." ,  HttpStatus.CREATED);
+
     }
 
-    public Stream<List<BookDto>> getBooksByUserId(UUID userId) {
+    public Stream<Object> getBooksByUserId(UUID userId) {
         List<BooksRefDto> booksRefDto = bookRefRepo.findByUserUserId(userId);
         return booksRefDto.stream()
                 .map(bookRefDto -> bookRepo.findByBookId(bookRefDto.getBook().getBookId()));
-
     }
-
     public List<BookDto> getBooksByTitleOrAuthor(Optional<String> title, Optional<String> author) {
         return bookRepo.findByTitleOrAuthor(title, author);
     }

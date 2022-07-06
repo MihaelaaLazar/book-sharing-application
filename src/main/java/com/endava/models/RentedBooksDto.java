@@ -1,7 +1,6 @@
 package com.endava.models;
 
 import javax.persistence.*;
-import java.time.Period;
 import java.util.UUID;
 
 @Entity
@@ -21,7 +20,15 @@ public class RentedBooksDto {
     private UserDto user;
 
     @Column(name = "returning_date")
-    private Period returningDate;
+    private Long returningDate;
+    public RentedBooksDto() {}
+
+    public RentedBooksDto(UUID rentedBookId, UUID userId, UUID bookRefId, long remainingDays) {
+        this.rentedBookId = rentedBookId;
+        this.user = new UserDto(userId);
+        this.bookForRent = bookForRent.getBookRef().setBookRefId(bookRefId);
+        this.returningDate = remainingDays;
+    }
 
     public UUID getRentedBookId() {
         return rentedBookId;
@@ -47,11 +54,11 @@ public class RentedBooksDto {
         this.user = user;
     }
 
-    public Period getReturningDate() {
+    public Long getReturningDate() {
         return returningDate;
     }
 
-    public void setReturningDate(Period returningDate) {
+    public void setReturningDate(Long returningDate) {
         this.returningDate = returningDate;
     }
 

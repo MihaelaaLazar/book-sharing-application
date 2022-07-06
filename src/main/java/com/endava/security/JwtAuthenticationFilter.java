@@ -1,7 +1,7 @@
 package com.endava.security;
 
 import com.endava.models.UserDto;
-import com.endava.util.JwtTokenUtil;
+import com.endava.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

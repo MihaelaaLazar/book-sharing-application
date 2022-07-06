@@ -11,6 +11,6 @@ import java.util.UUID;
 @Repository
 public interface BookRepo extends CrudRepository<BookDto, UUID> {
     List<BookDto> findByTitleOrAuthor(Optional<String> title, Optional<String> author);
-    List<BookDto> findByBookId(UUID bookId);
+    BookDto findByBookId(UUID bookId);
 }
 

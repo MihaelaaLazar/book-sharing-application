@@ -1,4 +1,4 @@
-package com.endava.util;
+package com.endava.utils;
 
 import com.endava.models.UserDto;
 import io.jsonwebtoken.Jwts;

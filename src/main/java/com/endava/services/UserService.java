@@ -3,7 +3,7 @@ package com.endava.services;
 import com.endava.config.PasswordConfig;
 import com.endava.models.UserDto;
 import com.endava.repositories.UserRepo;
-import com.endava.util.JwtTokenUtil;
+import com.endava.utils.JwtTokenUtil;
 import com.endava.validation.EmailValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,11 +28,10 @@ public class UserService {
     public ResponseEntity<?> createUserAccount(UserDto user) throws MessagingException {
         user.setPassword(passwordConfig.encoder().encode(user.getPassword()));
         user.setVerified(false);
-
-        if (userRepo.findByEmail(user.getEmail()).isPresent()) {
+        if (userRepo.findByEmail(user.getEmail()).isPresent() && user.isVerified()) {
             return ResponseEntity.badRequest().body("Email already exists and your account is verified");
         } else {
-            if (!user.isVerified() && EmailValidation.isValidEmailAddress(user.getEmail())) {
+            if (EmailValidation.isValidEmailAddress(user.getEmail())) {
                 String token = JwtTokenUtil.generateAccessToken(user);
                 user.setToken(token);
                 String url = "http://localhost:8080/api/users/confirmation?token=" + user.getToken();

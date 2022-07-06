@@ -1,8 +1,7 @@
 package com.endava.models;
 
-
 import javax.persistence.*;
-import java.time.Period;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -18,8 +17,16 @@ public class BooksForRentDto {
     @ManyToOne
     private BooksRefDto bookRef;
 
-    @Column(name = "rent_date")
-    private Period rentDate;
+
+    public BooksForRentDto(UUID bookForRentId, BooksRefDto bookRef) {
+        this.bookForRentId = bookForRentId;
+        this.bookRef = bookRef;
+    }
+    public BooksForRentDto() {}
+
+    public BooksForRentDto(UUID bookForRentId){
+        this.bookForRentId = bookForRentId;
+    }
 
     public UUID getBookForRentId() {
         return bookForRentId;
@@ -37,20 +44,11 @@ public class BooksForRentDto {
         this.bookRef = bookRef;
     }
 
-    public Period getRentDate() {
-        return rentDate;
-    }
-
-    public void setRentDate(Period rentDate) {
-        this.rentDate = rentDate;
-    }
-
     @Override
     public String toString() {
         return "BooksForRentDto{" +
                 "bookForRentId=" + getBookForRentId() +
                 ", bookRefId=" + getBookRef().getBookRefId() +
-                ", rentDate=" + getRentDate() +
                 '}';
     }
 }

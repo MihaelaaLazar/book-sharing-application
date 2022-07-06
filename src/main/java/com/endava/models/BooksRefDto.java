@@ -36,12 +36,17 @@ public class BooksRefDto {
         this.book = new BookDto(bookId);
     }
 
+    public BooksRefDto(UUID bookRefId) {
+        this.bookRefId = bookRefId;
+    }
+
     public UUID getBookRefId() {
         return bookRefId;
     }
 
-    public void setBookRefId(UUID bookRefId) {
+    public BooksForRentDto setBookRefId(UUID bookRefId) {
         this.bookRefId = bookRefId;
+        return null;
     }
 
     public BookDto getBook() {
