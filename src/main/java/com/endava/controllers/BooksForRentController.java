@@ -2,7 +2,7 @@ package com.endava.controllers;
 
 
 import com.endava.models.BooksForRentDto;
-import com.endava.models.RentalPeriod;
+import com.endava.utils.RentalPeriod;
 import com.endava.services.BooksForRentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

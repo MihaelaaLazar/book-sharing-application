@@ -11,23 +11,23 @@ public class RentedBooksDto {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID rentedBookId;
 
-    @JoinColumn(name = "book_for_rent_id")
+    @JoinColumn(name = "book_ref_id")
     @ManyToOne
-    private BooksForRentDto bookForRent;
+    private BooksRefDto booksRefDto;
 
     @JoinColumn(name = "user_id")
     @ManyToOne
     private UserDto user;
 
     @Column(name = "returning_date")
-    private Long returningDate;
+    private Long remainingDays;
     public RentedBooksDto() {}
 
     public RentedBooksDto(UUID rentedBookId, UUID userId, UUID bookRefId, long remainingDays) {
         this.rentedBookId = rentedBookId;
         this.user = new UserDto(userId);
-        this.bookForRent = bookForRent.getBookRef().setBookRefId(bookRefId);
-        this.returningDate = remainingDays;
+        this.booksRefDto = new BooksRefDto(bookRefId);
+        this.remainingDays = remainingDays;
     }
 
     public UUID getRentedBookId() {
@@ -38,12 +38,12 @@ public class RentedBooksDto {
         this.rentedBookId = rentedBookId;
     }
 
-    public BooksForRentDto getBookForRent() {
-        return bookForRent;
+    public BooksRefDto getBooksRefDto() {
+        return booksRefDto;
     }
 
-    public void setBookForRent(BooksForRentDto bookForRent) {
-        this.bookForRent = bookForRent;
+    public void setBooksRefDto(BooksRefDto booksRefDto) {
+        this.booksRefDto = booksRefDto;
     }
 
     public UserDto getUser() {
@@ -54,21 +54,21 @@ public class RentedBooksDto {
         this.user = user;
     }
 
-    public Long getReturningDate() {
-        return returningDate;
+    public Long getRemainingDays() {
+        return remainingDays;
     }
 
-    public void setReturningDate(Long returningDate) {
-        this.returningDate = returningDate;
+    public void setRemainingDays(Long remainingDays) {
+        this.remainingDays = remainingDays;
     }
 
     @Override
     public String toString() {
         return "RentedBooksDto{" +
                 "rentedBookId=" + getRentedBookId() +
-                ", bookForRentId=" + getBookForRent().getBookForRentId() +
+                ", bookRefId=" + getBooksRefDto().getBookRefId() +
                 ", userId=" + getUser().getUserId() +
-                ", returningDate=" + getReturningDate() +
+                ", returningDate=" + getRemainingDays() +
                 '}';
     }
 }

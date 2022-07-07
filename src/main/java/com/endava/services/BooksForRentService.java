@@ -1,12 +1,13 @@
 package com.endava.services;
 
 import com.endava.models.BooksForRentDto;
-import com.endava.models.RentalPeriod;
+import com.endava.utils.RentalPeriod;
 import com.endava.models.RentedBooksDto;
-import com.endava.repositories.BookRefRepo;
 import com.endava.repositories.BooksForRentRepo;
 import com.endava.repositories.RentedBooksRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,25 +25,31 @@ public class BooksForRentService {
     @Autowired
     private RentedBooksRepo rentedBooksRepo;
 
-    @Autowired
-    private BookRefRepo bookRefRepo;
-
 
     public List<BooksForRentDto> getBooksForRent(){
         return booksForRentRepo.findAll();
     }
 
-    public void rentBook(UUID userId, UUID bookRefId, RentalPeriod body) {
+    public ResponseEntity<?> rentBook(UUID userId, UUID bookRefId, RentalPeriod body) {
         BooksForRentDto bookAvailable = booksForRentRepo.findByBookRefId(bookRefId).orElse(null);
         if (bookAvailable == null) {
-            throw new IllegalArgumentException("Book not available");
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("Book not available");
         }
-
-        LocalDate date = LocalDate.now().plus(body.getPeriod());
-        long remainingDays = Period.between(LocalDate.now(), date).getDays();
-
-        RentedBooksDto rentedBook = new RentedBooksDto(null, userId, bookAvailable.getBookForRentId() , remainingDays);
-        rentedBooksRepo.save(rentedBook);
-//        booksForRentRepo.delete(bookAvailable);
+        if (bookAvailable.getBookRef().getUser().getUserId().equals(userId)) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body("You can't rent your own book");
+        } else {
+            LocalDate date = LocalDate.now().plus(body.getPeriod());
+            long remainingDays = Period.between(LocalDate.now(), date).getDays();
+            RentedBooksDto rentedBook = new RentedBooksDto(null, userId, bookRefId, remainingDays);
+            rentedBooksRepo.save(rentedBook);
+            booksForRentRepo.delete(bookAvailable);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Book rented");
+        }
     }
 }

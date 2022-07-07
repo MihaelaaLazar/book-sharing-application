@@ -1,4 +1,4 @@
-package com.endava.models;
+package com.endava.utils;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -11,12 +11,12 @@ public enum RentalPeriod {
     ONE_WEEK("ONE_WEEK", Period.ofDays(7)),
     TWO_WEEKS("TWO_WEEKS", Period.ofDays(14)),
     THREE_WEEKS("THREE_WEEKS", Period.ofDays(21)),
-    ONE_MONTH("ONE_MONTH", Period.ofMonths(1)),
-    TWO_MONTHS("TWO_MONTHS", Period.ofMonths(2)),
-    THREE_MONTHS("THREE_MONTHS", Period.ofMonths(3));
+    ONE_MONTH("ONE_MONTH", Period.ofDays(30)),
+    TWO_MONTHS("TWO_MONTHS", Period.ofDays(60)),
+    THREE_MONTHS("THREE_MONTHS", Period.ofDays(90));
 
 
-    private final String key;
+    final String key;
     private final Period period;
 
     private RentalPeriod(String key, Period period) {
