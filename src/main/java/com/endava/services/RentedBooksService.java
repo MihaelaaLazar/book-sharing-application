@@ -42,6 +42,7 @@ public class RentedBooksService {
                 .status(HttpStatus.OK)
                 .body(jsonObject.toString());
     }
+
     public ResponseEntity<?> extendTimeForBook(UUID rentedBookId, DefaultPeriodsForExtendedTime body) {
         RentedBooksDto rentedBook = rentedBooksRepo.findByRentedBookId(rentedBookId);
         if (rentedBook == null) {

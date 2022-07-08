@@ -3,13 +3,14 @@ package com.endava.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-public class UserDto  implements UserDetails {
+public class UserDto implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,12 +28,15 @@ public class UserDto  implements UserDetails {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private boolean verified;
+
     public String getToken() {
         return token;
     }
+
     public void setToken(String token) {
         this.token = token;
     }
+
     private String token;
 
 
@@ -45,7 +49,8 @@ public class UserDto  implements UserDetails {
         this.password = password;
     }
 
-    public UserDto(){}
+    public UserDto() {
+    }
 
     public UserDto(UUID userId) {
         this.userId = userId;

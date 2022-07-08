@@ -3,11 +3,7 @@ package com.endava.services;
 import com.endava.models.BookDto;
 import com.endava.models.BooksForRentDto;
 import com.endava.models.BooksRefDto;
-import com.endava.models.RentedBooksDto;
-import com.endava.repositories.BookRefRepo;
-import com.endava.repositories.BookRepo;
-import com.endava.repositories.BooksForRentRepo;
-import com.endava.repositories.RentedBooksRepo;
+import com.endava.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,12 +30,17 @@ public class BookService {
     @Autowired
     private RentedBooksRepo rentedBooksRepo;
 
+
+    public List<BookDto> getAllBooks() {
+        return bookRepo.findAll();
+    }
+
     public ResponseEntity<?> createBook(UUID userId, BookDto book) {
         bookRepo.save(book);
         BooksRefDto booksRefDto = new BooksRefDto(null, userId, book.getBookId());
         bookRefRepo.save(booksRefDto);
         booksForRentRepo.save(new BooksForRentDto(null, booksRefDto));
-        return new ResponseEntity<>("Book created." ,  HttpStatus.CREATED);
+        return new ResponseEntity<>("Book created.", HttpStatus.CREATED);
 
     }
 
@@ -48,16 +49,18 @@ public class BookService {
         return booksRefDto.stream()
                 .map(bookRefDto -> bookRepo.findByBookId(bookRefDto.getBook().getBookId()));
     }
-    public List<?> getBooksByTitleOrAuthor(Optional<String> title, Optional<String> author) {
+
+    public Stream<?> getBooksByTitleOrAuthor(Optional<String> title, Optional<String> author) {
         List<BookDto> books = bookRepo.findByTitleOrAuthor(title, author);
-        for(BookDto book : books){
-            List<RentedBooksDto> rentedBooks = rentedBooksRepo.findBookByBookId(book.getBookId());
-            for(RentedBooksDto rentedBook : rentedBooks){
-                if(book.getBookId().equals(rentedBook.getBooksRefDto().getBook().getBookId())){
-                    return List.of(rentedBook);
-                }
-            }
-        }
-        return books;
+        Stream<?> availableBooks = books.stream()
+                .filter(book -> booksForRentRepo.findByBookId(book.getBookId()) != null);
+
+        Stream<?> rentedBooks = books.stream()
+                .filter(book -> rentedBooksRepo.findOneBookByBookId(book.getBookId()) != null)
+                .map(book -> rentedBooksRepo.findOneBookByBookId(book.getBookId()))
+                .filter(rentedBook -> rentedBook.getRemainingDays() != null);
+
+        return Stream.concat(availableBooks, rentedBooks);
+
     }
 }

@@ -2,22 +2,39 @@ package com.endava.models;
 
 import javax.persistence.*;
 import java.util.UUID;
+
 @Entity
 @Table(name = "waiting_list")
 public class WaitingListDto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "waiting_id")
     private UUID waitingId;
 
-    @JoinColumn(name = "user_id")
-    @ManyToOne
-    private UserDto user;
+    @Column(name = "user_id")
+    private UUID userId;
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+    }
 
     @JoinColumn(name = "book_ref_id")
     @ManyToOne
-    private BooksRefDto  booksRefDto;
+    private BooksRefDto booksRefDto;
+
+    public WaitingListDto(UUID waitingId, UUID userId, UUID bookRefId) {
+        this.waitingId = waitingId;
+        this.userId = userId;
+        this.booksRefDto = new BooksRefDto(bookRefId);
+    }
+
+    public WaitingListDto() {
+    }
 
     public UUID getWaitingId() {
         return waitingId;
@@ -25,14 +42,6 @@ public class WaitingListDto {
 
     public void setWaitingId(UUID waitingId) {
         this.waitingId = waitingId;
-    }
-
-    public UserDto getUser() {
-        return user;
-    }
-
-    public void setUser(UserDto user) {
-        this.user = user;
     }
 
     public BooksRefDto getBooksRefDto() {
@@ -47,7 +56,7 @@ public class WaitingListDto {
     public String toString() {
         return "WaitingListDto{" +
                 "waitingId=" + getWaitingId() +
-                ", userId=" + getUser().getUserId() +
+                ", userId=" + getUserId() +
                 ", booksRefDtoId=" + getBooksRefDto().getBookRefId() +
                 '}';
     }

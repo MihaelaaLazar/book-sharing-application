@@ -31,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .orElseThrow(
                                 () -> new UsernameNotFoundException("User " + username + " not found.")));
     }
+
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {

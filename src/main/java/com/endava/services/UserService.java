@@ -18,29 +18,32 @@ public class UserService {
 
     @Autowired
     private UserRepo userRepo;
-
     @Autowired
     private PasswordConfig passwordConfig;
 
     @Autowired
     private EmailService emailService;
 
-    public ResponseEntity<?> createUserAccount(UserDto user) throws MessagingException {
-        user.setPassword(passwordConfig.encoder().encode(user.getPassword()));
-        user.setVerified(false);
-        if (userRepo.findByEmail(user.getEmail()).isPresent() && user.isVerified()) {
-            return ResponseEntity.badRequest().body("Email already exists and your account is verified");
-        } else {
-            if (EmailValidation.isValidEmailAddress(user.getEmail())) {
-                String token = JwtTokenUtil.generateAccessToken(user);
-                user.setToken(token);
-                String url = "http://localhost:8080/api/users/confirmation?token=" + user.getToken();
-                emailService.sendConfirmationEmail("Please confirm your account by clicking on: " + url, user.getEmail(), "Confirm your account");
-                userRepo.save(user);
-                return ResponseEntity.ok(user);
+    public ResponseEntity<?> createUserAccount(UserDto user) {
+        try {
+            user.setPassword(passwordConfig.encoder().encode(user.getPassword()));
+            user.setVerified(false);
+            if (userRepo.findByEmail(user.getEmail()).isPresent() && user.isVerified()) {
+                return ResponseEntity.badRequest().body("Email already exists and your account is verified");
+            } else {
+                if (EmailValidation.isValidEmailAddress(user.getEmail())) {
+                    String token = JwtTokenUtil.generateAccessToken(user);
+                    user.setToken(token);
+                    String url = "http://localhost:8080/api/users/confirmation?token=" + user.getToken();
+                    emailService.sendConfirmationEmail("Please confirm your account by clicking on: " + url, user.getEmail(), "Confirm your account");
+                    userRepo.save(user);
+                    return ResponseEntity.ok(user);
+                }
             }
+            return ResponseEntity.badRequest().body("Invalid email address");
+        } catch (MessagingException e) {
+            return ResponseEntity.badRequest().body("Email sending failed");
         }
-        return ResponseEntity.badRequest().body("Invalid email address");
     }
 
     public String confirmUserAccount(String token) {

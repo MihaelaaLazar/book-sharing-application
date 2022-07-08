@@ -19,18 +19,30 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/{userId}/create")
+    @RequestMapping(
+            method = RequestMethod.GET)
+    public List<BookDto> getAllBooks() {
+        return bookService.getAllBooks();
+    }
+
+    @RequestMapping(
+            method = RequestMethod.POST,
+            value = "/{userId}/create")
     public ResponseEntity<?> createBookWithUserId(@PathVariable UUID userId, @RequestBody BookDto book) {
         return bookService.createBook(userId, book);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{userId}")
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/{userId}")
     public Stream<Object> getBooksByUserId(@PathVariable UUID userId) {
         return bookService.getBooksByUserId(userId);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/search")
-    public List<?> getBooksByTitleOrAuthor(@RequestParam("title") Optional<String> title, @RequestParam("author") Optional<String> author) {
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/search")
+    public Stream<?> getBooksByTitleOrAuthor(@RequestParam("title") Optional<String> title, @RequestParam("author") Optional<String> author) {
         return bookService.getBooksByTitleOrAuthor(title, author);
     }
 

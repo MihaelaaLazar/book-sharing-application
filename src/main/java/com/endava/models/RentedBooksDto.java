@@ -21,7 +21,9 @@ public class RentedBooksDto {
 
     @Column(name = "returning_date")
     private Long remainingDays;
-    public RentedBooksDto() {}
+
+    public RentedBooksDto() {
+    }
 
     public RentedBooksDto(UUID rentedBookId, UUID userId, UUID bookRefId, long remainingDays) {
         this.rentedBookId = rentedBookId;

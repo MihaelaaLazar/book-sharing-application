@@ -15,7 +15,6 @@ public enum RentalPeriod {
     TWO_MONTHS("TWO_MONTHS", Period.ofDays(60)),
     THREE_MONTHS("THREE_MONTHS", Period.ofDays(90));
 
-
     final String key;
     private final Period period;
 

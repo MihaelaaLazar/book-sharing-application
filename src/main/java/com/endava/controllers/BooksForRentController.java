@@ -17,12 +17,15 @@ public class BooksForRentController {
     @Autowired
     private BooksForRentService booksForRentService;
 
-
-    @RequestMapping(method= RequestMethod.GET)
+    @RequestMapping(
+            method = RequestMethod.GET)
     public List<BooksForRentDto> getBooksForRent() {
-       return booksForRentService.getBooksForRent();
+        return booksForRentService.getBooksForRent();
     }
-    @RequestMapping(method = RequestMethod.POST, value = "/{userId}/{bookRefId}/")
+
+    @RequestMapping(
+            method = RequestMethod.POST,
+            value = "/{userId}/{bookRefId}/")
     public void rentBook(@PathVariable UUID userId, @PathVariable UUID bookRefId, @RequestBody RentalPeriod body) {
         booksForRentService.rentBook(userId, bookRefId, body);
     }

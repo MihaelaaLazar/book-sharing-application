@@ -24,12 +24,6 @@ public class BooksRefDto {
     @ManyToOne
     private UserDto user;
 
-    public BooksRefDto(UUID bookRefId, BookDto book, UserDto user) {
-        this.bookRefId = bookRefId;
-        this.book = book;
-        this.user = user;
-    }
-
     public BooksRefDto(UUID bookRefId, UUID userId, UUID bookId) {
         this.bookRefId = bookRefId;
         this.user = new UserDto(userId);

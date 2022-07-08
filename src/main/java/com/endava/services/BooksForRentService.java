@@ -26,7 +26,7 @@ public class BooksForRentService {
     private RentedBooksRepo rentedBooksRepo;
 
 
-    public List<BooksForRentDto> getBooksForRent(){
+    public List<BooksForRentDto> getBooksForRent() {
         return booksForRentRepo.findAll();
     }
 
@@ -38,6 +38,7 @@ public class BooksForRentService {
                     .body("Book not available");
         }
         if (bookAvailable.getBookRef().getUser().getUserId().equals(userId)) {
+            System.out.println("You can't rent your own book");
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
                     .body("You can't rent your own book");

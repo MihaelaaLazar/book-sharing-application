@@ -13,7 +13,6 @@ import java.util.UUID;
 public interface UserRepo extends CrudRepository<UserDto, String> {
     Optional<UserDto> findByEmail(String email);
     List<UserDto> findAll();
-
     UserDto findByUserId(UUID userId);
     UserDto findByUsernameAndPassword(String username, String password);
     UserDto findByToken(String token);

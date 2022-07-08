@@ -69,7 +69,9 @@ public class BookDto {
         this.description = description;
     }
 
-    public BookDto(){}
+    public BookDto() {
+    }
+
     public BookDto(UUID bookId, String title, String author, LocalDate dateOfPublication, String description) {
         this.bookId = getBookId();
         this.title = getTitle();
@@ -78,4 +80,14 @@ public class BookDto {
         this.description = getDescription();
     }
 
+    @Override
+    public String toString() {
+        return "BookDto{" +
+                "bookId=" + getBookId() +
+                ", title='" + getTitle() + '\'' +
+                ", author='" + getAuthor() + '\'' +
+                ", dateOfPublication=" + getDateOfPublication() +
+                ", description='" + getDescription() + '\'' +
+                '}';
+    }
 }

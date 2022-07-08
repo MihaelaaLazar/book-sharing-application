@@ -12,8 +12,12 @@ import java.util.UUID;
 
 @Repository
 public interface BooksForRentRepo extends CrudRepository<BooksForRentDto, UUID> {
+    List<BooksForRentDto> findAll();
+
     @Query("SELECT b FROM BooksForRentDto b JOIN b.bookRef br WHERE br.bookRefId = ?1")
     Optional<BooksForRentDto> findByBookRefId(UUID bookRefId);
-    List<BooksForRentDto> findAll();
+
+    @Query("SELECT b FROM BooksForRentDto b JOIN b.bookRef br WHERE br.book.bookId = ?1")
+    BooksForRentDto findByBookId(UUID bookId);
 
 }

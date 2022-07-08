@@ -21,11 +21,11 @@ public class EmailService {
     private Environment env;
 
     public void sendConfirmationEmail(String body,
-                                        String toEmail,
-                                        String subject) throws MessagingException {
+                                      String toEmail,
+                                      String subject) throws MessagingException {
 
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,true);
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
         mimeMessageHelper.setFrom(Objects.requireNonNull(env.getProperty("spring.mail.username")));
         mimeMessageHelper.setText(body);
@@ -33,7 +33,6 @@ public class EmailService {
         mimeMessageHelper.setSubject(subject);
         javaMailSender.send(mimeMessage);
         System.out.println("Mail send successfully.");
-
     }
 
 }

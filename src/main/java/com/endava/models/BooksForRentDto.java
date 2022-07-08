@@ -1,7 +1,6 @@
 package com.endava.models;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -22,10 +21,8 @@ public class BooksForRentDto {
         this.bookForRentId = bookForRentId;
         this.bookRef = bookRef;
     }
-    public BooksForRentDto() {}
 
-    public BooksForRentDto(UUID bookForRentId){
-        this.bookForRentId = bookForRentId;
+    public BooksForRentDto() {
     }
 
     public UUID getBookForRentId() {
