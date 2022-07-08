@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,7 +24,7 @@ public class UserController {
             method = RequestMethod.POST,
             consumes = {APPLICATION_JSON_VALUE},
             produces = {APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> createUserAccount(@RequestBody UserDto user) throws MessagingException {
+    public ResponseEntity<?> createUserAccount(@RequestBody UserDto user) {
         return userService.createUserAccount(user);
     }
 
