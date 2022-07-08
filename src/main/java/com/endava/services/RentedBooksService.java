@@ -35,7 +35,7 @@ public class RentedBooksService {
             json.put("WhoBorrowed", rentedBook.getUser().getFirstName() + " " + rentedBook.getUser().getLastName());
             json.put("BookName", rentedBook.getBooksRefDto().getBook().getTitle());
             json.put("OwnerName", rentedBook.getBooksRefDto().getUser().getFirstName() + " " + rentedBook.getBooksRefDto().getUser().getLastName());
-            json.put("RemainingDays", rentedBook.getRemainingDays());
+            json.put("RemainingDays", rentedBook.getReturningDate());
             jsonObject.add(json);
         }
         return ResponseEntity
@@ -51,9 +51,9 @@ public class RentedBooksService {
                     .body("Book not found");
         } else {
             LocalDate extendedTime = LocalDate.now().plus(body.getPeriod());
-            long extendedDays = Period.between(LocalDate.now(), extendedTime).getDays();
-            long remainingDaysAfterExtension = rentedBook.getRemainingDays() + extendedDays;
-            rentedBook.setRemainingDays(remainingDaysAfterExtension);
+            Period extendedDays = Period.between(LocalDate.now(), extendedTime);
+            LocalDate returningDateAfterExtension = rentedBook.getReturningDate().plus(extendedDays);
+            rentedBook.setReturningDate(returningDateAfterExtension);
             rentedBooksRepo.save(rentedBook);
             return ResponseEntity
                     .status(HttpStatus.OK)
@@ -73,7 +73,7 @@ public class RentedBooksService {
                 JSONObject json = new JSONObject();
                 json.put("BookTitle", book.getBooksRefDto().getBook().getTitle());
                 json.put("BookAuthor", book.getBooksRefDto().getBook().getAuthor());
-                json.put("RemainingDays", book.getRemainingDays());
+                json.put("RemainingDays", book.getReturningDate());
                 jsonObject.add(json);
             }
             return ResponseEntity

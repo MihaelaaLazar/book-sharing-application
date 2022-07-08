@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class ScheduledTasks {
     public void deleteTheBookFromTheRentedBooks() {
         List<RentedBooksDto> rentedBooksDtoList = rentedBooksRepo.findAll();
         for (RentedBooksDto rentedBooksDto : rentedBooksDtoList) {
-            if (rentedBooksDto.getRemainingDays() == 0) {
+            if (LocalDate.now().isAfter(rentedBooksDto.getReturningDate())) {
                 rentedBooksRepo.delete(rentedBooksDto);
                 booksForRentRepo.save(new BooksForRentDto(null, rentedBooksDto.getBooksRefDto()));
             }

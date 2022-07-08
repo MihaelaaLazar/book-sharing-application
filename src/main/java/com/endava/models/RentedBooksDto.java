@@ -1,6 +1,7 @@
 package com.endava.models;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -20,16 +21,16 @@ public class RentedBooksDto {
     private UserDto user;
 
     @Column(name = "returning_date")
-    private Long remainingDays;
+    private LocalDate returningDate;
 
     public RentedBooksDto() {
     }
 
-    public RentedBooksDto(UUID rentedBookId, UUID userId, UUID bookRefId, long remainingDays) {
+    public RentedBooksDto(UUID rentedBookId, UUID userId, UUID bookRefId, LocalDate returningDate) {
         this.rentedBookId = rentedBookId;
         this.user = new UserDto(userId);
         this.booksRefDto = new BooksRefDto(bookRefId);
-        this.remainingDays = remainingDays;
+        this.returningDate = returningDate;
     }
 
     public UUID getRentedBookId() {
@@ -56,12 +57,12 @@ public class RentedBooksDto {
         this.user = user;
     }
 
-    public Long getRemainingDays() {
-        return remainingDays;
+    public LocalDate getReturningDate() {
+        return returningDate;
     }
 
-    public void setRemainingDays(Long remainingDays) {
-        this.remainingDays = remainingDays;
+    public void setReturningDate(LocalDate returningDate) {
+        this.returningDate = returningDate;
     }
 
     @Override
@@ -70,7 +71,7 @@ public class RentedBooksDto {
                 "rentedBookId=" + getRentedBookId() +
                 ", bookRefId=" + getBooksRefDto().getBookRefId() +
                 ", userId=" + getUser().getUserId() +
-                ", returningDate=" + getRemainingDays() +
+                ", returningDate=" + getReturningDate() +
                 '}';
     }
 }

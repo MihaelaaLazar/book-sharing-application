@@ -58,7 +58,7 @@ public class BookService {
         Stream<?> rentedBooks = books.stream()
                 .filter(book -> rentedBooksRepo.findOneBookByBookId(book.getBookId()) != null)
                 .map(book -> rentedBooksRepo.findOneBookByBookId(book.getBookId()))
-                .filter(rentedBook -> rentedBook.getRemainingDays() != null);
+                .filter(rentedBook -> rentedBook.getReturningDate() != null);
 
         return Stream.concat(availableBooks, rentedBooks);
 

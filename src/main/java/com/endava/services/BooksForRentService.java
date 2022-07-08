@@ -38,14 +38,14 @@ public class BooksForRentService {
                     .body("Book not available");
         }
         if (bookAvailable.getBookRef().getUser().getUserId().equals(userId)) {
-            System.out.println("You can't rent your own book");
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
                     .body("You can't rent your own book");
         } else {
             LocalDate date = LocalDate.now().plus(body.getPeriod());
-            long remainingDays = Period.between(LocalDate.now(), date).getDays();
-            RentedBooksDto rentedBook = new RentedBooksDto(null, userId, bookRefId, remainingDays);
+            Period returningDate = Period.between(LocalDate.now(), date);
+            LocalDate returningDateAfterExtension = LocalDate.now().plus(returningDate);
+            RentedBooksDto rentedBook = new RentedBooksDto(null, userId, bookRefId, returningDateAfterExtension);
             rentedBooksRepo.save(rentedBook);
             booksForRentRepo.delete(bookAvailable);
             return ResponseEntity
