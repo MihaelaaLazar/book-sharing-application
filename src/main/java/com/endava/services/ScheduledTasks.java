@@ -37,7 +37,7 @@ public class ScheduledTasks {
     public void deleteTheBookFromTheRentedBooks() {
         List<RentedBooksDto> rentedBooksDtoList = rentedBooksRepo.findAll();
         for (RentedBooksDto rentedBooksDto : rentedBooksDtoList) {
-            if (LocalDate.now().plusDays(22).isAfter(rentedBooksDto.getReturningDate())) {
+            if (LocalDate.now().isAfter(rentedBooksDto.getReturningDate())) {
                 rentedBooksRepo.delete(rentedBooksDto);
                 booksForRentRepo.save(new BooksForRentDto(null, rentedBooksDto.getBooksRefDto()));
             }
