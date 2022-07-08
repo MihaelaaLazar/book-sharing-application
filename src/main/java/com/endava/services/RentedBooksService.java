@@ -32,18 +32,16 @@ public class RentedBooksService {
         }
         for (RentedBooksDto rentedBook : rentedBooks) {
             JSONObject json = new JSONObject();
-            json.put("Name of the person who borrowed: ", rentedBook.getUser().getFirstName() + " " + rentedBook.getUser().getLastName());
-            json.put("Name of the book: ", rentedBook.getBooksRefDto().getBook().getTitle());
-            json.put("Name of the owner: ", rentedBook.getBooksRefDto().getUser().getFirstName() + " " + rentedBook.getBooksRefDto().getUser().getLastName());
-            json.put("Remaining days: ", rentedBook.getRemainingDays());
+            json.put("WhoBorrowed", rentedBook.getUser().getFirstName() + " " + rentedBook.getUser().getLastName());
+            json.put("BookName", rentedBook.getBooksRefDto().getBook().getTitle());
+            json.put("OwnerName", rentedBook.getBooksRefDto().getUser().getFirstName() + " " + rentedBook.getBooksRefDto().getUser().getLastName());
+            json.put("RemainingDays", rentedBook.getRemainingDays());
             jsonObject.add(json);
         }
-
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(jsonObject.toString());
     }
-
     public ResponseEntity<?> extendTimeForBook(UUID rentedBookId, DefaultPeriodsForExtendedTime body) {
         RentedBooksDto rentedBook = rentedBooksRepo.findByRentedBookId(rentedBookId);
         if (rentedBook == null) {
@@ -72,9 +70,9 @@ public class RentedBooksService {
         } else {
             for (RentedBooksDto book : rentedBook) {
                 JSONObject json = new JSONObject();
-                json.put("Book's title: ", book.getBooksRefDto().getBook().getTitle());
-                json.put("Book's author: ", book.getBooksRefDto().getBook().getAuthor());
-                json.put("Remaining days: ", book.getRemainingDays());
+                json.put("BookTitle", book.getBooksRefDto().getBook().getTitle());
+                json.put("BookAuthor", book.getBooksRefDto().getBook().getAuthor());
+                json.put("RemainingDays", book.getRemainingDays());
                 jsonObject.add(json);
             }
             return ResponseEntity

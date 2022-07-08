@@ -18,4 +18,9 @@ public interface RentedBooksRepo extends CrudRepository<RentedBooksDto, UUID> {
     @Query("Select b from RentedBooksDto b where b.user.userId = ?1")
     List<RentedBooksDto> findRentedBookByUserId(UUID userId);
 
+    @Query("Select b from RentedBooksDto b where b.booksRefDto.book.bookId = ?1")
+    List<RentedBooksDto> findBookByBookId(UUID bookId);
+
+    List<RentedBooksDto> findAll();
+
 }

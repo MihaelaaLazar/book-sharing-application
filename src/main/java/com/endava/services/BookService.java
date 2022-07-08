@@ -3,9 +3,11 @@ package com.endava.services;
 import com.endava.models.BookDto;
 import com.endava.models.BooksForRentDto;
 import com.endava.models.BooksRefDto;
+import com.endava.models.RentedBooksDto;
 import com.endava.repositories.BookRefRepo;
 import com.endava.repositories.BookRepo;
 import com.endava.repositories.BooksForRentRepo;
+import com.endava.repositories.RentedBooksRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,9 @@ public class BookService {
     @Autowired
     private BooksForRentRepo booksForRentRepo;
 
+    @Autowired
+    private RentedBooksRepo rentedBooksRepo;
+
     public ResponseEntity<?> createBook(UUID userId, BookDto book) {
         bookRepo.save(book);
         BooksRefDto booksRefDto = new BooksRefDto(null, userId, book.getBookId());
@@ -43,7 +48,16 @@ public class BookService {
         return booksRefDto.stream()
                 .map(bookRefDto -> bookRepo.findByBookId(bookRefDto.getBook().getBookId()));
     }
-    public List<BookDto> getBooksByTitleOrAuthor(Optional<String> title, Optional<String> author) {
-        return bookRepo.findByTitleOrAuthor(title, author);
+    public List<?> getBooksByTitleOrAuthor(Optional<String> title, Optional<String> author) {
+        List<BookDto> books = bookRepo.findByTitleOrAuthor(title, author);
+        for(BookDto book : books){
+            List<RentedBooksDto> rentedBooks = rentedBooksRepo.findBookByBookId(book.getBookId());
+            for(RentedBooksDto rentedBook : rentedBooks){
+                if(book.getBookId().equals(rentedBook.getBooksRefDto().getBook().getBookId())){
+                    return List.of(rentedBook);
+                }
+            }
+        }
+        return books;
     }
 }
