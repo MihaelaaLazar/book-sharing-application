@@ -41,8 +41,8 @@ public class UserController {
             method = RequestMethod.POST,
             consumes = {APPLICATION_JSON_VALUE},
             produces = {APPLICATION_JSON_VALUE})
-    public UserDto login(@RequestBody UserDto user) {
-        return userService.login(user.getUsername(), user.getPassword());
+    public ResponseEntity<?> login(@RequestBody UserDto user) {
+        return userService.login(user);
     }
 
     @RequestMapping(

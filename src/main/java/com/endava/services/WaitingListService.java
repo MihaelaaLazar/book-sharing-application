@@ -31,5 +31,4 @@ public class WaitingListService {
                 .status(HttpStatus.OK)
                 .body("User added to waiting list");
     }
-
 }

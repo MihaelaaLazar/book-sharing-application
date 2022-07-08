@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.time.Period;
-import java.util.stream.Stream;
 
 public enum DefaultPeriodsForExtendedTime {
 
@@ -22,7 +21,7 @@ public enum DefaultPeriodsForExtendedTime {
 
     @JsonCreator
     public final static DefaultPeriodsForExtendedTime decode(final String code) {
-        return Stream.of(DefaultPeriodsForExtendedTime.values()).filter(targetEnum -> targetEnum.key.equals(code)).findFirst().orElse(null);
+        return EnumDecode.decode(code, DefaultPeriodsForExtendedTime.class);
     }
 
     @JsonValue

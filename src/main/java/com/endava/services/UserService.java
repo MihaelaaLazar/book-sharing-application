@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -32,7 +33,7 @@ public class UserService {
                 return ResponseEntity.badRequest().body("Email already exists and your account is verified");
             } else {
                 if (EmailValidation.isValidEmailAddress(user.getEmail())) {
-                    String token = JwtTokenUtil.generateAccessToken(user);
+                    String token = JwtTokenUtil.generateAccessToken(user.getUsername());
                     user.setToken(token);
                     String url = "http://localhost:8080/api/users/confirmation?token=" + user.getToken();
                     emailService.sendConfirmationEmail("Please confirm your account by clicking on: " + url, user.getEmail(), "Confirm your account");
@@ -57,8 +58,21 @@ public class UserService {
         }
     }
 
-    public UserDto login(String username, String password) {
-        return userRepo.findByUsernameAndPassword(username, password);
+    public ResponseEntity<?> login(UserDto userDto) {
+
+        UserDto _user = userRepo.findByUsername(userDto.getUsername());
+        String encodedPassword = _user.getPassword();
+
+        if (passwordConfig.matches(userDto.getPassword(), encodedPassword)) {
+            return ResponseEntity
+                    .status(200)
+                    .body(Map.of("token", _user.getToken(), "verified", _user.isVerified()));
+        } else {
+            return ResponseEntity
+                    .status(401)
+                    .body("Unauthorized");
+        }
+
     }
 
     public List<UserDto> getAllUsers() {

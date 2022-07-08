@@ -32,7 +32,6 @@ public class EmailService {
         mimeMessageHelper.setTo(toEmail);
         mimeMessageHelper.setSubject(subject);
         javaMailSender.send(mimeMessage);
-        System.out.println("Mail send successfully.");
     }
 
 }

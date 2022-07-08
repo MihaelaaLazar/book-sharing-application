@@ -35,7 +35,7 @@ public class RentedBooksService {
             json.put("WhoBorrowed", rentedBook.getUser().getFirstName() + " " + rentedBook.getUser().getLastName());
             json.put("BookName", rentedBook.getBooksRefDto().getBook().getTitle());
             json.put("OwnerName", rentedBook.getBooksRefDto().getUser().getFirstName() + " " + rentedBook.getBooksRefDto().getUser().getLastName());
-            json.put("RemainingDays", rentedBook.getReturningDate());
+            json.put("ReturningDate", rentedBook.getReturningDate());
             jsonObject.add(json);
         }
         return ResponseEntity
@@ -73,7 +73,7 @@ public class RentedBooksService {
                 JSONObject json = new JSONObject();
                 json.put("BookTitle", book.getBooksRefDto().getBook().getTitle());
                 json.put("BookAuthor", book.getBooksRefDto().getBook().getAuthor());
-                json.put("RemainingDays", book.getReturningDate());
+                json.put("ReturningDate", book.getReturningDate());
                 jsonObject.add(json);
             }
             return ResponseEntity

@@ -11,5 +11,8 @@ public class PasswordConfig {
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
+    public boolean matches(CharSequence rawPassword, String encodedPassword){
+       return new BCryptPasswordEncoder().matches(rawPassword, encodedPassword);
+    }
 
 }

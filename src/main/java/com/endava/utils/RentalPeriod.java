@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.time.Period;
-import java.util.stream.Stream;
 
 public enum RentalPeriod {
 
@@ -25,7 +24,7 @@ public enum RentalPeriod {
 
     @JsonCreator
     public final static RentalPeriod decode(final String code) {
-        return Stream.of(RentalPeriod.values()).filter(targetEnum -> targetEnum.key.equals(code)).findFirst().orElse(null);
+        return EnumDecode.decode(code, RentalPeriod.class);
     }
 
     @JsonValue
