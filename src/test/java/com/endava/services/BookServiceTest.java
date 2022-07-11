@@ -29,9 +29,7 @@ public class BookServiceTest {
     private static final BookDto BOOK_DTO = new BookDto();
     private static final String TITLE = "title";
     private static final String AUTHOR = "author";
-
     private static final String DESCRIPTION = "description";
-
     private static final LocalDate PUBLISHED_DATE = LocalDate.now();
 
     @Mock
@@ -42,7 +40,6 @@ public class BookServiceTest {
 
     @Mock
     private BooksForRentRepo booksForRentRepo;
-
 
     @InjectMocks
     private BookService bookService;

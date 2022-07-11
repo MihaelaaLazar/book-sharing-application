@@ -39,12 +39,18 @@ public class UserService {
                     String url = "http://localhost:8080/api/users/confirmation?token=" + user.getToken();
                     emailService.sendConfirmationEmail("Please confirm your account by clicking on: " + url, user.getEmail(), "Confirm your account");
                     userRepo.save(user);
-                    return ResponseEntity.ok(user);
+                    return ResponseEntity
+                            .status(201)
+                            .body("Your account has been created. Please check your email to confirm your account");
                 }
             }
-            return ResponseEntity.badRequest().body("Invalid email address");
+            return ResponseEntity
+                    .status(400)
+                    .body("Invalid email address");
         } catch (MessagingException e) {
-            return ResponseEntity.badRequest().body("Email sending failed");
+            return ResponseEntity
+                    .status(400)
+                    .body("Email sending failed");
         }
     }
 
@@ -75,12 +81,15 @@ public class UserService {
         }
 
     }
-    public ResponseEntity<?> updateUser(UUID userId, UserDto userDto){
+
+    public ResponseEntity<?> updateUser(UUID userId, UserDto userDto) {
         UserDto existingUser = userRepo.findByUserId(userId);
-        if(existingUser != null){
+        if (existingUser != null) {
             BeanUtils.copyProperties(userDto, existingUser, "userId", "email", "token", "password", "verified");
             userRepo.save(existingUser);
-            return ResponseEntity.ok(existingUser);
+            return ResponseEntity
+                    .status(200)
+                    .body(existingUser);
         }
         return ResponseEntity.badRequest().body("User not found");
     }

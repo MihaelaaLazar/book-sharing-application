@@ -14,6 +14,8 @@ public interface BookRepo extends CrudRepository<BookDto, UUID> {
 
     BookDto findByBookId(UUID bookId);
 
+    Optional<BookDto> findByTitle(String title);
+
     List<BookDto> findAll();
 
 }

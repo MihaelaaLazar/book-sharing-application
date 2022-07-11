@@ -36,11 +36,18 @@ public class BookService {
     }
 
     public ResponseEntity<?> createBook(UUID userId, BookDto book) {
+        if(bookRepo.findByTitle(book.getTitle()).isPresent()) {
+            return ResponseEntity
+                    .status(400)
+                    .body("Book already exists");
+        }
         bookRepo.save(book);
         BooksRefDto booksRefDto = new BooksRefDto(null, userId, book.getBookId());
         bookRefRepo.save(booksRefDto);
         booksForRentRepo.save(new BooksForRentDto(null, booksRefDto));
-        return new ResponseEntity<>("Book created.", HttpStatus.CREATED);
+        return ResponseEntity
+                .status(201)
+                .body("Book created.");
 
     }
 

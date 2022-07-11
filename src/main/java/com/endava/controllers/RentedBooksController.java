@@ -21,7 +21,6 @@ public class RentedBooksController {
     @Autowired
     private RentedBooksService rentedBooksService;
 
-
     @Operation(
             summary = "Find all book given to rent by user",
             description = "Finds all book given to rent by user"

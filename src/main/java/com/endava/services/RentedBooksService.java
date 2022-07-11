@@ -6,7 +6,6 @@ import com.endava.models.RentedBooksDto;
 import com.endava.repositories.RentedBooksRepo;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +26,7 @@ public class RentedBooksService {
         List<RentedBooksDto> rentedBooks = rentedBooksRepo.findBookByUserId(userId);
         if (rentedBooks.isEmpty()) {
             return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
+                    .status(404)
                     .body("No rented books found");
         }
         for (RentedBooksDto rentedBook : rentedBooks) {
@@ -39,7 +38,7 @@ public class RentedBooksService {
             jsonObject.add(json);
         }
         return ResponseEntity
-                .status(HttpStatus.OK)
+                .status(200)
                 .body(jsonObject.toString());
     }
 
@@ -47,7 +46,7 @@ public class RentedBooksService {
         RentedBooksDto rentedBook = rentedBooksRepo.findByRentedBookId(rentedBookId);
         if (rentedBook == null) {
             return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
+                    .status(404)
                     .body("Book not found");
         } else {
             LocalDate extendedTime = LocalDate.now().plus(body.getPeriod());
@@ -56,7 +55,7 @@ public class RentedBooksService {
             rentedBook.setReturningDate(returningDateAfterExtension);
             rentedBooksRepo.save(rentedBook);
             return ResponseEntity
-                    .status(HttpStatus.OK)
+                    .status(200)
                     .body("Time extended");
         }
     }
@@ -66,7 +65,7 @@ public class RentedBooksService {
         List<RentedBooksDto> rentedBook = rentedBooksRepo.findRentedBookByUserId(userId);
         if (rentedBook == null) {
             return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
+                    .status(404)
                     .body("Book not found");
         } else {
             for (RentedBooksDto book : rentedBook) {
@@ -78,7 +77,7 @@ public class RentedBooksService {
                 jsonObject.add(json);
             }
             return ResponseEntity
-                    .status(HttpStatus.OK)
+                    .status(200)
                     .body(jsonObject.toString());
         }
     }

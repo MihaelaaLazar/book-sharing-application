@@ -1,7 +1,6 @@
 package com.endava.services;
 
 
-import com.endava.config.PasswordConfig;
 import com.endava.models.UserDto;
 import com.endava.repositories.UserRepo;
 import org.junit.Ignore;
@@ -29,12 +28,6 @@ public class UserServiceTest {
 
     @Mock
     private UserRepo userRepo;
-
-    @Mock
-    private PasswordConfig passwordConfig;
-
-    @Mock
-    private EmailService emailService;
 
     @InjectMocks
     private UserService userService;

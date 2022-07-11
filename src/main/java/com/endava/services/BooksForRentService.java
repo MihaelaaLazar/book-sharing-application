@@ -6,7 +6,6 @@ import com.endava.models.RentedBooksDto;
 import com.endava.repositories.BooksForRentRepo;
 import com.endava.repositories.RentedBooksRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -34,12 +33,12 @@ public class BooksForRentService {
         BooksForRentDto bookAvailable = booksForRentRepo.findByBookRefId(bookRefId).orElse(null);
         if (bookAvailable == null) {
             return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
+                    .status(404)
                     .body("Book not available");
         }
         if (bookAvailable.getBookRef().getUser().getUserId().equals(userId)) {
             return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
+                    .status(400)
                     .body("You can't rent your own book");
         } else {
             LocalDate date = LocalDate.now().plus(body.getPeriod());
@@ -49,7 +48,7 @@ public class BooksForRentService {
             rentedBooksRepo.save(rentedBook);
             booksForRentRepo.delete(bookAvailable);
             return ResponseEntity
-                    .status(HttpStatus.OK)
+                    .status(200)
                     .body("Book rented");
         }
     }

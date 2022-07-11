@@ -2,10 +2,8 @@ package com.endava.controllers;
 
 import com.endava.models.UserDto;
 import com.endava.services.UserService;
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,7 +44,6 @@ public class UserController {
     public String confirmUserAccount(@RequestParam("token") String token) {
         return userService.confirmUserAccount(token);
     }
-
 
     @Operation(
             summary = "Login",
