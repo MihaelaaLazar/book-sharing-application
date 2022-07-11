@@ -26,6 +26,11 @@ public class WaitingListService {
                     .status(404)
                     .body("Book not found");
         }
+        if(waitingListRepo.findByUserId(userId).isPresent()) {
+            return ResponseEntity
+                    .status(400)
+                    .body("User already in waiting list");
+        }
         waitingListRepo.save(new WaitingListDto(UUID.randomUUID(), userId, rentedBooks.getBooksRefDto().getBookRefId()));
         return ResponseEntity
                 .status(200)

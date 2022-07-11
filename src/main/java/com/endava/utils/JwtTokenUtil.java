@@ -7,9 +7,11 @@ import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
+import static com.endava.utils.Constants.EXPIRE_DURATION;
+import static com.endava.utils.Constants.SECRET_KEY;
+
 public class JwtTokenUtil implements Serializable {
-    public static long EXPIRE_DURATION = 600000;
-    public static String SECRET_KEY = "secret";
+
 
     public static String generateAccessToken(String username) {
         return  Jwts.builder()
