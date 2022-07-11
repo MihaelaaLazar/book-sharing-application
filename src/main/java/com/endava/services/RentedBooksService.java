@@ -74,6 +74,7 @@ public class RentedBooksService {
                 json.put("BookTitle", book.getBooksRefDto().getBook().getTitle());
                 json.put("BookAuthor", book.getBooksRefDto().getBook().getAuthor());
                 json.put("ReturningDate", book.getReturningDate());
+                json.put("RentedId:", book.getRentedBookId());
                 jsonObject.add(json);
             }
             return ResponseEntity

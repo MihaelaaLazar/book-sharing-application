@@ -2,6 +2,8 @@ package com.endava.controllers;
 
 import com.endava.models.UserDto;
 import com.endava.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +15,16 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/api/users")
+@Tag(name = "1. User", description = "User API")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
 
+    @Operation(
+            summary = "Create user",
+            description = "Adds a new user")
     @RequestMapping(
             value = "/register",
             method = RequestMethod.POST,
@@ -28,6 +34,9 @@ public class UserController {
         return userService.createUserAccount(user);
     }
 
+    @Operation(
+            summary="Confirm your email",
+            description = "Confirms your email")
     @RequestMapping(
             value = "/confirmation",
             method = RequestMethod.GET,
@@ -36,6 +45,10 @@ public class UserController {
         return userService.confirmUserAccount(token);
     }
 
+
+    @Operation(
+            summary = "Login",
+            description = "Login")
     @RequestMapping(
             value = "/login",
             method = RequestMethod.POST,
@@ -45,6 +58,9 @@ public class UserController {
         return userService.login(user);
     }
 
+    @Operation(
+            summary = "Find all users",
+            description = "Finds all users")
     @RequestMapping(
             method = RequestMethod.GET,
             produces = {APPLICATION_JSON_VALUE})
@@ -52,6 +68,9 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @Operation(
+            summary = "Find user by id",
+            description = "Finds the only user with the given id, if exists")
     @RequestMapping(
             value = "/{userId}",
             method = RequestMethod.GET,

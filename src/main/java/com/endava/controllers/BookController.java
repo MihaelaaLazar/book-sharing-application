@@ -2,6 +2,9 @@ package com.endava.controllers;
 
 import com.endava.models.BookDto;
 import com.endava.services.BookService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,17 +17,24 @@ import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/books")
+@Tag(name = "2. Book", description = "Book API")
 public class BookController {
 
     @Autowired
     private BookService bookService;
 
+    @Operation(
+            summary = "Find all books",
+            description = "Finds all books")
     @RequestMapping(
             method = RequestMethod.GET)
     public List<BookDto> getAllBooks() {
         return bookService.getAllBooks();
     }
 
+    @Operation(
+            summary = "As a user I can create a book",
+            description = "Creates a book with user's id")
     @RequestMapping(
             method = RequestMethod.POST,
             value = "/{userId}/create")
@@ -32,6 +42,9 @@ public class BookController {
         return bookService.createBook(userId, book);
     }
 
+    @Operation(
+            summary = "Find books by user id",
+            description = "Finds books by user id")
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/{userId}")
@@ -39,6 +52,13 @@ public class BookController {
         return bookService.getBooksByUserId(userId);
     }
 
+    @Operation(
+            summary = "Find book by title or author",
+            description = "Finds book by title or author",
+            parameters = {
+                    @Parameter(name = "title", description = "Book's title"),
+                    @Parameter(name = "author", description = "Book's author")
+            })
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/search")

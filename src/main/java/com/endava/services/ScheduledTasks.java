@@ -45,8 +45,8 @@ public class ScheduledTasks {
         log.info("Update rented books task ran at {}", dateFormat.format(new Date()));
     }
 
-    //1 minute just for testing purposes
-    @Scheduled(fixedRate = 65000)
+    //2 minutes just for testing purposes
+    @Scheduled(fixedRate = 120000)
     public void assignTheBookToTheUser() {
         List<WaitingListDto> usersInWaitingList = waitingListRepo.findAll();
         for (WaitingListDto _usersInWaitingList : usersInWaitingList) {

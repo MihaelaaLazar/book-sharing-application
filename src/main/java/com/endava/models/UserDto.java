@@ -1,33 +1,41 @@
 package com.endava.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-public class UserDto implements UserDetails {
+public class UserDto  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
+    @Schema(hidden = true)
     private UUID userId;
     @Column(name = "first_name")
+    @Schema(description = "First Name" ,required = true, example = "John")
     private String firstName;
     @Column(name = "last_name")
+    @Schema(description = "Last Name" ,required = true, example = "Doe")
     private String lastName;
     @Column(name = "username")
+    @Schema(description = "Username" ,required = true, example = "johndoe")
     private String username;
     @Column(name = "email")
+    @Schema(description = "Email" ,required = true, example = "johndoe@gmail.com")
     private String email;
     @Column(name = "password")
+    @Schema(description = "Password" ,required = true)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+    @Schema(hidden = true)
     private boolean verified;
+
+    @Schema(hidden = true)
+    private String token;
 
     public String getToken() {
         return token;
@@ -37,7 +45,6 @@ public class UserDto implements UserDetails {
         this.token = token;
     }
 
-    private String token;
 
 
     public UserDto(UUID userId, String firstName, String lastName, String username, String email, String password) {
@@ -84,25 +91,6 @@ public class UserDto implements UserDetails {
         return username;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -115,12 +103,6 @@ public class UserDto implements UserDetails {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
     public String getPassword() {
         return password;
     }

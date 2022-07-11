@@ -2,9 +2,11 @@ package com.endava.utils;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.Period;
 
+@Schema(description = "Default period for extended time", example = "ONE_WEEK | TWO_WEEKS")
 public enum DefaultPeriodsForExtendedTime {
 
     ONE_WEEK("ONE_WEEK", Period.ofDays(7)),

@@ -9,6 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface WaitingListRepo extends CrudRepository<WaitingListDto, UUID> {
-
     List<WaitingListDto> findAll();
 }
