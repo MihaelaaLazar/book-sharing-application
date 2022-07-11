@@ -2,8 +2,10 @@ package com.endava.controllers;
 
 import com.endava.models.UserDto;
 import com.endava.services.UserService;
+import com.fasterxml.jackson.databind.util.BeanUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +37,7 @@ public class UserController {
     }
 
     @Operation(
-            summary="Confirm your email",
+            summary = "Confirm your email",
             description = "Confirms your email")
     @RequestMapping(
             value = "/confirmation",
@@ -77,5 +79,19 @@ public class UserController {
             produces = {APPLICATION_JSON_VALUE})
     public UserDto getUserByUserId(@PathVariable("userId") UUID userId) {
         return userService.getUserByUserId(userId);
+    }
+
+
+    @Operation(
+            summary = "Update user",
+            description = "Updates the user with the given id")
+    @RequestMapping(
+            value = "/{userId}",
+            method = RequestMethod.PUT,
+            consumes = {APPLICATION_JSON_VALUE},
+            produces = {APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> updateUser(@PathVariable("userId") UUID userId, @RequestBody UserDto user) {
+        return userService.updateUser(userId, user);
+
     }
 }

@@ -5,6 +5,7 @@ import com.endava.models.UserDto;
 import com.endava.repositories.UserRepo;
 import com.endava.utils.JwtTokenUtil;
 import com.endava.validation.EmailValidation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -73,6 +74,15 @@ public class UserService {
                     .body("Unauthorized");
         }
 
+    }
+    public ResponseEntity<?> updateUser(UUID userId, UserDto userDto){
+        UserDto existingUser = userRepo.findByUserId(userId);
+        if(existingUser != null){
+            BeanUtils.copyProperties(userDto, existingUser, "userId", "email", "token", "password", "verified");
+            userRepo.save(existingUser);
+            return ResponseEntity.ok(existingUser);
+        }
+        return ResponseEntity.badRequest().body("User not found");
     }
 
     public List<UserDto> getAllUsers() {

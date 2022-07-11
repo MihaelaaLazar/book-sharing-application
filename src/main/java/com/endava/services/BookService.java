@@ -63,4 +63,22 @@ public class BookService {
         return Stream.concat(availableBooks, rentedBooks);
 
     }
+
+    public ResponseEntity<?> updateBook(UUID bookId, BookDto book) {
+        BookDto bookDto = bookRepo.findByBookId(bookId);
+        if (bookDto == null) {
+            return
+                    ResponseEntity
+                            .status(404)
+                            .body("Book not found.");
+        }
+        bookDto.setTitle(book.getTitle());
+        bookDto.setAuthor(book.getAuthor());
+        bookDto.setDescription(book.getDescription());
+        bookDto.setDateOfPublication(book.getDateOfPublication());
+        bookRepo.save(bookDto);
+        return ResponseEntity
+                .status(201)
+                .body("Book updated.");
+    }
 }

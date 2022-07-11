@@ -66,4 +66,12 @@ public class BookController {
         return bookService.getBooksByTitleOrAuthor(title, author);
     }
 
+    @Operation(
+            summary = "Update book",
+            description = "Updates book")
+    @RequestMapping(method = RequestMethod.PUT, value = "/{bookId}/update")
+    public ResponseEntity<?> updateBook(@PathVariable UUID bookId, @RequestBody BookDto book) {
+        return bookService.updateBook(bookId, book);
+    }
+
 }
