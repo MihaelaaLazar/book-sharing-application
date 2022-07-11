@@ -12,7 +12,6 @@ import static com.endava.utils.Constants.SECRET_KEY;
 
 public class JwtTokenUtil implements Serializable {
 
-
     public static String generateAccessToken(String username) {
         return  Jwts.builder()
                 .setSubject(username)

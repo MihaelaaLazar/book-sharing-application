@@ -21,7 +21,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
     @Operation(
             summary = "Create user",
             description = "Adds a new user")

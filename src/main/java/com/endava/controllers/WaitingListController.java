@@ -20,7 +20,6 @@ public class WaitingListController {
     @Autowired
     private WaitingListService waitingListService;
 
-
     @Operation(
             summary = "Add a user on the waiting list if the book is not available with his id and book id",
             description = "Adds a user on the waiting list if the book is not available"

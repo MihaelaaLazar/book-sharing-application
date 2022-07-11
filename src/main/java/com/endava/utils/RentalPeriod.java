@@ -8,7 +8,6 @@ import java.time.Period;
 
 @Schema(description = "Period for borrowed a book", example = "ONE_WEEK | TWO_WEEKS | THREE_WEEKS | ONE_MONTH | TWO_MONTHS | THREE_MONTHS")
 public enum RentalPeriod {
-
     ONE_WEEK("ONE_WEEK", Period.ofDays(7)),
     TWO_WEEKS("TWO_WEEKS", Period.ofDays(14)),
     THREE_WEEKS("THREE_WEEKS", Period.ofDays(21)),

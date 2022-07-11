@@ -62,7 +62,9 @@ public class BookController {
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/search")
-    public Stream<?> getBooksByTitleOrAuthor(@RequestParam("title") Optional<String> title, @RequestParam("author") Optional<String> author) {
+    public Stream<?> getBooksByTitleOrAuthor(
+            @RequestParam("title") Optional<String> title,
+            @RequestParam("author") Optional<String> author) {
         return bookService.getBooksByTitleOrAuthor(title, author);
     }
 

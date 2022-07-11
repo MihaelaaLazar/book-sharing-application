@@ -41,7 +41,9 @@ public class RentedBooksController {
             value = "/{rentedBookId}",
             method = RequestMethod.PUT,
             produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> extendTimeForBook(@PathVariable("rentedBookId") UUID rentedBookId, @RequestBody DefaultPeriodsForExtendedTime body) {
+    public ResponseEntity<?> extendTimeForBook(
+            @PathVariable("rentedBookId") UUID rentedBookId,
+            @RequestBody DefaultPeriodsForExtendedTime body) {
         return rentedBooksService.extendTimeForBook(rentedBookId, body);
     }
 
