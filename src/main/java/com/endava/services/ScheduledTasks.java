@@ -32,7 +32,7 @@ public class ScheduledTasks {
     private static final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
 
     //1 minute just for testing purposes
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(cron = "0 0 0 * * *")
     public void deleteTheBookFromTheRentedBooks() {
         List<RentedBooksDto> rentedBooksDtoList = rentedBooksRepo.findAll();
         for (RentedBooksDto rentedBooksDto : rentedBooksDtoList) {
@@ -44,7 +44,7 @@ public class ScheduledTasks {
         log.info("Update rented books task ran at {}", DATE_FORMAT.format(new Date()));
     }
 
-    @Scheduled(fixedRate = 65000)
+    @Scheduled(cron = "0 0 0 * * *")
     public void assignTheBookToTheUser() {
         List<WaitingListDto> usersInWaitingList = waitingListRepo.findAll();
         for (WaitingListDto _usersInWaitingList : usersInWaitingList) {
