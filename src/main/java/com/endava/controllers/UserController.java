@@ -16,6 +16,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/api/users")
 @Tag(name = "1. User", description = "User API")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     @Autowired
@@ -89,5 +90,12 @@ public class UserController {
     public ResponseEntity<?> updateUser(@PathVariable("userId") UUID userId, @RequestBody UserDto user) {
         return userService.updateUser(userId, user);
 
+    }
+
+    @Operation(summary = "Verify token for user", description = "Verifies the token for the user")
+    @RequestMapping(value = "/verify/{token}",  method = RequestMethod.GET,
+            headers = "Accept=application/json")
+    public ResponseEntity<?> verifyToken(@PathVariable String token) {
+        return userService.verifyToken(token);
     }
 }

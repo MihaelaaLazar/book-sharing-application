@@ -45,7 +45,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable() // disable csrf for now, but it should be enabled because it protects from attacks
                 .authorizeRequests().antMatchers("/api/users/register").permitAll()
                 .and()
+                .authorizeRequests().antMatchers("/api/users/confirm?**").permitAll()
+                .and()
                 .authorizeRequests().antMatchers("/api/users/login").permitAll()
+                .and()
+                .authorizeRequests().antMatchers("/api/users/verify/**").permitAll()
                 .and()
                 .authorizeRequests().antMatchers(
                         "/swagger-ui/index.html/**",

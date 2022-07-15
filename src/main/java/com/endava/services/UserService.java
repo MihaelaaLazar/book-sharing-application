@@ -4,6 +4,7 @@ import com.endava.config.PasswordConfig;
 import com.endava.models.UserDto;
 import com.endava.repositories.UserRepo;
 import com.endava.validation.EmailValidation;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.json.JSONObject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,28 +79,36 @@ public class UserService {
     }
 
     public ResponseEntity<?> login(UserDto userDto) {
-        UserDto _user = userRepo.findByUsername(userDto.getUsername());
-        String encodedPassword = _user.getPassword();
-        if (passwordConfig.matches(userDto.getPassword(), encodedPassword)) {
-            try {
-                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword()));
-            } catch (BadCredentialsException e) {
+        try {
+            UserDto _user = userRepo.findByUsername(userDto.getUsername());
+            String encodedPassword = _user.getPassword();
+            if (passwordConfig.matches(userDto.getPassword(), encodedPassword)) {
+                try {
+                    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword()));
+                } catch (BadCredentialsException e) {
+                    return ResponseEntity
+                            .status(400)
+                            .body("Invalid username or password");
+                }
+                final UserDetails userDetails = userDtoDetailsService.loadUserByUsername(userDto.getUsername());
+                JSONObject jsonObject = new JSONObject();
+                final String token = jwtUtilService.generateToken(userDetails.getUsername());
+                userDto.setToken(token);
+                jsonObject.put("token", token);
+                jsonObject.put("name", _user.getUsername());
+                jsonObject.put("userId", _user.getUserId());
                 return ResponseEntity
-                        .status(400)
-                        .body("Invalid username or password");
+                        .status(200)
+                        .body(jsonObject.toString());
+            } else {
+                return ResponseEntity
+                        .status(401)
+                        .body("Unauthorized");
             }
-            final UserDetails userDetails = userDtoDetailsService.loadUserByUsername(userDto.getUsername());
-            JSONObject jsonObject = new JSONObject();
-            final String token = jwtUtilService.generateToken(userDetails.getUsername());
-            userDto.setToken(token);
-            jsonObject.put("token", token);
+        } catch (Exception e) {
             return ResponseEntity
-                    .status(200)
-                    .body(jsonObject.toString());
-        } else {
-            return ResponseEntity
-                    .status(401)
-                    .body("Unauthorized");
+                    .status(400)
+                    .body("Something went wrong");
         }
     }
 
@@ -112,7 +121,7 @@ public class UserService {
                     .status(200)
                     .body(existingUser);
         }
-        return ResponseEntity.badRequest().body("User not found");
+        return ResponseEntity.status(400).body("User not found");
     }
 
     public List<UserDto> getAllUsers() {
@@ -121,6 +130,33 @@ public class UserService {
 
     public UserDto getUserByUserId(UUID userId) {
         return userRepo.findByUserId(userId);
+    }
+
+    public ResponseEntity<?> verifyToken(String token) {
+        try {
+            if (jwtUtilService.isTokenExpired(token) == true) {
+                return ResponseEntity
+                        .status(401)
+                        .body("Token expired");
+            } else {
+                String username = jwtUtilService.extractUsername(token);
+                UserDto user = userRepo.findByUsername(username);
+                if (user != null) {
+                    return ResponseEntity
+                            .status(200)
+                            .body(user);
+                } else {
+                    return ResponseEntity
+                            .status(404)
+                            .body("User not found");
+                }
+            }
+        } catch (ExpiredJwtException e) {
+            final String expiredMsg = e.getMessage();
+            return ResponseEntity
+                    .status(401)
+                    .body(expiredMsg);
+        }
     }
 
 }

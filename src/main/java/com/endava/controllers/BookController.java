@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("/api/books")
 @Tag(name = "2. Book", description = "Book API")
+@CrossOrigin(origins = "http://localhost:3000")
 public class BookController {
 
     @Autowired

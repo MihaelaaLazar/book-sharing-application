@@ -15,6 +15,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/booksForRent")
 @Tag(name = "3. BooksForRent", description = "BooksForRent API")
+@CrossOrigin(origins = "http://localhost:3000")
 public class BooksForRentController {
 
     @Autowired

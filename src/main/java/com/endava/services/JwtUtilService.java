@@ -33,7 +33,7 @@ public class JwtUtilService {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
 
-    private Boolean isTokenExpired(String token) {
+    public Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
@@ -50,7 +50,7 @@ public class JwtUtilService {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        String username = extractUsername(token);
+        return (userDetails.getUsername().equals(username) && !isTokenExpired(token));
     }
 }
