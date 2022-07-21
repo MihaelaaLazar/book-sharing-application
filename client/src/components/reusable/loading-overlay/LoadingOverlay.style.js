@@ -14,5 +14,7 @@ export const LoadingOverlayWrapper = styled.div`
   #loading-overlay {
     max-width: 12rem;
     max-height: 12rem;
+    overflow: hidden;
+
   }
 `;

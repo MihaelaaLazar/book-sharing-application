@@ -5,7 +5,6 @@ import com.endava.models.UserDto;
 import com.endava.repositories.UserRepo;
 import com.endava.validation.EmailValidation;
 import io.jsonwebtoken.ExpiredJwtException;
-import org.json.JSONObject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -91,15 +90,11 @@ public class UserService {
                             .body("Invalid username or password");
                 }
                 final UserDetails userDetails = userDtoDetailsService.loadUserByUsername(userDto.getUsername());
-                JSONObject jsonObject = new JSONObject();
                 final String token = jwtUtilService.generateToken(userDetails.getUsername());
-                userDto.setToken(token);
-                jsonObject.put("token", token);
-                jsonObject.put("name", _user.getUsername());
-                jsonObject.put("userId", _user.getUserId());
+                _user.setToken(token);
                 return ResponseEntity
                         .status(200)
-                        .body(jsonObject.toString());
+                        .body(_user);
             } else {
                 return ResponseEntity
                         .status(401)

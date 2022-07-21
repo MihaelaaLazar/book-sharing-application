@@ -1,13 +1,17 @@
 package com.endava.services;
 
+import com.endava.cloudinary.CloudinaryService;
 import com.endava.models.BookDto;
 import com.endava.models.BooksForRentDto;
 import com.endava.models.BooksRefDto;
 import com.endava.repositories.*;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,25 +33,30 @@ public class BookService {
     @Autowired
     private RentedBooksRepo rentedBooksRepo;
 
+    @Autowired
+    private CloudinaryService cloudinaryService;
+
 
     public List<BookDto> getAllBooks() {
         return bookRepo.findAll();
     }
 
-    public ResponseEntity<?> createBook(UUID userId, BookDto book) {
-        if(bookRepo.findByTitle(book.getTitle()).isPresent()) {
+    public ResponseEntity<?> createBook(UUID userId, BookDto book, MultipartFile file) {
+        if (bookRepo.findByTitle(book.getTitle()).isPresent()) {
             return ResponseEntity
                     .status(400)
                     .body("Book already exists");
+        } else {
+            String url = cloudinaryService.uploadFile(file);
+            book.setImageUrl(url);
+            bookRepo.save(book);
+            BooksRefDto booksRefDto = new BooksRefDto(null, userId, book.getBookId());
+            bookRefRepo.save(booksRefDto);
+            booksForRentRepo.save(new BooksForRentDto(null, booksRefDto));
+            return ResponseEntity
+                    .status(201)
+                    .body("Book created.");
         }
-        bookRepo.save(book);
-        BooksRefDto booksRefDto = new BooksRefDto(null, userId, book.getBookId());
-        bookRefRepo.save(booksRefDto);
-        booksForRentRepo.save(new BooksForRentDto(null, booksRefDto));
-        return ResponseEntity
-                .status(201)
-                .body("Book created.");
-
     }
 
     public Stream<Object> getBooksByUserId(UUID userId) {
@@ -86,5 +95,16 @@ public class BookService {
         return ResponseEntity
                 .status(201)
                 .body("Book updated.");
+    }
+
+    public ResponseEntity<?> getBooksWithPagination(int page, int item) {
+        JSONObject responseBody = new JSONObject();
+        long count = bookRepo.countByBookId();
+        Page<BookDto> books = bookRepo.findAll(PageRequest.of(page, item));
+        responseBody.put("totalCount", count);
+        responseBody.put("books", books.getContent());
+        return ResponseEntity
+                .status(200)
+                .body(responseBody.toString());
     }
 }

@@ -2,11 +2,6 @@ package com.endava.security;
 
 import com.endava.filters.JwtRequestFilter;
 import com.endava.services.UserDtoDetailsService;
-import io.swagger.v3.oas.models.Components;
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.security.SecurityRequirement;
-import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,9 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.util.Arrays;
-
-import static com.endava.utils.Constants.*;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -68,14 +60,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
-    @Bean
-    public OpenAPI customOpenAPI() {
-        return new OpenAPI()
-                .components(new Components().addSecuritySchemes("bearer-jwt",
-                        new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme(SECURITY_SCHEME).bearerFormat("JWT")
-                                .in(SecurityScheme.In.HEADER).name(ACCESS_TOKEN_HEADER)))
-                .info(new Info().title("Book Sharing Application API").version("snapshot"))
-                .addSecurityItem(
-                        new SecurityRequirement().addList("bearer-jwt", Arrays.asList("read", "write")));
-    }
 }

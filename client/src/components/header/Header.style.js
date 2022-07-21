@@ -29,7 +29,7 @@ export const UserIconWrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
 `
-export const UserIcon = styled(FontAwesomeIcon)`
+export const IconWrapper = styled(FontAwesomeIcon)`
   font-size: 2rem;
   color: #de411b;
   padding: 1rem 1rem;
@@ -41,6 +41,7 @@ export const Logo = styled.img`
   left: 5rem;
   top: 1rem;
   max-width: 5rem;
+  cursor: pointer;
 `;
 
 export const ButtonWrapper = styled.button`
@@ -52,6 +53,7 @@ export const ButtonWrapper = styled.button`
   border: none;
   cursor: pointer;
   font-size: 1.5rem;
+  justify-content: center;
 `
 
 

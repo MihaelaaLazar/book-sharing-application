@@ -24,6 +24,7 @@ export const AnimationWrapper = styled.div`
   
   #book-lover {
     max-height: 100%;
+    overflow: hidden;
   }
 `;
 
@@ -38,7 +39,7 @@ export const DescriptionWrapper = styled.div`
     font-size:26px;
   }
 `
-export const RegisterButton = styled.button`
+export const ButtonWrapper = styled.button`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -51,5 +52,5 @@ export const RegisterButton = styled.button`
   font-size: 20px;
   color:#f1f1f1;
   cursor:pointer;
-  
 `
+

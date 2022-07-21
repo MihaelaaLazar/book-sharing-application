@@ -1,12 +1,17 @@
 import useForm, {isRequired} from "../../hooks/useForm";
-import bcrypt from "bcryptjs";
 import {Fragment, useState} from "react";
 import {LoginForm, LoginWrapper} from "./Login.style";
 import LoadingOverlay from "../reusable/loading-overlay/LoadingOverlay";
 import useMessage from "../../hooks/useMessage";
+import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import UserApi from "../reusable/apis/userApi";
+import {updateUser} from "../../reducers/user.reducer";
 
 
 const Login = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const initialLoginState = {
         username: '',
@@ -35,23 +40,13 @@ const Login = () => {
 
     const handleLogin = () => {
         setLoading(true);
-
-        fetch('http://localhost:8080/api/users/login', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(values),
-        })
-            .then(res => {
-                return res.json()
-            })
+        UserApi.login(values)
             .then(data => {
-                bcrypt.hashSync(values.password, 10);
                 localStorage.setItem("token", data.token);
                 setLoading(false);
                 setMessageSuccess("Login successful");
+                navigate("/dashboard")
+                dispatch(updateUser(data))
                 resetForm();
             })
             .catch(err => {

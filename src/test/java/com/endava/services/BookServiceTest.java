@@ -80,16 +80,16 @@ public class BookServiceTest {
         assertThat(books).isNotNull();
     }
 
-    @Test
-    @Ignore
-    public void shouldCreateBook(){
-        when(bookRepo.save(BOOK_DTO)).thenReturn(BOOK_DTO);
-        when(bookRefRepo.save(new BooksRefDto(null, BOOK_ID, BOOK_ID))).thenReturn(new BooksRefDto(null, BOOK_ID, BOOK_ID));
-        when(booksForRentRepo.save(new BooksForRentDto(null, new BooksRefDto(null, BOOK_ID, BOOK_ID)))).thenReturn(new BooksForRentDto(null, new BooksRefDto(null, BOOK_ID, BOOK_ID)));
-
-        bookService.createBook(BOOK_ID, BOOK_DTO);
-
-        assertThat(BOOK_DTO).isNotNull();
-    }
+//    @Test
+//    @Ignore
+//    public void shouldCreateBook(){
+//        when(bookRepo.save(BOOK_DTO)).thenReturn(BOOK_DTO);
+//        when(bookRefRepo.save(new BooksRefDto(null, BOOK_ID, BOOK_ID))).thenReturn(new BooksRefDto(null, BOOK_ID, BOOK_ID));
+//        when(booksForRentRepo.save(new BooksForRentDto(null, new BooksRefDto(null, BOOK_ID, BOOK_ID)))).thenReturn(new BooksForRentDto(null, new BooksRefDto(null, BOOK_ID, BOOK_ID)));
+//
+//        bookService.createBook(BOOK_ID, BOOK_DTO);
+//
+//        assertThat(BOOK_DTO).isNotNull();
+//    }
 
 }

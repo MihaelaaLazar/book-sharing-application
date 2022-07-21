@@ -32,6 +32,18 @@ public class BookDto {
     @Schema(description = "Description" ,required = true, example = "The Lord of the Rings is the saga of a group of sometimes reluctant heroes who set forth to save their world from consummate evil. Its many worlds and creatures were drawn from Tolkien's extensive knowledge of philology and folklore.")
     private String description;
 
+    @Column(name = "image_url")
+    @Schema(hidden = true)
+    private String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public BookDto(UUID bookId) {
         this.bookId = bookId;
     }

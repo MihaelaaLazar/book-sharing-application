@@ -6,8 +6,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,12 +38,19 @@ public class BookController {
 
     @Operation(
             summary = "As a user I can create a book",
-            description = "Creates a book with user's id")
+            description = "Creates a book with user's id"
+    )
     @RequestMapping(
             method = RequestMethod.POST,
-            value = "/{userId}/create")
-    public ResponseEntity<?> createBookWithUserId(@PathVariable UUID userId, @RequestBody BookDto book) {
-        return bookService.createBook(userId, book);
+            value = "/{userId}/create",
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE}
+    )
+    public ResponseEntity<?> createBookWithUserId(
+            @PathVariable UUID userId,
+            @RequestPart("body")  BookDto book,
+            @RequestPart("file")  MultipartFile file
+    ) {
+        return bookService.createBook(userId, book, file);
     }
 
     @Operation(
@@ -77,4 +87,12 @@ public class BookController {
         return bookService.updateBook(bookId, book);
     }
 
+    @Operation(
+            summary = "Get all books with pagination",
+            description = "Gets all books with pagination"
+    )
+    @RequestMapping(method = RequestMethod.GET, value = "/{page}/{item}")
+    public ResponseEntity<?> getBooksWithPagination(@PathVariable int page, @PathVariable int item) {
+        return bookService.getBooksWithPagination(page, item);
+    }
 }

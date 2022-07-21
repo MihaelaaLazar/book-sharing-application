@@ -5,7 +5,9 @@ const GlobalCSS = createGlobalStyle`
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Comic Neue', cursive, sans-serif;
+    font-family: 'Lato', sans-serif;
+    overflow-x: hidden;
+
   }
 
   *:focus {

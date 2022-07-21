@@ -16,10 +16,15 @@ export const LabelIconWrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap:1px
+  gap:1px;
+  font-weight: 400;
 `
 export const LabelIcon = styled(FontAwesomeIcon)`
   font-size: 2rem;
   color: #de411b;
+  padding: 1rem 1rem;
+`
+export const ImageIcon = styled.img`
+  max-width: 4rem;
   padding: 1rem 1rem;
 `
