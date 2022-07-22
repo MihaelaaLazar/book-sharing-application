@@ -7,6 +7,7 @@ import com.endava.services.BooksForRentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,6 +39,16 @@ public class BooksForRentController {
             value = "/{userId}/{bookRefId}/")
     public void rentBook(@PathVariable UUID userId, @PathVariable UUID bookRefId, @RequestBody RentalPeriod body) {
         booksForRentService.rentBook(userId, bookRefId, body);
+    }
+
+    @Operation(
+            summary = "Get all available books with pagination",
+            description = "Get all available books with pagination")
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/{page}/{pageSize}")
+    public ResponseEntity<?> getAvailableBookWithPagination(@PathVariable int page, @PathVariable int pageSize) {
+        return booksForRentService.getAvailableBookWithPagination(page, pageSize);
     }
 
 

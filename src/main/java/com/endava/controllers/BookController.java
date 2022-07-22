@@ -91,8 +91,17 @@ public class BookController {
             summary = "Get all books with pagination",
             description = "Gets all books with pagination"
     )
-    @RequestMapping(method = RequestMethod.GET, value = "/{page}/{item}")
-    public ResponseEntity<?> getBooksWithPagination(@PathVariable int page, @PathVariable int item) {
-        return bookService.getBooksWithPagination(page, item);
+    @RequestMapping(method = RequestMethod.GET, value = "/{page}/{pageSize}")
+    public ResponseEntity<?> getBooksWithPagination(@PathVariable int page, @PathVariable int pageSize) {
+        return bookService.getBooksWithPagination(page, pageSize);
+    }
+
+    @Operation(
+            summary = "Get all books with userId and pagination",
+            description = "Gets all books with userId and pagination"
+    )
+    @RequestMapping(method = RequestMethod.GET, value="/{userId}/{page}/{pageSize}")
+    public ResponseEntity<?> getBooksWithUserIdAndPagination(@PathVariable UUID userId, @PathVariable int page, @PathVariable int pageSize){
+        return bookService.getBooksWithUserIdAndPagination(userId, page, pageSize);
     }
 }

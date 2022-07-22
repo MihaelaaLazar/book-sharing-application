@@ -5,31 +5,68 @@ export const BookListWrapper = styled.div`
   flex-direction: column;
   width: 100%;
 `
-export const BookListItem = styled.div`
+export const UserBookInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  width: 100%;
+`;
+export const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap:0.5rem;
-  padding: 1rem;
   width: 100%;
-  height: 6rem;
-  outline: 1px solid #de411b;
+  justify-content: flex-start;
+  padding: 2rem 1rem;
+  border: 1px solid #dad2d2;
+`;
+export const CardInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  font-size: 15px;
+  color: #183153;
 
-  
-  .book-label{
-    font-size: 20px;
+  & > img {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    max-width: 25rem;
+    max-height: 25rem;
+    margin-bottom: 1rem;
+
+  }
+
+  table {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  table,
+  tbody,
+  tr{
+    width: 100%;
+  }
+
+  table tr td:first-child {
+    color: #183153;
     font-weight: 600;
+    width: 50%;
   }
-  .book-details{
-    color: #1e3a61;
-    font-size: 20px;
+
+  table tr td:last-child {
+    color: #183153;
+    text-align: left;
+    width: 50%;
   }
-`
+
+`;
 export const AddBookButton = styled.button`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-top:1rem;
   width: 10%;
   background-color: #de411b;
   color: #fff;

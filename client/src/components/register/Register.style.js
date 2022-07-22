@@ -19,7 +19,7 @@ export const FormWrapper = styled.form`
   box-shadow: inset 0 0 0 2px #eff4f4;
 
 
-  & > input {
+  & > input, textarea {
     display: flex;
     flex-direction: column;
     background-color: #ffffff;
@@ -34,28 +34,34 @@ export const FormWrapper = styled.form`
     outline-color: rgba(118, 137, 230, 0.5);
   }
 
+  & > textarea {
+    min-height: 100px;
+    resize: none;
+  }
+
   & > label {
     display: flex;
     flex-direction: column;
     align-self: flex-start;
-    padding:0 1rem;
+    padding: 0 1rem;
   }
 
   & > button {
     display: flex;
     flex-direction: row;
-    border:none;
+    border: none;
     font-size: 20px;
-    color:#ffffff;
+    color: #ffffff;
     background-color: #de411b;
-    cursor:pointer;
-    padding:0.5rem 2rem;
+    cursor: pointer;
+    padding: 0.5rem 2rem;
     border-radius: 5px;
-    margin-top:1rem;
-    
+    margin-top: 1rem;
+
   }
+
   & > button:disabled,
-  & > button[disabled]{
+  & > button[disabled] {
     background-color: #cccccc;
     color: #666666;
   }
@@ -63,9 +69,11 @@ export const FormWrapper = styled.form`
   .message-success {
     color: #64b450;
   }
+
   .message-error {
     color: #e04d4d;
   }
+
   .message-warning {
     color: #f9a825;
   }

@@ -5,7 +5,10 @@ import com.endava.utils.RentalPeriod;
 import com.endava.models.RentedBooksDto;
 import com.endava.repositories.BooksForRentRepo;
 import com.endava.repositories.RentedBooksRepo;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -51,5 +54,15 @@ public class BooksForRentService {
                     .status(200)
                     .body("Book rented");
         }
+    }
+    public ResponseEntity<?> getAvailableBookWithPagination(int page, int pageSize) {
+        JSONObject responseBody = new JSONObject();
+        long count = booksForRentRepo.countByBookForRendId();
+        Page<BooksForRentDto> availableBooks = booksForRentRepo.findAll(PageRequest.of(page, pageSize));
+        responseBody.put("totalCount", count);
+        responseBody.put("availableBook", availableBooks.getContent());
+        return ResponseEntity
+                .status(200)
+                .body(responseBody.toString());
     }
 }

@@ -11,9 +11,11 @@ import Login from "./components/login/Login";
 import {Provider} from "react-redux";
 import store from "./reducers/store";
 import UserPage from "./components/user-page/UserPage";
+import CreateBook from "./components/user-page/books/CreateBook";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-console.log(store)
+
+
 root.render(
     <Fragment>
         <GlobalCSS/>
@@ -25,6 +27,7 @@ root.render(
                     <Route path="/register" exact={true} element={<Register/>}/>
                     <Route path="/login" exact={true} element={<Login/>}/>
                     <Route path="/dashboard" exact={true} element={<UserPage/>}/>
+                    <Route path="/dashboard/create" exact={true} element={<CreateBook/>}/>
                 </Routes>
             </App>
         </Router>

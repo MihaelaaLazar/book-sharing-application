@@ -2,6 +2,7 @@ import styled from "styled-components";
 import ReactPaginate from "react-paginate";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
+
 export const BooksWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -13,7 +14,6 @@ export const ReactPaginateWrapper = styled(ReactPaginate)`
   width: 100%;
   justify-content: center;
   align-items: center;
-  position: absolute;
   bottom: 0;
 
   li {
@@ -33,6 +33,20 @@ export const ReactPaginateWrapper = styled(ReactPaginate)`
       background-color: #de411b;
       border-radius: 4px;
       color: #ffffff;
+
+      svg {
+        color: #ffffff;
+      }
+    }
+
+    a:focus {
+      background-color: #de411b;
+      border-radius: 4px;
+      color: #ffffff;
+
+      svg {
+        color: #ffffff;
+      }
     }
   }
 `
@@ -55,7 +69,7 @@ export const BookInfoWrapper = styled.div`
 `
 export const BookCardWrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   justify-content: flex-start;
   padding: 2rem 1rem;
@@ -67,26 +81,41 @@ export const BookInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  font-size: 18px;
+  font-size: 15px;
   color: #183153;
+
 
   & > img {
     display: flex;
     justify-content: center;
-    align-items: center;
-    width: 50%;
-    object-fit: contain;
-  }
-  div{
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-    letter-spacing: 1px;
-    white-space: pre;
+    align-self: center;
+    max-width: 25rem;
+    max-height: 25rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
   }
 
-  div span {
+  table {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  table,
+  tbody,
+  tr {
+    width: 100%;
+  }
+
+  table tr td:first-child {
     color: #183153;
     font-weight: 600;
+    width: 50%;
+  }
+
+  table tr td:last-child {
+    color: #183153;
+    text-align: left;
+    width: 50%;
   }
 `

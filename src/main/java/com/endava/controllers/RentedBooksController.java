@@ -16,6 +16,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/api/rentedBooks")
 @Tag(name = "4. RentedBooks", description = "RentedBooks API")
+@CrossOrigin(origins = "http://localhost:3000")
 public class RentedBooksController {
 
     @Autowired

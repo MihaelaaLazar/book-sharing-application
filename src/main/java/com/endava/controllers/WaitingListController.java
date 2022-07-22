@@ -15,6 +15,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/waiting")
 @Tag(name = "5. WaitingList", description = "WaitingList API")
+@CrossOrigin(origins = "http://localhost:3000")
 public class WaitingListController {
 
     @Autowired

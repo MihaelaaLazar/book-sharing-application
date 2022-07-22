@@ -97,11 +97,22 @@ public class BookService {
                 .body("Book updated.");
     }
 
-    public ResponseEntity<?> getBooksWithPagination(int page, int item) {
+    public ResponseEntity<?> getBooksWithPagination(int page, int pageSize) {
         JSONObject responseBody = new JSONObject();
         long count = bookRepo.countByBookId();
-        Page<BookDto> books = bookRepo.findAll(PageRequest.of(page, item));
+        Page<BookDto> books = bookRepo.findAll(PageRequest.of(page, pageSize));
         responseBody.put("totalCount", count);
+        responseBody.put("books", books.getContent());
+        return ResponseEntity
+                .status(200)
+                .body(responseBody.toString());
+    }
+
+    public ResponseEntity<?> getBooksWithUserIdAndPagination(UUID userId, int page, int pageSize) {
+        JSONObject responseBody = new JSONObject();
+        Page<BooksRefDto> booksDto = bookRefRepo.findAllByUserId(userId, PageRequest.of(page, pageSize));
+        Page<BookDto> books = booksDto.map(bookRefDto -> bookRepo.findByBookId(bookRefDto.getBook().getBookId()));
+        responseBody.put("totalCount", books.getTotalElements());
         responseBody.put("books", books.getContent());
         return ResponseEntity
                 .status(200)
