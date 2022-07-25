@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
 export const ModalWrapper = styled.div`
   position: fixed;
   top: 0;
@@ -18,7 +19,7 @@ export const CloseButton = styled(FontAwesomeIcon)`
   right: 4rem;
   font-size: 3rem;
   cursor: pointer;
-  color:#d3d3d3;
+  color: #d3d3d3;
 `
 export const ModalCard = styled.div`
   width: 70%;
@@ -56,7 +57,7 @@ export const BookTitle = styled.div`
   font-size: 34px;
   color: #1e3a61;
   font-weight: 600;
-  
+
 `;
 
 export const BookAuthor = styled.div`
@@ -89,12 +90,25 @@ export const BookDetails = styled.table`
 `;
 
 export const RentTheBookButton = styled.button`
-  background-color:#de411b;
+  background-color: #de411b;
   color: #fff;
   border: none;
   padding: 1rem 2rem;
   font-size: 18px;
   cursor: pointer;
-  margin-top: 1.2rem;
+  margin-top: 1rem;
   width: 40%;
 `;
+
+export const DropdownWrapper = styled.select`
+  width: 40%;
+  border: 1px solid var(--select-border);
+  border-radius: 0.25em;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1.1;
+  background-color: #fff;
+  background-image: linear-gradient(to top, #f9f9f9, #fff 55%);
+  
+`
