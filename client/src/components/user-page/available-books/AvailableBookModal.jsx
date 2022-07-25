@@ -6,11 +6,12 @@ import {
     ModalContent,
     ModalThumbnail,
     ModalWrapper, RentTheBookButton
-} from "./BookDetailsModal.style";
+} from "./ModalStyle.style";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useSelector} from "react-redux";
 import RentedBookApi from "../../reusable/apis/rentedBookApi";
 import {useState} from "react";
+import useMessage from "../../../hooks/useMessage";
 
 const RENTAL_PERIOD = {
     oneWeek: {
@@ -38,20 +39,31 @@ const RENTAL_PERIOD = {
         label: "Three months",
         value: "THREE_MONTHS"
     }
-
-
 }
-
-const BookDetailsModal = ({availableBook, onClose}) => {
+const AvailableBookModal = ({availableBook, onClose}) => {
 
     const bookRefData = availableBook.bookRef;
     const bookData = availableBook.bookRef.book;
     const userData = availableBook.bookRef.user;
     const loggedUser = useSelector((state) => state.user);
     const [rentalPeriod, setRentalPeriod] = useState();
+    const initialMessage = {
+        type: "",
+        message: ""
+    };
+    const {
+        message,
+        setMessageError,
+        setMessageSuccess,
+    } = useMessage(initialMessage);
+
 
     const handleRentBook = async () => {
         await RentedBookApi.rentBook(loggedUser.userId, bookRefData.bookRefId, rentalPeriod);
+        loggedUser.userId === bookRefData.user.userId
+            ? setMessageError("You cannot rent your own book")
+            : setMessageSuccess("Book rented successfully");
+
     }
     const handleChange = (e) => {
         setRentalPeriod(e.target.value);
@@ -83,9 +95,11 @@ const BookDetailsModal = ({availableBook, onClose}) => {
                         value={RENTAL_PERIOD[option].value}>{RENTAL_PERIOD[option].label}</option>)}
                 </DropdownWrapper>
                 <RentTheBookButton onClick={handleRentBook}>Rent the book</RentTheBookButton>
+                {message ? <p className={`message-${message.type}`}>{message.message}</p> : null}
+
             </ModalContent>
         </ModalCard>
     </ModalWrapper>
 }
 
-export default BookDetailsModal;
+export default AvailableBookModal;

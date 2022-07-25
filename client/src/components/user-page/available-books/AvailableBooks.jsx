@@ -13,7 +13,7 @@ import {
 import LoadingOverlay from "../../reusable/loading-overlay/LoadingOverlay";
 import {faChevronLeft, faChevronRight, faEllipsis} from "@fortawesome/free-solid-svg-icons";
 import useModal from "../../../hooks/useModal";
-import BookDetailsModal from "./BookDetailsModal";
+import AvailableBookModal from "./AvailableBookModal";
 
 const AvailableBooks = () => {
     const availableBooks = useSelector((state) => state.availableBooks);
@@ -50,7 +50,7 @@ const AvailableBooks = () => {
         dispatch(addAvailableBook(data.availableBook));
     };
     const {modal, setModalData} = useModal({
-        Component: BookDetailsModal
+        Component: AvailableBookModal
     });
 
 

@@ -48,5 +48,12 @@ export default {
         return fetch(`http://localhost:8080/api/booksForRent/${page}/${pageSize}`, {
             headers : headers
         });
+    },
+
+    getBookByBookId : async (bookId) => {
+        return fetch (`http://localhost:8080/api/books/bookData/${bookId}`,
+            {
+                headers: headers
+            });
     }
 }

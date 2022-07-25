@@ -4,6 +4,7 @@ import com.endava.cloudinary.CloudinaryService;
 import com.endava.models.BookDto;
 import com.endava.models.BooksForRentDto;
 import com.endava.models.BooksRefDto;
+import com.endava.models.RentedBooksDto;
 import com.endava.repositories.*;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
@@ -76,7 +79,6 @@ public class BookService {
                 .filter(rentedBook -> rentedBook.getReturningDate() != null);
 
         return Stream.concat(availableBooks, rentedBooks);
-
     }
 
     public ResponseEntity<?> updateBook(UUID bookId, BookDto book) {
@@ -101,8 +103,10 @@ public class BookService {
         JSONObject responseBody = new JSONObject();
         long count = bookRepo.countByBookId();
         Page<BookDto> books = bookRepo.findAll(PageRequest.of(page, pageSize));
+
         responseBody.put("totalCount", count);
         responseBody.put("books", books.getContent());
+
         return ResponseEntity
                 .status(200)
                 .body(responseBody.toString());
@@ -117,5 +121,15 @@ public class BookService {
         return ResponseEntity
                 .status(200)
                 .body(responseBody.toString());
+    }
+
+    public ResponseEntity<?> getBookByBookId(UUID bookId){
+        BookDto bookDto = bookRepo.findByBookId(bookId);
+        RentedBooksDto rentedBook = rentedBooksRepo.findOneBookByBookId(bookId);
+        BooksForRentDto booksForRentDto = booksForRentRepo.findByBookId(bookId);
+        return ResponseEntity
+                .status(200)
+                .body(Stream.of(bookDto, rentedBook, booksForRentDto).collect(Collectors.toList()));
+
     }
 }

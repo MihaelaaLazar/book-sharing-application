@@ -31,6 +31,13 @@ public class WaitingListService {
                     .status(400)
                     .body("User already in waiting list");
         }
+        if(rentedBooks.getBooksRefDto().getUser().getUserId().equals(userId) ||
+                rentedBooks.getUser().getUserId().equals(userId)) {
+            return ResponseEntity
+                    .status(409)
+                    .body("User not allowed to add to waiting list");
+        }
+
         waitingListRepo.save(new WaitingListDto(UUID.randomUUID(), userId, rentedBooks.getBooksRefDto().getBookRefId()));
         return ResponseEntity
                 .status(200)

@@ -17,6 +17,17 @@ const GlobalCSS = createGlobalStyle`
   html {
     width: 100%;
   }
+  .message-success {
+    color: #64b450;
+  }
+
+  .message-error {
+    color: #e04d4d;
+  }
+
+  .message-warning {
+    color: #f9a825;
+  }
 `;
 
 export default GlobalCSS;

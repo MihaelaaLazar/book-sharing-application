@@ -7,6 +7,9 @@ import {
 } from "./Book.style";
 import {faChevronRight, faChevronLeft, faEllipsis} from '@fortawesome/free-solid-svg-icons';
 import LoadingOverlay from "../../reusable/loading-overlay/LoadingOverlay";
+import useModal from "../../../hooks/useModal";
+import BookInformationModal from '../books/BookInformationModal';
+
 
 
 const Books = () => {
@@ -33,7 +36,8 @@ const Books = () => {
 
     const fetchBooks = async (currentPage, _items) => {
         const res = await BookApi.getAllBooksWithPagination(currentPage, pageSize);
-        const data = res.json();
+        const data = await res.json();
+        console.log(data)
         setLoading(false)
         return data;
     };
@@ -44,17 +48,21 @@ const Books = () => {
         setCurrentPageIndex(selected * pageSize);
         dispatch(addBook(data.books))
     };
+    const {modal, setModalData} = useModal({
+        Component: BookInformationModal
+    });
 
     return (
 
         <BooksWrapper>
+            {modal}
             {loading && <LoadingOverlay/>}
             {books && books.length ?
                 <BookInfoWrapper>
                     {books.map((book) => {
                         return (<BookCardWrapper key={book.bookId}>
                             <BookInfo>
-                                <img src={book.imageUrl} alt={"img"}/>
+                                <img onClick={() => setModalData({book})} src={book.imageUrl} alt={"img"}/>
                                 <table>
                                     <tbody>
                                     <tr>

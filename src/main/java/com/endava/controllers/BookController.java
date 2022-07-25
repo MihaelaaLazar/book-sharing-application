@@ -104,4 +104,13 @@ public class BookController {
     public ResponseEntity<?> getBooksWithUserIdAndPagination(@PathVariable UUID userId, @PathVariable int page, @PathVariable int pageSize){
         return bookService.getBooksWithUserIdAndPagination(userId, page, pageSize);
     }
+
+    @Operation(
+            summary = " Get book by bookId",
+            description = "Gets book by bookId"
+    )
+    @RequestMapping(method = RequestMethod.GET, value = "/bookData/{bookId}")
+    public ResponseEntity<?> getBookById(@PathVariable UUID bookId) {
+        return bookService.getBookByBookId(bookId);
+    }
 }

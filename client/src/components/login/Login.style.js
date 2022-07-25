@@ -61,18 +61,5 @@ export const LoginForm = styled.form`
     background-color: #cccccc;
     color: #666666;
   }
-
-  .message-success {
-    color: #64b450;
-  }
-
-  .message-error {
-    color: #e04d4d;
-  }
-
-  .message-warning {
-    color: #f9a825;
-  }
-
-
+  
 `;
