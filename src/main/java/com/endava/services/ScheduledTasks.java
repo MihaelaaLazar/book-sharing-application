@@ -31,7 +31,6 @@ public class ScheduledTasks {
 
     private static final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
 
-    //1 minute just for testing purposes
     @Scheduled(cron = "0 0 0 * * *")
     public void deleteTheBookFromTheRentedBooks() {
         List<RentedBooksDto> rentedBooksDtoList = rentedBooksRepo.findAll();

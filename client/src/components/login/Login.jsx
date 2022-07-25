@@ -45,7 +45,7 @@ const Login = () => {
                 localStorage.setItem("token", data.token);
                 setLoading(false);
                 setMessageSuccess("Login successful");
-                navigate("/dashboard")
+                navigate("/")
                 dispatch(updateUser(data))
                 resetForm();
             })
