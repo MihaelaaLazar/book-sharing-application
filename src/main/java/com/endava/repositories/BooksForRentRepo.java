@@ -18,6 +18,9 @@ public interface BooksForRentRepo extends CrudRepository<BooksForRentDto, UUID> 
 
     Page<BooksForRentDto> findAll(Pageable pageable);
 
+    @Query("SELECT b FROM BooksForRentDto b WHERE b.bookRef.user.userId = ?1 ")
+    List<BooksForRentDto> findAllByUserId(UUID userId);
+
     @Query("SELECT COUNT(b) FROM BooksForRentDto b")
     long countByBookForRendId();
 

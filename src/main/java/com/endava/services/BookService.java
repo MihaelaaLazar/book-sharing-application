@@ -8,15 +8,13 @@ import com.endava.models.RentedBooksDto;
 import com.endava.repositories.*;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.data.domain.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -114,16 +112,37 @@ public class BookService {
 
     public ResponseEntity<?> getBooksWithUserIdAndPagination(UUID userId, int page, int pageSize) {
         JSONObject responseBody = new JSONObject();
-        Page<BooksRefDto> booksDto = bookRefRepo.findAllByUserId(userId, PageRequest.of(page, pageSize));
-        Page<BookDto> books = booksDto.map(bookRefDto -> bookRepo.findByBookId(bookRefDto.getBook().getBookId()));
-        responseBody.put("totalCount", books.getTotalElements());
-        responseBody.put("books", books.getContent());
+
+        List<BooksRefDto> booksDto = bookRefRepo.findAllByUserId(userId);
+        Set<BookDto> books = booksDto.stream().map(bookRefDto ->
+                bookRepo.findByBookId(bookRefDto.getBook().getBookId())).collect(Collectors.toSet());
+
+        List<BooksForRentDto> booksForRentDto = booksForRentRepo.findAllByUserId(userId);
+        Set<BookDto> _booksForRent = booksForRentDto.stream().map(bookForRent ->
+                bookRepo.findByBookId(bookForRent.getBookRef().getBook().getBookId())).collect(Collectors.toSet());
+
+        List<RentedBooksDto> rentedBooks = rentedBooksRepo.findAllByUserId(userId);
+        Set<BookDto> _rentedBooks = rentedBooks.stream().map(rentedBooksDto ->
+                bookRepo.findByBookId(rentedBooksDto.getBooksRefDto().getBook().getBookId())).collect(Collectors.toSet());
+
+        Set<BookDto> allBooks = Stream.concat(books.stream(), Stream.concat(_booksForRent.stream(), _rentedBooks.stream()))
+                .collect(Collectors.toSet());
+
+        List<BookDto> booksList = new ArrayList<>(allBooks);
+        PagedListHolder<BookDto> pagedListHolder = new PagedListHolder<>(booksList);
+
+        long count = booksList.size();
+        pagedListHolder.setPageSize(pageSize);
+        pagedListHolder.setPage(page);
+
+        responseBody.put("books", pagedListHolder.getPageList());
+        responseBody.put("totalCount", count);
         return ResponseEntity
                 .status(200)
                 .body(responseBody.toString());
     }
 
-    public ResponseEntity<?> getBookByBookId(UUID bookId){
+    public ResponseEntity<?> getBookByBookId(UUID bookId) {
         BookDto bookDto = bookRepo.findByBookId(bookId);
         RentedBooksDto rentedBook = rentedBooksRepo.findOneBookByBookId(bookId);
         BooksForRentDto booksForRentDto = booksForRentRepo.findByBookId(bookId);

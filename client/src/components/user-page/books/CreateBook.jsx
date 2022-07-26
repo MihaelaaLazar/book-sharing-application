@@ -34,7 +34,6 @@ const CreateBook = () => {
 
     const handleCreateBook = async () => {
         setLoading(true);
-        console.log(file);
         BookApi.addBook(user.userId, values, file)
             .then((res) => {
                 if (res.status === 201) {

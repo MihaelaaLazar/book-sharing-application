@@ -117,7 +117,7 @@ export const DropdownWrapper = styled.select`
 
 `
 
-export const AddOnWaiting = styled.button`
+export const ModalButtonWrapper = styled.button`
   background-color: #de411b;
   color: #fff;
   border: none;
@@ -126,5 +126,5 @@ export const AddOnWaiting = styled.button`
   cursor: pointer;
   margin-top: 1rem;
   width: 60%;
-
 `
+

@@ -31,10 +31,10 @@ public class RentedBooksService {
         }
         for (RentedBooksDto rentedBook : rentedBooks) {
             JSONObject json = new JSONObject();
-            json.put("WhoBorrowed", rentedBook.getUser().getFirstName() + " " + rentedBook.getUser().getLastName());
-            json.put("BookName", rentedBook.getBooksRefDto().getBook().getTitle());
-            json.put("OwnerName", rentedBook.getBooksRefDto().getUser().getFirstName() + " " + rentedBook.getBooksRefDto().getUser().getLastName());
-            json.put("ReturningDate", rentedBook.getReturningDate());
+            json.put("whoBorrowed", rentedBook.getUser().getFirstName() + " " + rentedBook.getUser().getLastName());
+            json.put("bookName", rentedBook.getBooksRefDto().getBook().getTitle());
+            json.put("ownerName", rentedBook.getBooksRefDto().getUser().getFirstName() + " " + rentedBook.getBooksRefDto().getUser().getLastName());
+            json.put("returningDate", rentedBook.getReturningDate());
             jsonObject.add(json);
         }
         return ResponseEntity
@@ -48,11 +48,16 @@ public class RentedBooksService {
             return ResponseEntity
                     .status(404)
                     .body("Book not found");
+        } else if (rentedBook.isExtended()) {
+            return ResponseEntity
+                    .status(400)
+                    .body("Book already extended");
         } else {
             LocalDate extendedTime = LocalDate.now().plus(body.getPeriod());
             Period extendedDays = Period.between(LocalDate.now(), extendedTime);
             LocalDate returningDateAfterExtension = rentedBook.getReturningDate().plus(extendedDays);
             rentedBook.setReturningDate(returningDateAfterExtension);
+            rentedBook.setExtended(true);
             rentedBooksRepo.save(rentedBook);
             return ResponseEntity
                     .status(200)
@@ -70,10 +75,11 @@ public class RentedBooksService {
         } else {
             for (RentedBooksDto book : rentedBook) {
                 JSONObject json = new JSONObject();
-                json.put("BookTitle", book.getBooksRefDto().getBook().getTitle());
-                json.put("BookAuthor", book.getBooksRefDto().getBook().getAuthor());
-                json.put("ReturningDate", book.getReturningDate());
-                json.put("RentedId:", book.getRentedBookId());
+                json.put("bookTitle", book.getBooksRefDto().getBook().getTitle());
+                json.put("bookAuthor", book.getBooksRefDto().getBook().getAuthor());
+                json.put("returningDate", book.getReturningDate());
+                json.put("rentedId", book.getRentedBookId());
+                json.put("bookOwner", book.getBooksRefDto().getUser().getUserId());
                 jsonObject.add(json);
             }
             return ResponseEntity

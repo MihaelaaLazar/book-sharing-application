@@ -1,5 +1,7 @@
 package com.endava.models;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -22,6 +24,10 @@ public class RentedBooksDto {
 
     @Column(name = "returning_date")
     private LocalDate returningDate;
+
+    @Schema(hidden = true)
+    private boolean extended;
+
 
     public RentedBooksDto() {
     }
@@ -63,6 +69,14 @@ public class RentedBooksDto {
 
     public void setReturningDate(LocalDate returningDate) {
         this.returningDate = returningDate;
+    }
+
+    public boolean isExtended() {
+        return extended;
+    }
+
+    public void setExtended(boolean extended) {
+        this.extended = extended;
     }
 
     @Override

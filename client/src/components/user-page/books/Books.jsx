@@ -37,7 +37,6 @@ const Books = () => {
     const fetchBooks = async (currentPage, _items) => {
         const res = await BookApi.getAllBooksWithPagination(currentPage, pageSize);
         const data = await res.json();
-        console.log(data)
         setLoading(false)
         return data;
     };

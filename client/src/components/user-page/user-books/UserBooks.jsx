@@ -13,6 +13,9 @@ import {PaginateIconWrapper, ReactPaginateWrapper} from "../books/Book.style";
 import {faChevronLeft, faChevronRight, faEllipsis} from "@fortawesome/free-solid-svg-icons";
 import {addUserBook} from "../../../reducers/userBooks.reducer";
 import {useNavigate} from "react-router-dom";
+import useModal from "../../../hooks/useModal";
+import UserBookInformationModal from "../user-books/UserBookInformationModal";
+
 
 const UserBooks = () => {
     const user = useSelector((state) => state.user);
@@ -58,16 +61,21 @@ const UserBooks = () => {
         navigate(`/dashboard/create`)
     }
 
+    const {modal, setModalData} = useModal({
+        Component: UserBookInformationModal
+    });
+
     return (
         <BookListWrapper>
             {loading && <LoadingOverlay/>}
+            {modal}
             {
                 userBooks && userBooks.length ?
                     <UserBookInfoWrapper>
-                        {userBooks.slice(currentPageIndex * pageSize, (currentPageIndex * pageSize) + pageSize).map((book) => {
+                        {userBooks.map((book) => {
                             return (<CardWrapper key={book.bookId}>
                                 <CardInfoWrapper>
-                                    <img src={book.imageUrl} alt={"img"}/>
+                                    <img  onClick={() => setModalData({book})} src={book.imageUrl} alt={"img"}/>
                                     <table>
                                         <tbody>
                                         <tr>

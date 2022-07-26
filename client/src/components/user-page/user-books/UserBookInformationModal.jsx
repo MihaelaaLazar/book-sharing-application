@@ -2,20 +2,20 @@ import {
     BookAuthor, BookDescription, BookDetails,
     BookTitle,
     BookTitleWrapper,
-    CloseButton, ModalButtonWrapper,
+    CloseButton, DropdownWrapper, ModalButtonWrapper,
     ModalCard,
     ModalContent,
     ModalThumbnail,
     ModalWrapper
 } from "../available-books/ModalStyle.style";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
-import {useEffect} from "react";
+import {Fragment, useEffect, useState} from "react";
 import BookApi from "../../reusable/apis/bookApi";
 import {useDispatch, useSelector} from "react-redux";
 import {addBookDetails} from "../../../reducers/bookDetails.reducer";
 import {isEmpty} from "lodash";
-import UserApi from "../../reusable/apis/userApi";
 import useMessage from "../../../hooks/useMessage";
+import RentedBookApi from "../../reusable/apis/rentedBookApi";
 
 const mapBooksFromState = (state) => {
     const booksDetails = state.bookDetails;
@@ -30,14 +30,25 @@ const mapBooksFromState = (state) => {
         })
     ]
 }
+const RENTAL_PERIOD = {
+    oneWeek: {
+        label: "One week",
+        value: "ONE_WEEK"
+    },
+    twoWeeks: {
+        label: "Two weeks",
+        value: "TWO_WEEKS"
+    }
+}
 
-const BookInformationModal = ({book, onClose}) => {
+const UserBookInformationModal = ({book, onClose}) => {
     const bookDetails = useSelector(mapBooksFromState);
     const user = useSelector(state => state.user);
     const bookData = bookDetails[0];
     const rentedData = bookDetails[1];
     const availableData = bookDetails[2];
     const dispatch = useDispatch();
+    const [rentalPeriod, setRentalPeriod] = useState({});
 
     const initialMessage = {
         type: "",
@@ -52,25 +63,26 @@ const BookInformationModal = ({book, onClose}) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const res = await BookApi.getBookByBookId(book.bookId)
+            const res = await BookApi.getBookByBookId(book.bookId);
             const data = await res.json();
             dispatch(addBookDetails(data))
         }
         fetchData();
     }, []);
 
-    const handleAddOnWaitingList = async () => {
-        const res =  await UserApi.addOnWaitingList(user.userId, book.bookId);
-        if(res.status === 200) {
-            setMessageSuccess("Successfully added to waiting list");
-        } else if(res.status === 409) {
-            setMessageError("You are not allowed to add to waiting list");
-        }
-        else {
-            setMessageError("You are already in waiting list");
-        }
-
+    const handleChange = (e) => {
+        setRentalPeriod(e.target.value);
     }
+
+    const handleExtendPeriod = async () => {
+        const res = await RentedBookApi.extendPeriod(rentedData.rentedBookId, rentalPeriod);
+        if (res.status === 200) {
+            setMessageSuccess("Successfully extended the rental period");
+        } else {
+            setMessageError("You already extended the rental period");
+        }
+    }
+    const isRentedByUserLogged = rentedData?.user?.userId === user?.userId
 
     return <ModalWrapper>
         <CloseButton icon={faXmark} onClick={onClose}/>
@@ -112,10 +124,18 @@ const BookInformationModal = ({book, onClose}) => {
                     </tr>
                     </tbody>
                 </BookDetails>
-                {!isEmpty(rentedData) && <ModalButtonWrapper onClick={handleAddOnWaitingList}>Add on waiting list</ModalButtonWrapper>}
-                {message ? <p className={`message-${message.type}`}>{message.message}</p> : null}
+                {isRentedByUserLogged
+                    ? <Fragment>
+                        <DropdownWrapper value={rentalPeriod} onChange={handleChange}>
+                            {Object.keys(RENTAL_PERIOD).map(option => <option
+                                value={RENTAL_PERIOD[option].value}>{RENTAL_PERIOD[option].label}</option>)}
+                        </DropdownWrapper>
+                        <ModalButtonWrapper onClick={handleExtendPeriod}>Extend Period</ModalButtonWrapper>
+                        {message ? <p className={`message-${message.type}`}>{message.message}</p> : null}</Fragment>
+                    : null}
+
             </ModalContent>
         </ModalCard>
     </ModalWrapper>
 }
-export default BookInformationModal;
+export default UserBookInformationModal;

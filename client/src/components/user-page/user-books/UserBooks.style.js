@@ -38,6 +38,7 @@ export const CardInfoWrapper = styled.div`
     max-width: 20rem;
     max-height: 20rem;
     margin-bottom: 1rem;
+    cursor: pointer;
 
   }
 

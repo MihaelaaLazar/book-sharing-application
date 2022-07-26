@@ -19,7 +19,7 @@ export const TabWrapper = styled.div`
   flex:1 1;
   justify-content: center;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 0.8rem 0.5rem;
   border-bottom: ${({isActive}) => isActive ? "1px solid #de411b" : "none"};
   cursor: pointer;
   

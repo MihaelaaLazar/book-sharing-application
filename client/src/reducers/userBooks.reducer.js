@@ -1,14 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit';
 import update from 'immutability-helper';
-import {uniqBy} from "lodash";
 
 export const userBooksReducer = createSlice({
     name: 'userBooks',
     initialState: [],
     reducers: {
         addUserBook: (state, action) => {
-            const books = [...JSON.parse(JSON.stringify(state)), ...action.payload];
-            return update(state, {$set:uniqBy(books, book => book.bookId)})
+            return update(state, {$set: action.payload});
         },
         updateUserBook: (state, action) => {
             return update(state, {$set: action.payload});
