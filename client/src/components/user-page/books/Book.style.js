@@ -25,7 +25,7 @@ export const ReactPaginateWrapper = styled(ReactPaginate)`
       align-items: center;
       cursor: pointer;
       padding: 1rem 1rem;
-      font-size: 16px;
+      font-size: 14px;
       color: #183153;
     }
 
@@ -62,7 +62,7 @@ export const PaginateIconWrapper = styled(FontAwesomeIcon)`
 export const BookInfoWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 1.5rem;
   width: 100%;
 
@@ -72,8 +72,10 @@ export const BookCardWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   justify-content: flex-start;
-  padding: 2rem 1rem;
+  padding: 1rem 1rem;
   border: 1px solid #dad2d2;
+  max-height: 30rem;
+  border-radius: 0.5rem;
 
 `
 export const BookInfo = styled.div`
@@ -89,8 +91,8 @@ export const BookInfo = styled.div`
     display: flex;
     justify-content: center;
     align-self: center;
-    max-width: 25rem;
-    max-height: 25rem;
+    max-width: 20rem;
+    max-height: 20rem;
     cursor: pointer;
     margin-bottom: 1rem;
   }

@@ -37,39 +37,37 @@ export const ModalThumbnail = styled.section`
     object-fit: cover;
     height: 100%;
     width: 100%;
-    max-width: 25rem;
+    max-width: 20rem;
   }
 `;
 
 export const ModalContent = styled.section`
   flex: 1 1;
-  padding: 2rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  gap:2rem;
+  gap:1rem;
 `;
 export const BookTitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
-
 `
 
 export const BookTitle = styled.div`
-  font-size: 30px;
+  font-size: 28px;
   color: #1e3a61;
   font-weight: 600;
-
 `;
 
 export const BookAuthor = styled.div`
-  font-size: 26px;
+  font-size: 24px;
   color: #de411b;
 `;
 
 export const BookDescription = styled.section`
   color: #919191;
-  padding: 2rem 0;
+  padding: 1rem 0;
 `;
 
 export const BookDetails = styled.table`
@@ -102,7 +100,7 @@ export const RentTheBookButton = styled.button`
   padding: 1rem 2rem;
   font-size: 15px;
   cursor: pointer;
-  margin-top: 1rem;
+  margin-top: 0.3rem;
   width: 60%;
 `;
 
@@ -123,8 +121,8 @@ export const AddOnWaiting = styled.button`
   background-color: #de411b;
   color: #fff;
   border: none;
-  padding: 1rem 2rem;
-  font-size: 15px;
+  padding: 1rem;
+  font-size: 14px;
   cursor: pointer;
   margin-top: 1rem;
   width: 60%;

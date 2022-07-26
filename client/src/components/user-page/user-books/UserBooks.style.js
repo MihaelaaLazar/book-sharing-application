@@ -8,17 +8,20 @@ export const BookListWrapper = styled.div`
 export const UserBookInfoWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 1.5rem;
   width: 100%;
+ 
 `;
 export const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-height: 30rem;
   justify-content: flex-start;
-  padding: 2rem 1rem;
+  padding: 1rem 1rem;
   border: 1px solid #dad2d2;
+  border-radius: 0.5rem;
 `;
 export const CardInfoWrapper = styled.div`
   display: flex;
@@ -32,8 +35,8 @@ export const CardInfoWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-self: center;
-    max-width: 25rem;
-    max-height: 25rem;
+    max-width: 20rem;
+    max-height: 20rem;
     margin-bottom: 1rem;
 
   }
@@ -71,7 +74,7 @@ export const AddBookButton = styled.button`
   background-color: #de411b;
   color: #fff;
   border: none;
-  padding: 1rem;
+  padding: 0.7rem;
   border-radius: 5px;
   font-size: 1rem;
   font-weight: 600;

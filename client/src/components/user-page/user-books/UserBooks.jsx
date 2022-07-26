@@ -64,7 +64,7 @@ const UserBooks = () => {
             {
                 userBooks && userBooks.length ?
                     <UserBookInfoWrapper>
-                        {userBooks.slice(currentPageIndex, pageSize).map((book) => {
+                        {userBooks.slice(currentPageIndex * pageSize, (currentPageIndex * pageSize) + pageSize).map((book) => {
                             return (<CardWrapper key={book.bookId}>
                                 <CardInfoWrapper>
                                     <img src={book.imageUrl} alt={"img"}/>
