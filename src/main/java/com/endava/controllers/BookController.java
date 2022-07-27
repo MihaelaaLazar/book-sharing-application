@@ -65,18 +65,14 @@ public class BookController {
 
     @Operation(
             summary = "Find book by title or author",
-            description = "Finds book by title or author",
-            parameters = {
-                    @Parameter(name = "title", description = "Book's title"),
-                    @Parameter(name = "author", description = "Book's author")
-            })
+            description = "Finds book by title or author")
     @RequestMapping(
             method = RequestMethod.GET,
             value = "/search")
     public Stream<?> getBooksByTitleOrAuthor(
-            @RequestParam("title") Optional<String> title,
-            @RequestParam("author") Optional<String> author) {
-        return bookService.getBooksByTitleOrAuthor(title, author);
+            @RequestParam("query") String query)
+    {
+        return bookService.getBooksByTitleOrAuthor(query);
     }
 
     @Operation(

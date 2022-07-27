@@ -66,8 +66,8 @@ public class BookService {
                 .map(bookRefDto -> bookRepo.findByBookId(bookRefDto.getBook().getBookId()));
     }
 
-    public Stream<?> getBooksByTitleOrAuthor(Optional<String> title, Optional<String> author) {
-        List<BookDto> books = bookRepo.findByTitleOrAuthor(title, author);
+    public Stream<?> getBooksByTitleOrAuthor(String query) {
+        List<BookDto> books = bookRepo.findByQuery(query);
         Stream<?> availableBooks = books.stream()
                 .filter(book -> booksForRentRepo.findByBookId(book.getBookId()) != null);
 

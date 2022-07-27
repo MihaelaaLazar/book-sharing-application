@@ -1,37 +1,46 @@
-import {HeaderWrapper, Logo, LoginIcon, ButtonWrapper, UserIcon, UserIconWrapper, IconWrapper} from './Header.style';
-import {faArrowRightToBracket, faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons'
+import {HeaderWrapper, Logo, LoginIcon, ButtonWrapper, UserIconWrapper, IconWrapper} from './Header.style';
+import {faArrowRightToBracket} from '@fortawesome/free-solid-svg-icons'
 import logoSrc from '../../assets/logo.png'
-import {useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
 import {faUser} from "@fortawesome/free-solid-svg-icons";
-import {deleteUser} from "../../reducers/user.reducer";
+import Search from "../search/Search";
+import {useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {useState} from "react";
+import UserPopup from "../user-page/user-books/UserPopup";
+import {useRef} from 'react';
+import useOnClickOutside from "../../hooks/useOnClickOutside";
+
+
 
 const Header = () => {
     const user = useSelector((state) => state.user);
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const [openPopup, setOpenPopup] = useState(false);
+    const popupRef = useRef();
 
     const handleNavigate = (path) => {
         navigate(path)
     }
-    const handleLogout = () => {
-        const jwtToken = localStorage.getItem("token");
-        if (jwtToken) {
-            dispatch(deleteUser(user))
-            localStorage.removeItem("token");
-            navigate("/")
 
-        }
+
+    const handleOpenPopup = () => {
+        setOpenPopup(true);
     }
+
+    useOnClickOutside(popupRef, () => {
+        setOpenPopup(false);
+    });
+
+
     return (
         <HeaderWrapper>
             <Logo src={logoSrc} onClick={() => handleNavigate("/")}></Logo>
+            <Search/>
             {
                 user
                     ? <UserIconWrapper>
-                        <IconWrapper icon={faMagnifyingGlass}/>
-                        <IconWrapper icon={faUser}/>
-                        <ButtonWrapper onClick={handleLogout}>Logout</ButtonWrapper>
+                        <IconWrapper icon={faUser} onClick={handleOpenPopup}/>
+                        {openPopup && <UserPopup ref={popupRef}/>}
                     </UserIconWrapper>
                     : (<ButtonWrapper onClick={() => handleNavigate("/login")}>Login
                         <LoginIcon icon={faArrowRightToBracket}/></ButtonWrapper>)

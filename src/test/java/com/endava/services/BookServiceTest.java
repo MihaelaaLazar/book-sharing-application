@@ -71,14 +71,14 @@ public class BookServiceTest {
         assertThat(booksRefDto).isNotNull();
     }
 
-    @Test
-    public void shouldGetBooksByTitleOrAuthor(){
-        when(bookRepo.findByTitleOrAuthor(Optional.of(TITLE), Optional.of(AUTHOR))).thenReturn(List.of(BOOK_DTO));
-
-        Stream<?> books = bookService.getBooksByTitleOrAuthor(Optional.of(TITLE), Optional.of(AUTHOR));
-
-        assertThat(books).isNotNull();
-    }
+//    @Test
+//    public void shouldGetBooksByTitleOrAuthor(){
+//        when(bookRepo.findByTitleOrAuthor(Optional.of(TITLE), Optional.of(AUTHOR))).thenReturn(List.of(BOOK_DTO));
+//
+//        Stream<?> books = bookService.getBooksByTitleOrAuthor(Optional.of(TITLE), Optional.of(AUTHOR));
+//
+//        assertThat(books).isNotNull();
+//    }
 
 //    @Test
 //    @Ignore

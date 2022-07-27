@@ -9,6 +9,7 @@ import {faChevronRight, faChevronLeft, faEllipsis} from '@fortawesome/free-solid
 import LoadingOverlay from "../../reusable/loading-overlay/LoadingOverlay";
 import useModal from "../../../hooks/useModal";
 import BookInformationModal from '../books/BookInformationModal';
+import Search from "../../search/Search";
 
 
 

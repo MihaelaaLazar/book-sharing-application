@@ -4,6 +4,7 @@ import bookReducer from "./book.reducer";
 import userBooksReducer from "./userBooks.reducer";
 import availableBooks from "./availableBooks.reducer";
 import bookDetailsReducer from "./bookDetails.reducer";
+import searchResultsReducer from "./searchResults.reducer";
 
 const store = configureStore({
     reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
         userBooks : userBooksReducer,
         availableBooks : availableBooks,
         bookDetails : bookDetailsReducer,
+        searchResults : searchResultsReducer
     },
 })
 export default store;

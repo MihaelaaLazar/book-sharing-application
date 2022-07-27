@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
-
 export const HeaderWrapper = styled.header`
   display: flex;
   flex-direction: row;
@@ -24,6 +23,7 @@ export const LoginIcon = styled(FontAwesomeIcon)`
   padding: 1rem 1rem;
 `;
 export const UserIconWrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -32,7 +32,8 @@ export const UserIconWrapper = styled.div`
 export const IconWrapper = styled(FontAwesomeIcon)`
   font-size: 2rem;
   color: #de411b;
-  padding: 1rem 1rem;
+  padding: 1rem 0;
+  cursor: pointer;
 `;
 
 export const Logo = styled.img`
