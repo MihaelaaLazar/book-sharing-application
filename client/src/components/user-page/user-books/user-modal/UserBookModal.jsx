@@ -7,15 +7,16 @@ import {
     ModalContent,
     ModalThumbnail,
     ModalWrapper
-} from "../available-books/ModalStyle.style";
+} from "../../available-books/ModalStyle.style";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import {Fragment, useEffect, useState} from "react";
-import BookApi from "../../reusable/apis/bookApi";
+import BookApi from "../../../reusable/apis/bookApi";
 import {useDispatch, useSelector} from "react-redux";
-import {addBookDetails} from "../../../reducers/bookDetails.reducer";
+import {addBookDetails} from "../../../../reducers/bookDetails.reducer";
 import {isEmpty} from "lodash";
-import useMessage from "../../../hooks/useMessage";
-import RentedBookApi from "../../reusable/apis/rentedBookApi";
+import useMessage from "../../../../hooks/useMessage";
+import RentedBookApi from "../../../reusable/apis/rentedBookApi";
+import utils from '../../../../utils/utils'
 
 const mapBooksFromState = (state) => {
     const booksDetails = state.bookDetails;
@@ -30,18 +31,7 @@ const mapBooksFromState = (state) => {
         })
     ]
 }
-const RENTAL_PERIOD = {
-    oneWeek: {
-        label: "One week",
-        value: "ONE_WEEK"
-    },
-    twoWeeks: {
-        label: "Two weeks",
-        value: "TWO_WEEKS"
-    }
-}
-
-const UserBookInformationModal = ({book, onClose}) => {
+const UserBookModal = ({book, onClose}) => {
     const bookDetails = useSelector(mapBooksFromState);
     const user = useSelector(state => state.user);
     const bookData = bookDetails[0];
@@ -76,12 +66,11 @@ const UserBookInformationModal = ({book, onClose}) => {
 
     const handleExtendPeriod = async () => {
         const res = await RentedBookApi.extendPeriod(rentedData.rentedBookId, rentalPeriod);
-        if (res.status === 200) {
-            setMessageSuccess("Successfully extended the rental period");
-        } else {
-            setMessageError("You already extended the rental period");
-        }
+        res.status === 200
+            ? setMessageSuccess("Successfully extended the rental period")
+            : setMessageError("You already extended the rental period");
     }
+
     const isRentedByUserLogged = rentedData?.user?.userId === user?.userId
 
     return <ModalWrapper>
@@ -98,10 +87,10 @@ const UserBookInformationModal = ({book, onClose}) => {
                 <BookDescription>{bookData?.description}</BookDescription>
                 <BookDetails>
                     <tbody>
-                    <tr key={bookData?.bookId}>
+                    <tr>
                         <td>Book Owner:</td>
                         <td>
-                            {!isEmpty(rentedData) && rentedData.booksRefDto?.user?.username}
+                            {!isEmpty(rentedData) && rentedData.bookRef?.user?.username}
                             {!isEmpty(availableData) && availableData.bookRef?.user?.username}
 
                         </td>
@@ -127,15 +116,16 @@ const UserBookInformationModal = ({book, onClose}) => {
                 {isRentedByUserLogged
                     ? <Fragment>
                         <DropdownWrapper value={rentalPeriod} onChange={handleChange}>
-                            {Object.keys(RENTAL_PERIOD).map(option => <option
-                                value={RENTAL_PERIOD[option].value}>{RENTAL_PERIOD[option].label}</option>)}
+                            {Object.keys(utils.defaultRentalPeriod).map(option => <option
+                                key={`option-${utils.defaultRentalPeriod[option].value}`}
+                                value={utils.defaultRentalPeriod[option].value}>{utils.defaultRentalPeriod[option].label}</option>)}
                         </DropdownWrapper>
                         <ModalButtonWrapper onClick={handleExtendPeriod}>Extend Period</ModalButtonWrapper>
-                        {message ? <p className={`message-${message.type}`}>{message.message}</p> : null}</Fragment>
+                        {message ? <p className={`message-${message.type}`}>{message.message}</p> : null}
+                    </Fragment>
                     : null}
-
             </ModalContent>
         </ModalCard>
     </ModalWrapper>
 }
-export default UserBookInformationModal;
+export default UserBookModal;

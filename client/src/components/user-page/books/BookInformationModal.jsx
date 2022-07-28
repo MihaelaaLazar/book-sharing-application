@@ -30,7 +30,6 @@ const mapBooksFromState = (state) => {
         })
     ]
 }
-
 const BookInformationModal = ({book, onClose}) => {
     const bookDetails = useSelector(mapBooksFromState);
     const user = useSelector(state => state.user);
@@ -60,17 +59,14 @@ const BookInformationModal = ({book, onClose}) => {
     }, []);
 
     const handleAddOnWaitingList = async () => {
-        const res =  await UserApi.addOnWaitingList(user.userId, book.bookId);
-        if(res.status === 200) {
-            setMessageSuccess("Successfully added to waiting list");
-        } else if(res.status === 409) {
-            setMessageError("You are not allowed to add to waiting list");
-        }
-        else {
-            setMessageError("You are already in waiting list");
-        }
-
+      await UserApi.addOnWaitingList(user.userId, book.bookId)
+          .then(res => {
+              setMessageSuccess("Added on waiting list");
+          }).catch(err => {
+              setMessageError(err.message)
+          });
     }
+
 
     return <ModalWrapper>
         <CloseButton icon={faXmark} onClick={onClose}/>
@@ -89,7 +85,7 @@ const BookInformationModal = ({book, onClose}) => {
                     <tr key={bookData?.bookId}>
                         <td>Book Owner:</td>
                         <td>
-                            {!isEmpty(rentedData) && rentedData.booksRefDto?.user?.username}
+                            {!isEmpty(rentedData) && rentedData.bookRef?.user?.username}
                             {!isEmpty(availableData) && availableData.bookRef?.user?.username}
 
                         </td>
@@ -112,7 +108,8 @@ const BookInformationModal = ({book, onClose}) => {
                     </tr>
                     </tbody>
                 </BookDetails>
-                {!isEmpty(rentedData) && <ModalButtonWrapper onClick={handleAddOnWaitingList}>Add on waiting list</ModalButtonWrapper>}
+                {!isEmpty(rentedData) &&
+                    <ModalButtonWrapper onClick={handleAddOnWaitingList}>Add on waiting list</ModalButtonWrapper>}
                 {message ? <p className={`message-${message.type}`}>{message.message}</p> : null}
             </ModalContent>
         </ModalCard>

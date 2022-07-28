@@ -3,7 +3,6 @@ package com.endava.controllers;
 import com.endava.models.BookDto;
 import com.endava.services.BookService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -13,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -74,6 +72,16 @@ public class BookController {
     {
         return bookService.getBooksByTitleOrAuthor(query);
     }
+    @Operation(summary = "Get book by title or author with pagination",
+            description = "Gets book by title or author with pagination")
+    @RequestMapping(method = RequestMethod.GET, value = "/search/{page}/{pageSize}")
+    public ResponseEntity<?> getBooksByTitleOrAuthorWithPagination(
+            @RequestParam("query") String query,
+            @PathVariable int page,
+            @PathVariable int pageSize)
+    {
+        return bookService.getBookByTitleOrAuthorWithPagination(query, page, pageSize);
+    }
 
     @Operation(
             summary = "Update book",
@@ -93,8 +101,8 @@ public class BookController {
     }
 
     @Operation(
-            summary = "Get all books with userId and pagination",
-            description = "Gets all books with userId and pagination"
+            summary = "Get all books by userId with pagination",
+            description = "Gets all books by userId with pagination"
     )
     @RequestMapping(method = RequestMethod.GET, value="/{userId}/{page}/{pageSize}")
     public ResponseEntity<?> getBooksWithUserIdAndPagination(@PathVariable UUID userId, @PathVariable int page, @PathVariable int pageSize){

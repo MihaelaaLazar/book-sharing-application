@@ -1,7 +1,7 @@
 import useForm, {isRequired, isSame, validateRegex} from "../../hooks/useForm";
 import utils from "../../utils/utils";
 import {Fragment, useState} from "react";
-import {FormWrapper, RegisterWrapper} from "./Register.style";
+import {Container, FormWrapper} from "../reusable/form/Form.style";
 import LoadingOverlay from "../reusable/loading-overlay/LoadingOverlay";
 import useMessage from "../../hooks/useMessage";
 
@@ -85,7 +85,7 @@ const Register = () => {
     return (
         <Fragment>
             {loading && <LoadingOverlay/>}
-            <RegisterWrapper>
+            <Container>
                 <FormWrapper onSubmit={submitHandler}>
                     <label>First Name</label>
                     <input type="text" name="firstName" value={values.firstName} onChange={changeHandler}/>
@@ -114,7 +114,7 @@ const Register = () => {
                     {message ? <p  className={`message-${message.type}`}>{message.message}</p> : null}
 
                 </FormWrapper>
-            </RegisterWrapper>
+            </Container>
         </Fragment>
     )
 }

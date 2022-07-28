@@ -2,15 +2,12 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {addBook} from "../../../reducers/book.reducer";
 import BookApi from "../../reusable/apis/bookApi";
-import {
-    BookCardWrapper, BookInfo, BookInfoWrapper, BooksWrapper, PaginateIconWrapper, ReactPaginateWrapper
-} from "./Book.style";
-import {faChevronRight, faChevronLeft, faEllipsis} from '@fortawesome/free-solid-svg-icons';
+import { BookInfoWrapper, BooksWrapper} from "./Book.style";
 import LoadingOverlay from "../../reusable/loading-overlay/LoadingOverlay";
 import useModal from "../../../hooks/useModal";
 import BookInformationModal from '../books/BookInformationModal';
-import Search from "../../search/Search";
-
+import BooksInfo from "../../reusable/modal/BooksInfo";
+import Paginate from "../../reusable/paginate/Paginate";
 
 
 const Books = () => {
@@ -53,47 +50,25 @@ const Books = () => {
     });
 
     return (
-
         <BooksWrapper>
             {modal}
             {loading && <LoadingOverlay/>}
-            {books && books.length ?
-                <BookInfoWrapper>
-                    {books.map((book) => {
-                        return (<BookCardWrapper key={book.bookId}>
-                            <BookInfo>
-                                <img onClick={() => setModalData({book})} src={book.imageUrl} alt={"img"}/>
-                                <table>
-                                    <tbody>
-                                    <tr>
-                                        <td>Title</td>
-                                        <td>{book.title}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Author</td>
-                                        <td>{book.author}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </BookInfo>
-                        </BookCardWrapper>);
-                    })}
-
-
+            {books && books.length ? <BookInfoWrapper>
+                    {books.map((bookInfoItem, index) => {
+                        return <BooksInfo
+                            key={`bookInfo-${index}`}
+                            book={bookInfoItem}
+                            setModalData={() => setModalData({book: bookInfoItem})}/>
+                    })
+                    }
                 </BookInfoWrapper>
                 : <div>There is currently no book in the library.</div>}
 
-            {books && books.length ?
-                <ReactPaginateWrapper
-                    previousLabel={<PaginateIconWrapper icon={faChevronLeft}/>}
-                    nextLabel={<PaginateIconWrapper icon={faChevronRight}/>}
-                    breakLabel={<PaginateIconWrapper icon={faEllipsis}/>}
-                    pageCount={pageCount}
-                    marginPagesDisplayed={2}
-                    onPageChange={handlePageClick}
-                    activeClassName={"active"}
-                />
-                : null}
+            <Paginate
+                handlePageClick={handlePageClick}
+                pageCount={pageCount}
+                props={books}/>
+
         </BooksWrapper>)
 }
 

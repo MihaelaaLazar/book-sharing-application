@@ -45,6 +45,13 @@ public class UserController {
         return userService.confirmUserAccount(token);
     }
 
+    @Operation(summary = "Verify token for user", description = "Verifies the token for the user")
+    @RequestMapping(value = "/verify/{token}",  method = RequestMethod.GET,
+            headers = "Accept=application/json")
+    public ResponseEntity<?> verifyToken(@PathVariable String token) {
+        return userService.verifyToken(token);
+    }
+
     @Operation(
             summary = "Login",
             description = "Login")
@@ -90,12 +97,5 @@ public class UserController {
     public ResponseEntity<?> updateUser(@PathVariable("userId") UUID userId, @RequestBody UserDto user) {
         return userService.updateUser(userId, user);
 
-    }
-
-    @Operation(summary = "Verify token for user", description = "Verifies the token for the user")
-    @RequestMapping(value = "/verify/{token}",  method = RequestMethod.GET,
-            headers = "Accept=application/json")
-    public ResponseEntity<?> verifyToken(@PathVariable String token) {
-        return userService.verifyToken(token);
     }
 }

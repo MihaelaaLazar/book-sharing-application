@@ -56,8 +56,8 @@ export default {
                 headers: headers
             });
     },
-    searchBook : async (query) => {
-            return fetch(`http://localhost:8080/api/books/search?query=${query}`, {
+    searchBook : async (query, page, pageSize) => {
+            return fetch(`http://localhost:8080/api/books/search/${page}/${pageSize}?query=${query}`, {
                 headers : headers
             });
 

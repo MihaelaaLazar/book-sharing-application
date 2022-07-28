@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-export const RegisterWrapper = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -65,16 +66,38 @@ export const FormWrapper = styled.form`
     background-color: #cccccc;
     color: #666666;
   }
-
-  .message-success {
-    color: #64b450;
+  
+  & > input[type="date"]{
+    outline-style: solid;
+    outline-color: rgba(118, 137, 230, 0.5);
+    display: flex;
+    flex-direction: row;
   }
 
-  .message-error {
-    color: #e04d4d;
+  input[type="file"] {
+    display: none;
+  }
+  
+  & > .file {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-self: center;
+    gap:0.5rem;
+    padding: 0.5rem 2rem;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    margin:1.2rem;
   }
 
-  .message-warning {
-    color: #f9a825;
+  & > .image-preview {
+    width:40%;
+    height:40%;
+    object-fit:contain;
+    border-radius:5px;
   }
 `
+export const Icon = styled(FontAwesomeIcon)`
+  color: #de411b;
+  font-size: 20px;
+`;

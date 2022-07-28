@@ -22,7 +22,7 @@ public class WaitingListController {
     private WaitingListService waitingListService;
 
     @Operation(
-            summary = "Add a user on the waiting list if the book is not available with his id and book id",
+            summary = "Add a user on the waiting list if the book is not available",
             description = "Adds a user on the waiting list if the book is not available"
     )
     @RequestMapping(

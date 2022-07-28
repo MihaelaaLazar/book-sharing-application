@@ -50,7 +50,8 @@ const Login = () => {
                 resetForm();
             })
             .catch(err => {
-                setMessageError("Something went wrong. Try again.");
+                console.log(err)
+                setMessageError(err.message);
                 setLoading(false);
             });
     }

@@ -32,8 +32,8 @@ public class RentedBooksService {
         for (RentedBooksDto rentedBook : rentedBooks) {
             JSONObject json = new JSONObject();
             json.put("whoBorrowed", rentedBook.getUser().getFirstName() + " " + rentedBook.getUser().getLastName());
-            json.put("bookName", rentedBook.getBooksRefDto().getBook().getTitle());
-            json.put("ownerName", rentedBook.getBooksRefDto().getUser().getFirstName() + " " + rentedBook.getBooksRefDto().getUser().getLastName());
+            json.put("bookName", rentedBook.getBookRef().getBook().getTitle());
+            json.put("ownerName", rentedBook.getBookRef().getUser().getFirstName() + " " + rentedBook.getBookRef().getUser().getLastName());
             json.put("returningDate", rentedBook.getReturningDate());
             jsonObject.add(json);
         }
@@ -75,11 +75,11 @@ public class RentedBooksService {
         } else {
             for (RentedBooksDto book : rentedBook) {
                 JSONObject json = new JSONObject();
-                json.put("bookTitle", book.getBooksRefDto().getBook().getTitle());
-                json.put("bookAuthor", book.getBooksRefDto().getBook().getAuthor());
+                json.put("bookTitle", book.getBookRef().getBook().getTitle());
+                json.put("bookAuthor", book.getBookRef().getBook().getAuthor());
                 json.put("returningDate", book.getReturningDate());
                 json.put("rentedId", book.getRentedBookId());
-                json.put("bookOwner", book.getBooksRefDto().getUser().getUserId());
+                json.put("bookOwner", book.getBookRef().getUser().getUserId());
                 jsonObject.add(json);
             }
             return ResponseEntity

@@ -12,36 +12,9 @@ import {useSelector} from "react-redux";
 import RentedBookApi from "../../reusable/apis/rentedBookApi";
 import {useState} from "react";
 import useMessage from "../../../hooks/useMessage";
+import utils from '../../../utils/utils'
 
-const RENTAL_PERIOD = {
-    oneWeek: {
-        label: "One week",
-        value: "ONE_WEEK"
-    },
-    twoWeeks: {
-        label: "Two weeks",
-        value: "TWO_WEEKS"
-    },
-    threeWeeks: {
-        label: "Three weeks",
-        value: "THREE_WEEKS"
-    },
-    oneMonth: {
-        label: "One month",
-        value: "ONE_MONTH"
-    },
-    twoMonths: {
-        label: "Two months",
-        value: "TWO_MONTHS"
-
-    },
-    threeMonths: {
-        label: "Three months",
-        value: "THREE_MONTHS"
-    }
-}
 const AvailableBookModal = ({availableBook, onClose}) => {
-
     const bookRefData = availableBook.bookRef;
     const bookData = availableBook.bookRef.book;
     const userData = availableBook.bookRef.user;
@@ -91,8 +64,9 @@ const AvailableBookModal = ({availableBook, onClose}) => {
                     </tbody>
                 </BookDetails>
                 <DropdownWrapper value={rentalPeriod} onChange={handleChange}>
-                    {Object.keys(RENTAL_PERIOD).map(option => <option
-                        value={RENTAL_PERIOD[option].value}>{RENTAL_PERIOD[option].label}</option>)}
+                    {Object.keys(utils.rentalPeriodTimes).map(option => <option
+                        key={`option-${utils.rentalPeriodTimes[option].value}`}
+                        value={utils.rentalPeriodTimes[option].value}>{utils.rentalPeriodTimes[option].label}</option>)}
                 </DropdownWrapper>
                 <RentTheBookButton onClick={handleRentBook}>Rent the book</RentTheBookButton>
                 {message ? <p className={`message-${message.type}`}>{message.message}</p> : null}

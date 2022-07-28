@@ -80,10 +80,19 @@ public class UserService {
     public ResponseEntity<?> login(UserDto userDto) {
         try {
             UserDto _user = userRepo.findByUsername(userDto.getUsername());
+            if (!_user.isVerified()) {
+                return ResponseEntity
+                        .status(404)
+                        .body("Your account is not verified yet. Please check your email to confirm your account");
+            }
             String encodedPassword = _user.getPassword();
             if (passwordConfig.matches(userDto.getPassword(), encodedPassword)) {
                 try {
-                    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword()));
+                    authenticationManager
+                            .authenticate(new UsernamePasswordAuthenticationToken(
+                                    userDto.getUsername(),
+                                    userDto.getPassword())
+                            );
                 } catch (BadCredentialsException e) {
                     return ResponseEntity
                             .status(400)
@@ -102,7 +111,7 @@ public class UserService {
             }
         } catch (Exception e) {
             return ResponseEntity
-                    .status(400)
+                    .status(409)
                     .body("Something went wrong");
         }
     }
@@ -129,7 +138,7 @@ public class UserService {
 
     public ResponseEntity<?> verifyToken(String token) {
         try {
-            if (jwtUtilService.isTokenExpired(token) == true) {
+            if (jwtUtilService.isTokenExpired(token)) {
                 return ResponseEntity
                         .status(401)
                         .body("Token expired");

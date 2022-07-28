@@ -3,18 +3,16 @@ import {useEffect, useState} from "react";
 import {
     AddBookButton,
     BookListWrapper,
-    CardInfoWrapper,
-    CardWrapper,
     UserBookInfoWrapper
 } from "./UserBooks.style";
 import BookApi from "../../reusable/apis/bookApi";
 import LoadingOverlay from "../../reusable/loading-overlay/LoadingOverlay";
-import {PaginateIconWrapper, ReactPaginateWrapper} from "../books/Book.style";
-import {faChevronLeft, faChevronRight, faEllipsis} from "@fortawesome/free-solid-svg-icons";
 import {addUserBook} from "../../../reducers/userBooks.reducer";
 import {useNavigate} from "react-router-dom";
 import useModal from "../../../hooks/useModal";
-import UserBookInformationModal from "../user-books/UserBookInformationModal";
+import UserBookModal from "./user-modal/UserBookModal";
+import BooksInfo from "../../reusable/modal/BooksInfo";
+import Paginate from "../../reusable/paginate/Paginate";
 
 
 const UserBooks = () => {
@@ -62,48 +60,33 @@ const UserBooks = () => {
     }
 
     const {modal, setModalData} = useModal({
-        Component: UserBookInformationModal
+        Component: UserBookModal
     });
 
     return (
         <BookListWrapper>
             {loading && <LoadingOverlay/>}
             {modal}
-            {
-                userBooks && userBooks.length ?
-                    <UserBookInfoWrapper>
-                        {userBooks.map((book) => {
-                            return (<CardWrapper key={book.bookId}>
-                                <CardInfoWrapper>
-                                    <img  onClick={() => setModalData({book})} src={book.imageUrl} alt={"img"}/>
-                                    <table>
-                                        <tbody>
-                                        <tr>
-                                            <td>Title</td>
-                                            <td>{book.title}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Author</td>
-                                            <td>{book.author}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </CardInfoWrapper>
-                            </CardWrapper>);
-                        })}
+            {userBooks && userBooks.length ?
+                <UserBookInfoWrapper>
+                    {userBooks.map((bookInfoItem, index) => {
+                        return <BooksInfo
+                            key={`book-${index}`}
+                            book={bookInfoItem}
+                            setModalData={() => setModalData({book: bookInfoItem})}/>
+                    })
+                    }
 
-                    </UserBookInfoWrapper>
-                    : <div> There is no book yet</div>}
+                </UserBookInfoWrapper>
+                : <div> There is no book yet</div>}
+
             <AddBookButton onClick={handleClick}>Add Book</AddBookButton>
+
             {userBooks && userBooks.length
-                ? <ReactPaginateWrapper
-                    previousLabel={<PaginateIconWrapper icon={faChevronLeft}/>}
-                    nextLabel={<PaginateIconWrapper icon={faChevronRight}/>}
-                    breakLabel={<PaginateIconWrapper icon={faEllipsis}/>}
+                ? <Paginate
+                    handlePageClick={handlePageClick}
                     pageCount={pageCount}
-                    marginPagesDisplayed={2}
-                    onPageChange={handlePageClick}
-                    activeClassName={"active"}/>
+                    props={userBooks}/>
                 : null}
 
 

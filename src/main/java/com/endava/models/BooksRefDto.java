@@ -1,7 +1,7 @@
 package com.endava.models;
 
 
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -9,6 +9,10 @@ import java.util.UUID;
 @Entity
 @Table(name = "books_ref")
 @NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+@ToString
 public class BooksRefDto {
 
     @Id
@@ -24,47 +28,14 @@ public class BooksRefDto {
     @ManyToOne
     private UserDto user;
 
-    public BooksRefDto(UUID bookRefId, UUID userId, UUID bookId) {
-        this.bookRefId = bookRefId;
-        this.user = new UserDto(userId);
-        this.book = new BookDto(bookId);
-    }
 
     public BooksRefDto(UUID bookRefId) {
         this.bookRefId = bookRefId;
     }
 
-    public UUID getBookRefId() {
-        return bookRefId;
-    }
-
-    public BooksForRentDto setBookRefId(UUID bookRefId) {
+    public BooksRefDto(UUID bookRefId, UUID userId, UUID bookId) {
         this.bookRefId = bookRefId;
-        return null;
-    }
-
-    public BookDto getBook() {
-        return book;
-    }
-
-    public void setBook(BookDto book) {
-        this.book = book;
-    }
-
-    public UserDto getUser() {
-        return user;
-    }
-
-    public void setUser(UserDto user) {
-        this.user = user;
-    }
-
-    @Override
-    public String toString() {
-        return "BooksRefDto{" +
-                "bookRefId=" + getBookRefId() +
-                ", bookId=" + getBook() +
-                ", userId=" + getUser().getUserId() +
-                '}';
+        this.user = new UserDto(userId);
+        this.book = new BookDto(bookId);
     }
 }

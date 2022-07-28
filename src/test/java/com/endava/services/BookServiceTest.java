@@ -1,12 +1,10 @@
 package com.endava.services;
 
 import com.endava.models.BookDto;
-import com.endava.models.BooksForRentDto;
 import com.endava.models.BooksRefDto;
 import com.endava.repositories.BookRefRepo;
 import com.endava.repositories.BookRepo;
 import com.endava.repositories.BooksForRentRepo;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -70,26 +67,5 @@ public class BookServiceTest {
 
         assertThat(booksRefDto).isNotNull();
     }
-
-//    @Test
-//    public void shouldGetBooksByTitleOrAuthor(){
-//        when(bookRepo.findByTitleOrAuthor(Optional.of(TITLE), Optional.of(AUTHOR))).thenReturn(List.of(BOOK_DTO));
-//
-//        Stream<?> books = bookService.getBooksByTitleOrAuthor(Optional.of(TITLE), Optional.of(AUTHOR));
-//
-//        assertThat(books).isNotNull();
-//    }
-
-//    @Test
-//    @Ignore
-//    public void shouldCreateBook(){
-//        when(bookRepo.save(BOOK_DTO)).thenReturn(BOOK_DTO);
-//        when(bookRefRepo.save(new BooksRefDto(null, BOOK_ID, BOOK_ID))).thenReturn(new BooksRefDto(null, BOOK_ID, BOOK_ID));
-//        when(booksForRentRepo.save(new BooksForRentDto(null, new BooksRefDto(null, BOOK_ID, BOOK_ID)))).thenReturn(new BooksForRentDto(null, new BooksRefDto(null, BOOK_ID, BOOK_ID)));
-//
-//        bookService.createBook(BOOK_ID, BOOK_DTO);
-//
-//        assertThat(BOOK_DTO).isNotNull();
-//    }
 
 }

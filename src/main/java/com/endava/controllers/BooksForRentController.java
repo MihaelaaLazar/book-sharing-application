@@ -32,7 +32,7 @@ public class BooksForRentController {
     }
 
     @Operation(
-            summary = "As a user I can rent a book with my id and the book id of the book I want to rent",
+            summary = "As a user I can rent a book",
             description = "Rents a book with the given id")
     @RequestMapping(
             method = RequestMethod.POST,

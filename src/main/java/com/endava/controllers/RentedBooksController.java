@@ -35,6 +35,18 @@ public class RentedBooksController {
     }
 
     @Operation(
+            summary = "Find all books which I currently borrowed",
+            description = "Finds all books which I currently borrowed"
+    )
+    @RequestMapping(
+            value = "/by/{userId}",
+            method = RequestMethod.GET,
+            produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getRentedBookByUserId(@PathVariable("userId") UUID userId) {
+        return rentedBooksService.getRentedBookByUserId(userId);
+    }
+
+    @Operation(
             summary = "As a user I want to extend the time of a book which I have borrowed",
             description = "Extends the time of a book"
     )
@@ -48,15 +60,4 @@ public class RentedBooksController {
         return rentedBooksService.extendTimeForBook(rentedBookId, body);
     }
 
-    @Operation(
-            summary = "Find all books which I currently borrowed",
-            description = "Finds all books which I currently borrowed"
-    )
-    @RequestMapping(
-            value = "/by/{userId}",
-            method = RequestMethod.GET,
-            produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getRentedBookByUserId(@PathVariable("userId") UUID userId) {
-        return rentedBooksService.getRentedBookByUserId(userId);
-    }
 }

@@ -79,6 +79,41 @@ public class BookService {
         return Stream.concat(availableBooks, rentedBooks);
     }
 
+    public ResponseEntity<?> getBookByTitleOrAuthorWithPagination(String query, int page, int pageSize) {
+        JSONObject responseBody = new JSONObject();
+
+        Set<BookDto> books = bookRepo._findByQuery(query);
+
+        Set<BookDto> availableBooks = books.stream()
+                .filter(book -> booksForRentRepo.findByBookId(book.getBookId()) != null)
+                .collect(Collectors.toSet());
+
+        Set<RentedBooksDto> rentedBooks = books.stream()
+                .filter(book -> rentedBooksRepo.findOneBookByBookId(book.getBookId()) != null)
+                .map(book -> rentedBooksRepo.findOneBookByBookId(book.getBookId()))
+                .filter(rentedBook -> rentedBook.getReturningDate() != null)
+                .collect(Collectors.toSet());
+
+        Set<?> allBooks = Stream.concat(rentedBooks.stream(), availableBooks.stream())
+                .collect(Collectors.toSet());
+
+        List<?> booksList = new ArrayList<>(allBooks);
+        PagedListHolder<?> pagedListHolder = new PagedListHolder<>(booksList);
+
+
+        long count = booksList.size();
+        pagedListHolder.setPageSize(pageSize);
+        pagedListHolder.setPage(page);
+
+        responseBody.put("searchResult", pagedListHolder.getPageList());
+        responseBody.put("totalCount", count);
+
+        return ResponseEntity
+                .status(200)
+                .body(responseBody.toString());
+
+    }
+
     public ResponseEntity<?> updateBook(UUID bookId, BookDto book) {
         BookDto bookDto = bookRepo.findByBookId(bookId);
         if (bookDto == null) {
@@ -123,7 +158,7 @@ public class BookService {
 
         List<RentedBooksDto> rentedBooks = rentedBooksRepo.findAllByUserId(userId);
         Set<BookDto> _rentedBooks = rentedBooks.stream().map(rentedBooksDto ->
-                bookRepo.findByBookId(rentedBooksDto.getBooksRefDto().getBook().getBookId())).collect(Collectors.toSet());
+                bookRepo.findByBookId(rentedBooksDto.getBookRef().getBook().getBookId())).collect(Collectors.toSet());
 
         Set<BookDto> allBooks = Stream.concat(books.stream(), Stream.concat(_booksForRent.stream(), _rentedBooks.stream()))
                 .collect(Collectors.toSet());
@@ -149,6 +184,5 @@ public class BookService {
         return ResponseEntity
                 .status(200)
                 .body(Stream.of(bookDto, rentedBook, booksForRentDto).collect(Collectors.toList()));
-
     }
 }

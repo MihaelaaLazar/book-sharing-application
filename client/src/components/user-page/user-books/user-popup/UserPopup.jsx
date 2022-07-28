@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {deleteUser} from "../../../reducers/user.reducer";
+import {deleteUser} from "../../../../reducers/user.reducer";
 import {useNavigate} from "react-router-dom";
 import {
     LogoutButton, PopupContent, PopupHeader, PopupHeaderText, PopupInformation, PopupWrapper

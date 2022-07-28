@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
@@ -18,12 +17,13 @@ public class UserDtoDetailsService implements UserDetailsService {
     private UserRepo userRepo;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDto user = userRepo.findByUsername(username);
-        if(user != null) {
-            return new User(user.getUsername(), user.getPassword(), new ArrayList<>());
-        }else{
-            throw new NotFoundException("User doesn't exist");
+    public UserDetails loadUserByUsername(String username) {
+        try{
+            UserDto userDto = userRepo.findByUsername(username);
+            return new User(userDto.getUsername(), userDto.getPassword(), new ArrayList<>());
+        }
+        catch (Exception e){
+            throw new NotFoundException("User not found");
         }
     }
 }

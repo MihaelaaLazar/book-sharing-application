@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Repository
@@ -16,6 +17,9 @@ public interface BookRepo extends CrudRepository<BookDto, UUID> {
 
     @Query("SELECT b FROM BookDto b WHERE LOWER(b.title) LIKE CONCAT('%',LOWER(?1), '%') OR LOWER(b.author) LIKE CONCAT('%', LOWER(?1), '%')")
     List<BookDto> findByQuery(String query);
+
+    @Query("SELECT b FROM BookDto b WHERE LOWER(b.title) LIKE CONCAT('%',LOWER(?1), '%') OR LOWER(b.author) LIKE CONCAT('%', LOWER(?1), '%')")
+    Set<BookDto> _findByQuery(String query);
 
     BookDto findByBookId(UUID bookId);
 

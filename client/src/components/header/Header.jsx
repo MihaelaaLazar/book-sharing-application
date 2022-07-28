@@ -6,7 +6,7 @@ import Search from "../search/Search";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
-import UserPopup from "../user-page/user-books/UserPopup";
+import UserPopup from "../user-page/user-books/user-popup/UserPopup";
 import {useRef} from 'react';
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 

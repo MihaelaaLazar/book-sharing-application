@@ -1,10 +1,17 @@
 package com.endava.models;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
 @Table(name = "books_for_rent")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class BooksForRentDto {
 
     @Id
@@ -16,36 +23,4 @@ public class BooksForRentDto {
     @ManyToOne
     private BooksRefDto bookRef;
 
-
-    public BooksForRentDto(UUID bookForRentId, BooksRefDto bookRef) {
-        this.bookForRentId = bookForRentId;
-        this.bookRef = bookRef;
-    }
-
-    public BooksForRentDto() {
-    }
-
-    public UUID getBookForRentId() {
-        return bookForRentId;
-    }
-
-    public void setBookForRentId(UUID bookForRentId) {
-        this.bookForRentId = bookForRentId;
-    }
-
-    public BooksRefDto getBookRef() {
-        return bookRef;
-    }
-
-    public void setBookRef(BooksRefDto bookRef) {
-        this.bookRef = bookRef;
-    }
-
-    @Override
-    public String toString() {
-        return "BooksForRentDto{" +
-                "bookForRentId=" + getBookForRentId() +
-                ", bookRefId=" + getBookRef().getBookRefId() +
-                '}';
-    }
 }

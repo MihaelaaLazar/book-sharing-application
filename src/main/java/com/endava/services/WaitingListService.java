@@ -26,19 +26,20 @@ public class WaitingListService {
                     .status(404)
                     .body("Book not found");
         }
-        if(waitingListRepo.findByUserId(userId).isPresent()) {
-            return ResponseEntity
-                    .status(400)
-                    .body("User already in waiting list");
-        }
-        if(rentedBooks.getBooksRefDto().getUser().getUserId().equals(userId) ||
+        if(rentedBooks.getBookRef().getUser().getUserId().equals(userId) ||
                 rentedBooks.getUser().getUserId().equals(userId)) {
             return ResponseEntity
                     .status(409)
                     .body("User not allowed to add to waiting list");
         }
 
-        waitingListRepo.save(new WaitingListDto(UUID.randomUUID(), userId, rentedBooks.getBooksRefDto().getBookRefId()));
+        if(waitingListRepo.findByUserId(userId).isPresent()) {
+            return ResponseEntity
+                    .status(400)
+                    .body("User already in waiting list");
+        }
+
+        waitingListRepo.save(new WaitingListDto(UUID.randomUUID(), userId, rentedBooks.getBookRef().getBookRefId()));
         return ResponseEntity
                 .status(200)
                 .body("User added to waiting list");

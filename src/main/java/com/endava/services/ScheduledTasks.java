@@ -37,7 +37,7 @@ public class ScheduledTasks {
         for (RentedBooksDto rentedBooksDto : rentedBooksDtoList) {
             if (LocalDate.now().isAfter(rentedBooksDto.getReturningDate())) {
                 rentedBooksRepo.delete(rentedBooksDto);
-                booksForRentRepo.save(new BooksForRentDto(null, rentedBooksDto.getBooksRefDto()));
+                booksForRentRepo.save(new BooksForRentDto(null, rentedBooksDto.getBookRef()));
             }
         }
         log.info("Update rented books task ran at {}", DATE_FORMAT.format(new Date()));
@@ -47,7 +47,7 @@ public class ScheduledTasks {
     public void assignTheBookToTheUser() {
         List<WaitingListDto> usersInWaitingList = waitingListRepo.findAll();
         for (WaitingListDto _usersInWaitingList : usersInWaitingList) {
-            BooksForRentDto booksForRentDto = booksForRentRepo.findByBookId(_usersInWaitingList.getBooksRefDto().getBook().getBookId());
+            BooksForRentDto booksForRentDto = booksForRentRepo.findByBookId(_usersInWaitingList.getBookRef().getBook().getBookId());
             if (booksForRentDto != null) {
                 RentedBooksDto rentedBook = new RentedBooksDto(
                         null,

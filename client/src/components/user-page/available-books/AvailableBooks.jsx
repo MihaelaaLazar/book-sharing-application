@@ -7,13 +7,12 @@ import {
     BookInfo,
     BookInfoWrapper,
     BooksWrapper,
-    PaginateIconWrapper,
-    ReactPaginateWrapper
+
 } from "../books/Book.style";
 import LoadingOverlay from "../../reusable/loading-overlay/LoadingOverlay";
-import {faChevronLeft, faChevronRight, faEllipsis} from "@fortawesome/free-solid-svg-icons";
 import useModal from "../../../hooks/useModal";
 import AvailableBookModal from "./AvailableBookModal";
+import Paginate from "../../reusable/paginate/Paginate";
 
 const AvailableBooks = () => {
     const availableBooks = useSelector((state) => state.availableBooks);
@@ -60,9 +59,8 @@ const AvailableBooks = () => {
             {loading && <LoadingOverlay/>}
             {availableBooks && availableBooks.length ?
                 <BookInfoWrapper>
-
-                    {availableBooks.map((availableBook) => {
-                        return (<BookCardWrapper key={availableBook.bookRef.book.bookId}>
+                    {availableBooks.map((availableBook, index) => {
+                        return <BookCardWrapper key={`book-${index}`}>
                             <BookInfo>
                                 <img onClick={() => setModalData({availableBook})}
                                      src={availableBook.bookRef.book.imageUrl} alt={"img"}/>
@@ -83,22 +81,17 @@ const AvailableBooks = () => {
                                     </tbody>
                                 </table>
                             </BookInfo>
-                        </BookCardWrapper>);
+                        </BookCardWrapper>
                     })}
 
                 </BookInfoWrapper>
                 : <div>No Books Available</div>
             }
             {availableBooks && availableBooks.length ?
-                <ReactPaginateWrapper
-                    previousLabel={<PaginateIconWrapper icon={faChevronLeft}/>}
-                    nextLabel={<PaginateIconWrapper icon={faChevronRight}/>}
-                    breakLabel={<PaginateIconWrapper icon={faEllipsis}/>}
+                <Paginate
+                    handlePageClick={handlePageClick}
                     pageCount={pageCount}
-                    marginPagesDisplayed={2}
-                    onPageChange={handlePageClick}
-                    activeClassName={"active"}
-                />
+                    props={availableBooks}/>
                 : null}
 
         </BooksWrapper>);

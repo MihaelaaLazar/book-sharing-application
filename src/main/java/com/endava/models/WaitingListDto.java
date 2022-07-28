@@ -1,10 +1,17 @@
 package com.endava.models;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
 @Table(name = "waiting_list")
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
 public class WaitingListDto {
 
     @Id
@@ -25,39 +32,11 @@ public class WaitingListDto {
 
     @JoinColumn(name = "book_ref_id")
     @ManyToOne
-    private BooksRefDto booksRefDto;
+    private BooksRefDto bookRef;
 
     public WaitingListDto(UUID waitingId, UUID userId, UUID bookRefId) {
         this.waitingId = waitingId;
         this.userId = userId;
-        this.booksRefDto = new BooksRefDto(bookRefId);
-    }
-
-    public WaitingListDto() {
-    }
-
-    public UUID getWaitingId() {
-        return waitingId;
-    }
-
-    public void setWaitingId(UUID waitingId) {
-        this.waitingId = waitingId;
-    }
-
-    public BooksRefDto getBooksRefDto() {
-        return booksRefDto;
-    }
-
-    public void setBooksRefDto(BooksRefDto booksRefDto) {
-        this.booksRefDto = booksRefDto;
-    }
-
-    @Override
-    public String toString() {
-        return "WaitingListDto{" +
-                "waitingId=" + getWaitingId() +
-                ", userId=" + getUserId() +
-                ", booksRefDtoId=" + getBooksRefDto().getBookRefId() +
-                '}';
+        this.bookRef = new BooksRefDto(bookRefId);
     }
 }
