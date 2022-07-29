@@ -1,15 +1,12 @@
 import {HeaderWrapper, Logo, LoginIcon, ButtonWrapper, UserIconWrapper, IconWrapper} from './Header.style';
-import {faArrowRightToBracket} from '@fortawesome/free-solid-svg-icons'
+import {faArrowRightToBracket, faUser} from '@fortawesome/free-solid-svg-icons'
 import logoSrc from '../../assets/logo.png'
-import {faUser} from "@fortawesome/free-solid-svg-icons";
 import Search from "../search/Search";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useState, useRef} from "react";
 import UserPopup from "../user-page/user-books/user-popup/UserPopup";
-import {useRef} from 'react';
 import useOnClickOutside from "../../hooks/useOnClickOutside";
-
 
 
 const Header = () => {
@@ -22,7 +19,6 @@ const Header = () => {
         navigate(path)
     }
 
-
     const handleOpenPopup = () => {
         setOpenPopup(true);
     }
@@ -30,7 +26,6 @@ const Header = () => {
     useOnClickOutside(popupRef, () => {
         setOpenPopup(false);
     });
-
 
     return (
         <HeaderWrapper>

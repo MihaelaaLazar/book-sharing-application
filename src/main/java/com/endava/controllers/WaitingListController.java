@@ -40,4 +40,13 @@ public class WaitingListController {
     public List<WaitingListDto> getAllUsers() {
         return waitingListService.getAllUsers();
     }
+
+    @Operation(
+            summary = "Get info by userId",
+            description = "Get info by userId"
+    )
+    @RequestMapping(method = RequestMethod.GET, value = "/{userId}")
+    public ResponseEntity<?> getByUserId(@PathVariable UUID userId) {
+        return waitingListService.getByUserId(userId);
+    }
 }

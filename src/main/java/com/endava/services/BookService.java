@@ -82,36 +82,21 @@ public class BookService {
     public ResponseEntity<?> getBookByTitleOrAuthorWithPagination(String query, int page, int pageSize) {
         JSONObject responseBody = new JSONObject();
 
-        Set<BookDto> books = bookRepo._findByQuery(query);
+        List<BookDto> books = bookRepo.findByQuery(query);
 
-        Set<BookDto> availableBooks = books.stream()
-                .filter(book -> booksForRentRepo.findByBookId(book.getBookId()) != null)
-                .collect(Collectors.toSet());
+        List<BooksRefDto> booksRefDto = books.stream()
+                .map(book -> bookRefRepo.findByBookId(book.getBookId()))
+                .collect(Collectors.toList());
 
-        Set<RentedBooksDto> rentedBooks = books.stream()
-                .filter(book -> rentedBooksRepo.findOneBookByBookId(book.getBookId()) != null)
-                .map(book -> rentedBooksRepo.findOneBookByBookId(book.getBookId()))
-                .filter(rentedBook -> rentedBook.getReturningDate() != null)
-                .collect(Collectors.toSet());
-
-        Set<?> allBooks = Stream.concat(rentedBooks.stream(), availableBooks.stream())
-                .collect(Collectors.toSet());
-
-        List<?> booksList = new ArrayList<>(allBooks);
-        PagedListHolder<?> pagedListHolder = new PagedListHolder<>(booksList);
-
-
-        long count = booksList.size();
-        pagedListHolder.setPageSize(pageSize);
+        PagedListHolder<?> pagedListHolder = new PagedListHolder<>(booksRefDto);
         pagedListHolder.setPage(page);
+        pagedListHolder.setPageSize(pageSize);
 
-        responseBody.put("searchResult", pagedListHolder.getPageList());
-        responseBody.put("totalCount", count);
-
+        responseBody.put("searchResults", pagedListHolder.getPageList());
+        responseBody.put("totalCount", booksRefDto.size());
         return ResponseEntity
                 .status(200)
                 .body(responseBody.toString());
-
     }
 
     public ResponseEntity<?> updateBook(UUID bookId, BookDto book) {
@@ -147,31 +132,26 @@ public class BookService {
 
     public ResponseEntity<?> getBooksWithUserIdAndPagination(UUID userId, int page, int pageSize) {
         JSONObject responseBody = new JSONObject();
+        List<BooksRefDto> booksRefDto = bookRefRepo.findByUserUserId(userId);
 
-        List<BooksRefDto> booksDto = bookRefRepo.findAllByUserId(userId);
-        Set<BookDto> books = booksDto.stream().map(bookRefDto ->
-                bookRepo.findByBookId(bookRefDto.getBook().getBookId())).collect(Collectors.toSet());
+        List<BookDto> books = booksRefDto.stream()
+                .map(bookRefDto -> bookRepo.findByBookId(bookRefDto.getBook().getBookId()))
+                .collect(Collectors.toList());
 
-        List<BooksForRentDto> booksForRentDto = booksForRentRepo.findAllByUserId(userId);
-        Set<BookDto> _booksForRent = booksForRentDto.stream().map(bookForRent ->
-                bookRepo.findByBookId(bookForRent.getBookRef().getBook().getBookId())).collect(Collectors.toSet());
+        List<RentedBooksDto> rentedBooks = rentedBooksRepo.findRentedBookByUserId(userId);
+        List<BookDto> rentedBooksDto = rentedBooks.stream()
+                .map(rentedBook -> bookRepo.findByBookId(rentedBook.getBookRef().getBook().getBookId()))
+                .collect(Collectors.toList());
 
-        List<RentedBooksDto> rentedBooks = rentedBooksRepo.findAllByUserId(userId);
-        Set<BookDto> _rentedBooks = rentedBooks.stream().map(rentedBooksDto ->
-                bookRepo.findByBookId(rentedBooksDto.getBookRef().getBook().getBookId())).collect(Collectors.toSet());
+        List<BookDto> allBooks = Stream.concat(books.stream(), rentedBooksDto.stream())
+                .collect(Collectors.toList());
 
-        Set<BookDto> allBooks = Stream.concat(books.stream(), Stream.concat(_booksForRent.stream(), _rentedBooks.stream()))
-                .collect(Collectors.toSet());
-
-        List<BookDto> booksList = new ArrayList<>(allBooks);
-        PagedListHolder<BookDto> pagedListHolder = new PagedListHolder<>(booksList);
-
-        long count = booksList.size();
+        PagedListHolder<BookDto> pagedListHolder = new PagedListHolder<>(allBooks);
         pagedListHolder.setPageSize(pageSize);
         pagedListHolder.setPage(page);
 
         responseBody.put("books", pagedListHolder.getPageList());
-        responseBody.put("totalCount", count);
+        responseBody.put("totalCount", allBooks.size());
         return ResponseEntity
                 .status(200)
                 .body(responseBody.toString());

@@ -11,7 +11,7 @@ import {addUserBook} from "../../../reducers/userBooks.reducer";
 import {useNavigate} from "react-router-dom";
 import useModal from "../../../hooks/useModal";
 import UserBookModal from "./user-modal/UserBookModal";
-import BooksInfo from "../../reusable/modal/BooksInfo";
+import BooksInfo from "../../reusable/info-card/BooksInfo";
 import Paginate from "../../reusable/paginate/Paginate";
 
 

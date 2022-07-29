@@ -1,9 +1,8 @@
 import {useParams} from "react-router-dom";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import BookApi from "../reusable/apis/bookApi";
 import {useDispatch, useSelector} from "react-redux";
 import {addResults} from "../../reducers/searchResults.reducer";
-import {useState} from "react";
 import {addBook} from "../../reducers/book.reducer";
 import {
     BookInfoWrapper,
@@ -11,7 +10,7 @@ import {
 } from "../user-page/books/Book.style";
 import LoadingOverlay from "../reusable/loading-overlay/LoadingOverlay";
 import Paginate from "../reusable/paginate/Paginate";
-import BooksInfo from "../reusable/modal/BooksInfo";
+import BooksInfo from "../reusable/info-card/BooksInfo";
 import useModal from "../../hooks/useModal";
 import SearchBookModal from "./modal-search/SearchBookModal";
 
@@ -23,20 +22,18 @@ const SearchResults = () => {
     const [currentPageIndex, setCurrentPageIndex] = useState(0);
     const [loading, setLoading] = useState(false);
 
-    const bookInfo = searchResults.searchResult;
-
-
     let pageSize = 3;
 
     useEffect(() => {
         const fetchData = async () => {
             const {query} = params;
             const res = await searchBooks(query, currentPageIndex, pageSize);
-            setPageCount(Math.ceil(res.totalCount / pageSize));
-            dispatch(addResults(res))
+            const totalCount = res.totalCount;
+            setPageCount(Math.ceil(totalCount / pageSize));
+            dispatch(addResults(res.searchResults))
         }
         fetchData();
-    }, [])
+    }, [currentPageIndex, params, pageCount]);
 
     const searchBooks = async (_query, currentPage, _items) => {
         const res = await BookApi.searchBook(_query, currentPage, pageSize);
@@ -60,15 +57,13 @@ const SearchResults = () => {
         <BooksWrapper>
             {modal}
             {loading && <LoadingOverlay/>}
-            {bookInfo && bookInfo.length
+            {searchResults && searchResults.length
                 ? <BookInfoWrapper>
-                    {bookInfo.map((bookInfoItem, index) => {
+                    {searchResults.map((bookInfoItem, index) => {
                         return <BooksInfo
                             key={`bookInfo-${index}`}
-                            book={bookInfoItem.bookRef ? bookInfoItem.bookRef.book : bookInfoItem}
-                            setModalData={() => bookInfoItem.bookRef
-                                ? setModalData({book: bookInfoItem.bookRef})
-                                : setModalData({book: bookInfoItem})}
+                            book={bookInfoItem.book}
+                            setModalData={() => setModalData({book: bookInfoItem})}
                         />
                     })}
                 </BookInfoWrapper>
@@ -76,7 +71,7 @@ const SearchResults = () => {
             <Paginate
                 handlePageClick={handlePageClick}
                 pageCount={pageCount}
-                props={bookInfo}/>
+                props={searchResults}/>
         </BooksWrapper>
 
 

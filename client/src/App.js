@@ -17,23 +17,22 @@ function App({children}) {
     useEffect(() => {
         if (token) {
             UserApi.verify(token).then(res => {
-                if (res.status === 401) {
-                    localStorage.removeItem("token");
-                    navigate("/login")
-                }else{
-                    dispatch(addUser(res))
-                }
-            })
+                dispatch(addUser(res));
+            }).catch(err => {
+                localStorage.removeItem("token");
+                navigate("/login");
+            });
+
         }
     }, []);
 
     return (
-      <div className="main">
-          <Header/>
-          <HorizontalLine/>
-          {children}
-      </div>
-  );
+        <div className="main">
+            <Header/>
+            <HorizontalLine/>
+            {children}
+        </div>
+    );
 }
 
 export default App;

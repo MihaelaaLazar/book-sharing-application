@@ -7,6 +7,7 @@ import bookIcon from '../../assets/book.png';
 import openBook from '../../assets/open-book.png';
 import waiting from '../../assets/waiting.png';
 import Books from "./books/Books";
+import WaitingList from "./waiting-list/WaitingList";
 
 
 const UserPage = () =>{
@@ -25,7 +26,7 @@ const UserPage = () =>{
         },
         {
             label: <LabelIconWrapper><ImageIcon src={waiting}/>Waiting List</LabelIconWrapper>,
-            content: <div>x</div>
+            content: <WaitingList/>
         },
     ];
     return (

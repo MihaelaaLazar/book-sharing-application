@@ -5,6 +5,7 @@ import com.endava.models.UserDto;
 import com.endava.repositories.UserRepo;
 import com.endava.validation.EmailValidation;
 import io.jsonwebtoken.ExpiredJwtException;
+import org.json.JSONObject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -137,11 +138,14 @@ public class UserService {
     }
 
     public ResponseEntity<?> verifyToken(String token) {
+        JSONObject jsonObject = new JSONObject();
+        String message = "message";
         try {
-            if (jwtUtilService.isTokenExpired(token)) {
+            if (Boolean.TRUE.equals(jwtUtilService.isTokenExpired(token))) {
+                jsonObject.put(message, "Token expired");
                 return ResponseEntity
                         .status(401)
-                        .body("Token expired");
+                        .body(jsonObject.toString());
             } else {
                 String username = jwtUtilService.extractUsername(token);
                 UserDto user = userRepo.findByUsername(username);
@@ -150,16 +154,18 @@ public class UserService {
                             .status(200)
                             .body(user);
                 } else {
+                    jsonObject.put(message, "User not found");
                     return ResponseEntity
                             .status(404)
-                            .body("User not found");
+                            .body(jsonObject.toString());
                 }
             }
         } catch (ExpiredJwtException e) {
             final String expiredMsg = e.getMessage();
+            jsonObject.put(message, expiredMsg);
             return ResponseEntity
                     .status(401)
-                    .body(expiredMsg);
+                    .body(jsonObject.toString());
         }
     }
 

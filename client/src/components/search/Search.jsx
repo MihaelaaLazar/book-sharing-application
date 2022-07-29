@@ -1,7 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import {Container, IconMagnifyingGlass, IconRightArrow, SearchInput} from "./Search.style";
 import {faMagnifyingGlass, faArrowRight} from '@fortawesome/free-solid-svg-icons';
-import BookApi from "../reusable/apis/bookApi";
 import {useNavigate} from "react-router-dom";
 
 function Search() {
@@ -23,20 +22,30 @@ function Search() {
         setSearchQuery(null)
         navigate(`/search/${searchQuery}`);
     }
+    const handleKeypress = e => {
+        if (e.keyCode === 13) {
+            handleSearch();
+        }
+    }
 
     return (
-            <Container
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-                hover={showSearchInput}
-            >
-                <SearchInput placeholder="Search..." onChange={handleChange} ref={targetRef} showSearchInput={showSearchInput}/>
-                {showSearchInput
-                    ? <IconRightArrow onClick={handleSearch}  icon={faArrowRight}/>
-                    : <IconMagnifyingGlass  icon={faMagnifyingGlass}/>}
-            </Container>
+        <Container
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            hover={showSearchInput}
+        >
+            <SearchInput
+                onKeyDown={handleKeypress}
+                placeholder="Search..."
+                onChange={handleChange}
+                ref={targetRef}
+                showSearchInput={showSearchInput}/>
+            {showSearchInput
+                ? <IconRightArrow onClick={handleSearch} icon={faArrowRight}/>
+                : <IconMagnifyingGlass icon={faMagnifyingGlass}/>}
+        </Container>
     );
 }
 

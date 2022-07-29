@@ -6,7 +6,7 @@ import { BookInfoWrapper, BooksWrapper} from "./Book.style";
 import LoadingOverlay from "../../reusable/loading-overlay/LoadingOverlay";
 import useModal from "../../../hooks/useModal";
 import BookInformationModal from '../books/BookInformationModal';
-import BooksInfo from "../../reusable/modal/BooksInfo";
+import BooksInfo from "../../reusable/info-card/BooksInfo";
 import Paginate from "../../reusable/paginate/Paginate";
 
 

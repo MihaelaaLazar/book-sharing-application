@@ -11,9 +11,24 @@ import {
     ModalThumbnail,
     ModalWrapper,
 } from "../../user-page/available-books/ModalStyle.style";
+import {useEffect, useState} from "react";
+import BookApi from "../../reusable/apis/bookApi";
 
 
 const SearchBookModal = ({book, onClose}) => {
+    const [bookDetails, setBookDetails] = useState({});
+
+    useEffect(() => {
+        const fetchBookDetails = async () => {
+            const response = await BookApi.getBookByBookId(book.book.bookId);
+            const _bookDetails = await response.json();
+            setBookDetails(_bookDetails);
+        }
+        fetchBookDetails();
+    }, [book]);
+
+
+
     return <ModalWrapper>
         <CloseButton icon={faXmark} onClick={onClose}/>
         <ModalCard>
@@ -25,23 +40,21 @@ const SearchBookModal = ({book, onClose}) => {
             </ModalThumbnail>
             <ModalContent>
                 <BookTitleWrapper>
-                    {book.book
-                        ? <BookTitle>{book.book.title}</BookTitle>
-                        : <BookTitle>{book.title}</BookTitle>
-                    }
-                    {book.book
-                        ? <BookAuthor>{book.book.author}</BookAuthor>
-                        : <BookAuthor>{book.author}</BookAuthor>
-                    }
+                    <BookTitle>{book.book.title}</BookTitle>
+                    <BookAuthor>{book.book.author}</BookAuthor>
+
                 </BookTitleWrapper>
                 <BookDescription>
-                    {book.book
-                        ? <BookDescription>{book.book.description}</BookDescription>
-                        : <BookDescription>{book.description}</BookDescription>
-                    }
+                    <BookDescription>{book.book.description}</BookDescription>
                 </BookDescription>
                 <BookDetails>
-                    {/*TODO: add some details about search results*/}
+                    <tbody>
+                    <tr>
+                        <td>Book owner:</td>
+                        <td>{book.user.username}</td>
+                    </tr>
+                    </tbody>
+                    {/*TODO: add book details, rent book button or extend time button */}
                 </BookDetails>
             </ModalContent>
         </ModalCard>

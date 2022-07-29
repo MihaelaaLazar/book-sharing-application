@@ -19,8 +19,13 @@ export default {
 
     },
     verify : async (token) => {
-        const res = await fetch(`http://localhost:8080/api/users/verify/${token}`);
-            return await res.json();
+        const res =  await fetch(`http://localhost:8080/api/users/verify/${token}`);
+        if(res && !res.ok){
+            const errorMessage = await res.json()
+            throw new Error(errorMessage.message);
+        }
+        return await res.json();
+
     },
     addOnWaitingList : async(userId, bookId) =>{
         const res = await fetch(`http://localhost:8080/api/waiting/${userId}/${bookId}`,{

@@ -1,29 +1,19 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-export const BooksWrapper = styled.div`
+export const BookContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-`
-export const BookInfoWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 1.5rem;
-  width: 100%;
-`
-export const BookCardWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  justify-content: flex-start;
+  width: 50%;
+  justify-content: center;
+  align-self: center;
+  margin:auto;
   padding: 1rem 1rem;
   border: 1px solid #dad2d2;
   max-height: 30rem;
   border-radius: 0.5rem;
-
+  
 `
-export const BookInfo = styled.div`
+export const BookCard = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -36,8 +26,8 @@ export const BookInfo = styled.div`
     display: flex;
     justify-content: center;
     align-self: center;
-    max-width: 20rem;
-    max-height: 20rem;
+    max-width: 18rem;
+    max-height: 18rem;
     cursor: pointer;
     margin-bottom: 1rem;
   }

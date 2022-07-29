@@ -86,6 +86,7 @@ export const FormWrapper = styled.form`
     gap:0.5rem;
     padding: 0.5rem 2rem;
     border: 1px solid #ccc;
+    border-radius: 5px;
     cursor: pointer;
     margin:1.2rem;
   }

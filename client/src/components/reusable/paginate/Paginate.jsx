@@ -1,8 +1,5 @@
-import {
-    PaginateIconWrapper,
-    ReactPaginateWrapper
-} from "../../user-page/books/Book.style";
 import {faChevronLeft, faChevronRight, faEllipsis} from "@fortawesome/free-solid-svg-icons";
+import {PaginateIconWrapper, ReactPaginateWrapper} from "./Paginate.style";
 
 const Paginate = ({props, handlePageClick, pageCount}) => {
 

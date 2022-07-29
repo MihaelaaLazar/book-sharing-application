@@ -14,4 +14,7 @@ public interface BookRefRepo extends CrudRepository<BooksRefDto, UUID> {
 
     @Query("SELECT b FROM BooksRefDto b WHERE b.user.userId = ?1 ")
     List<BooksRefDto> findAllByUserId(UUID userId);
+
+    @Query("SELECT b from BooksRefDto b WHERE b.book.bookId = ?1")
+    BooksRefDto findByBookId(UUID bookId);
 }
