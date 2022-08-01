@@ -35,5 +35,4 @@ build/
 ### env ###
 .env
 
-application.properties
-env.yml
+./src/main/resources/env.yml
