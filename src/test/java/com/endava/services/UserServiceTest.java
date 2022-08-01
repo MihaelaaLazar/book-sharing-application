@@ -81,27 +81,5 @@ public class UserServiceTest {
         assertThat(message).isEqualTo("User account not found");
     }
 
-    @Test
-    @Ignore
-    public void shouldCheckIfEmailIsPresentAndUserIsVerified() {
-    when(userRepo.findByEmail(EMAIL).isPresent()).thenReturn(true);
-    when(USER.isVerified()).thenReturn(true);
-
-    ResponseEntity<?> response =  ResponseEntity
-            .status(400)
-            .body("Email already exists and your account is verified");
-
-    assertThat(userService.createUserAccount(USER)).isEqualTo(response);
-
-    }
-
-    @Test
-    @Ignore
-    public void shouldReturnMessageException() {
-
-       //TODO: implement this
-
-    }
-
 
 }

@@ -5,7 +5,6 @@ import com.endava.models.BooksRefDto;
 import com.endava.repositories.BookRefRepo;
 import com.endava.repositories.BookRepo;
 import com.endava.repositories.BooksForRentRepo;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -40,15 +39,6 @@ public class BookServiceTest {
 
     @InjectMocks
     private BookService bookService;
-
-    @BeforeEach
-    public void beforeEach() {
-        BOOK_DTO.setBookId(BOOK_ID);
-        BOOK_DTO.setTitle(TITLE);
-        BOOK_DTO.setAuthor(AUTHOR);
-        BOOK_DTO.setDescription(DESCRIPTION);
-        BOOK_DTO.setDateOfPublication(PUBLISHED_DATE);
-    }
 
 
     @Test
