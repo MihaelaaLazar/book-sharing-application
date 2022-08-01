@@ -35,4 +35,4 @@ build/
 ### env ###
 .env
 
-./src/main/resources/env.yml
+/src/main/**/*.yml
