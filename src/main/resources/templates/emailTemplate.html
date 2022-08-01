@@ -1,32 +1,52 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:remove="all">Confirmation email</title>
+    <title th:remove="all">Registration confirmation</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,900;1,300;1,400&display=swap"
+          rel="stylesheet">
+    <style type="text/css">
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Lato', sans-serif;
+            color: #183153;
+        }
+
+        a.link {
+            border: solid 1px  #183153;
+            background-color:  #183153;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            display: block;
+            width: 200px;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .welcome-message {
+            color: #de411b;
+            font-size: 20px;
+        }
+    </style>
 </head>
 <body>
-<div th:replace="body">
-    <h1>Confirmation email</h1>
-    <p>
-        Hello,
-    </p>
-    <p>
-        You have successfully registered on our website.
-    </p>
-    <p>
-        Please click the link below to confirm your email address.
-    </p>
-    <p>
-        <a href="${url}">${url}</a>
-    </p>
-    <p>
-        If you did not request this email, please ignore it.
-    </p>
-    <p>
-        Thank you,
-    </p>
-    <p>
-        Book club team
-    </p>
-</div>
+<h1>Confirm your account</h1>
+<div class="welcome-message">Welcome, <b th:text="${username}">username</b> !</div>
+<p>
+    To confirm your email address, please click on the link below
+</p>
+<p style="text-align: left;">
+    <a class="link" href="#" th:href="${url}">Confirm my account</a>
+</p>
+<br>
+<p>
+    Regards, <br/>
+    &emsp; <em>Book Club Team</em>
+</p>
 </body>
 </html>

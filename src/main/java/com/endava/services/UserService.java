@@ -16,7 +16,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -50,7 +52,10 @@ public class UserService {
                     String token = jwtUtilService.generateToken(user.getUsername());
                     user.setToken(token);
                     String url = "http://localhost:8080/api/users/confirmation?token=" + user.getToken();
-                    emailService.sendConfirmationEmail("Please confirm your account by clicking on: " + url, user.getEmail(), "Confirm your account");
+                    Map<String, Object> template = new HashMap<>();
+                    template.put("username", user.getUsername());
+                    template.put("url",url);
+                    emailService.sendEmailWithThymeleaf(user.getEmail(), "Confirm your account", template);
                     userRepo.save(user);
                     return ResponseEntity
                             .status(201)
@@ -133,8 +138,15 @@ public class UserService {
         return userRepo.findAll();
     }
 
-    public UserDto getUserByUserId(UUID userId) {
-        return userRepo.findByUserId(userId);
+    public ResponseEntity<?> getUserByUserId(UUID userId) {
+        if (userRepo.findByUserId(userId) == null) {
+            return ResponseEntity
+                    .status(400)
+                    .body("User not found");
+        } else {
+            UserDto user = userRepo.findByUserId(userId);
+            return ResponseEntity.status(200).body(user);
+        }
     }
 
     public ResponseEntity<?> verifyToken(String token) {

@@ -11,6 +11,7 @@ export const BookInfoWrapper = styled.div`
   justify-content: space-between;
   gap: 1.5rem;
   width: 100%;
+  padding:1rem 1rem;
 `
 export const BookCardWrapper = styled.div`
   display: flex;

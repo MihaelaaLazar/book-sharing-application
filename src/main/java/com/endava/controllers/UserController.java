@@ -81,7 +81,7 @@ public class UserController {
             value = "/{userId}",
             method = RequestMethod.GET,
             produces = {APPLICATION_JSON_VALUE})
-    public UserDto getUserByUserId(@PathVariable("userId") UUID userId) {
+    public ResponseEntity<?> getUserByUserId(@PathVariable("userId") UUID userId) {
         return userService.getUserByUserId(userId);
     }
 
