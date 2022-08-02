@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:remove="all">Confirmation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,900;1,300;1,400&display=swap"
+          rel="stylesheet">
+    <style type="text/css">
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Lato', sans-serif;
+            color: #183153;
+        }
+        .button-wrapper{
+            display: flex;
+            justify-content: center;
+            align-self: center;
+        }
+
+        a.link {
+            border: solid 1px  #de411b;
+            background-color:  #de411b;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            display: block;
+            width: 200px;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .welcome-message {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #183153;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="welcome-message"><p th:text="${message}">message</p> !</div>
+<p style="text-align: left;">
+
+<div class="button-wrapper">
+    <a class="link" href="#" th:href="${url}">Login</a>
+</div>
+</p>
+</body>
+</html>

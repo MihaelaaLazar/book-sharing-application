@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.UUID;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
-@RestController
+@Controller
 @RequestMapping("/api/users")
 @Tag(name = "1. User", description = "User API")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -41,8 +43,8 @@ public class UserController {
             value = "/confirmation",
             method = RequestMethod.GET,
             produces = {APPLICATION_JSON_VALUE})
-    public String confirmUserAccount(@RequestParam("token") String token) {
-        return userService.confirmUserAccount(token);
+    public String confirmUserAccount(@RequestParam("token") String token, Model model)  {
+        return userService.confirmUserAccount(token, model);
     }
 
     @Operation(summary = "Verify token for user", description = "Verifies the token for the user")

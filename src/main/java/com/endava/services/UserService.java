@@ -14,12 +14,10 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import javax.mail.MessagingException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -54,7 +52,7 @@ public class UserService {
                     String url = "http://localhost:8080/api/users/confirmation?token=" + user.getToken();
                     Map<String, Object> template = new HashMap<>();
                     template.put("username", user.getUsername());
-                    template.put("url",url);
+                    template.put("url", url);
                     emailService.sendEmailWithThymeleaf(user.getEmail(), "Confirm your account", template);
                     userRepo.save(user);
                     return ResponseEntity
@@ -72,16 +70,37 @@ public class UserService {
         }
     }
 
-    public String confirmUserAccount(String token) {
+    public String confirmUserAccount(String token, Model model) {
+        final String registerLink = "http://localhost:3000/register";
+        final String loginLink = "http://localhost:3000/login";
         UserDto user = userRepo.findByToken(token);
-        if (user != null) {
-            user.setVerified(true);
-            userRepo.save(user);
-            return "User account confirmed";
-        } else {
-            return "User account not found";
+        if (user != null && !user.isVerified()) {
+            try {
+                if (Boolean.FALSE.equals(jwtUtilService.isTokenExpired(token))) {
+                    user.setVerified(true);
+                    userRepo.save(user);
+                    model.addAttribute("message", "Your account has been verified");
+                    model.addAttribute("url", loginLink);
+                    return "confirmation-template";
+                } else {
+                    userRepo.delete(user);
+                    model.addAttribute("message", "Invalid token");
+                    model.addAttribute("url", registerLink);
+                    return "email-not-confirmed";
+                }
+            } catch (ExpiredJwtException e) {
+                userRepo.delete(user);
+                model.addAttribute("message", "Invalid token");
+                model.addAttribute("url", registerLink);
+                return "email-not-confirmed";
+
+            }
         }
+        model.addAttribute("message", "Your account has been verified");
+        model.addAttribute("url", loginLink);
+        return "confirmation-template";
     }
+
 
     public ResponseEntity<?> login(UserDto userDto) {
         try {

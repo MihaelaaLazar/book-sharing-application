@@ -43,7 +43,7 @@ public class EmailService {
     public void sendEmailWithThymeleaf(String to, String subject, Map<String, Object> template) throws MessagingException {
         Context context = new Context();
         context.setVariables(template);
-        String htmlBody = templateEngine.process("emailTemplate.html", context);
+        String htmlBody = templateEngine.process("email-template.html", context);
         sendConfirmationEmail(htmlBody, to, subject);
     }
 }
