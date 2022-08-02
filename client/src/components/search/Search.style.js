@@ -17,13 +17,24 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  
+  @media(max-width: 1280px){
+    
+  }
 
   ${({hover}) =>
           hover &&
           css`
             width: 20%;
             border: 2px solid #de411b;
+            @media(max-width: 1280px){
+              width: 40%;
+              border: 2px solid #de411b;
+              
+            }
           `}
+  
+  
 `;
 
 export const SearchInput = styled.input`
@@ -44,6 +55,12 @@ export const SearchInput = styled.input`
   appearance: none;
 
   display: ${(props) => (props.showSearchInput ? "block" : "none")};
+  
+  @media(max-width: 1280px){
+    width: 100%;
+    height:42px;
+    font-size:0.8rem;
+  }
 `;
 
 const fadeIn = keyframes`
@@ -62,6 +79,10 @@ const IconCommonCss = css`
   fill: #de411b;;
   z-index: 10;
   animation: ${fadeIn} 1s linear;
+  @media(max-width: 1280px){
+    width: 0.8rem;
+    height: 0.8rem;
+  }
 `;
 
 export const IconMagnifyingGlass = styled(FontAwesomeIcon)`

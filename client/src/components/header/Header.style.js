@@ -8,6 +8,10 @@ export const HeaderWrapper = styled.header`
   background-color: #fff;
   padding: 1rem 5rem;
   width: 100%;
+  
+  @media(max-width: 1280px){
+    padding:0.5rem 0.5rem;
+  }
 `;
 
 export const HorizontalLine = styled.div`
@@ -21,6 +25,11 @@ export const LoginIcon = styled(FontAwesomeIcon)`
   font-size: 2rem;
   color: #de411b;
   padding: 1rem 1rem;
+  
+  @media(max-width: 1280px){
+    font-size:1.2rem;
+    padding:0.5rem 0.5rem;
+  }
 `;
 export const UserIconWrapper = styled.div`
   position: relative;
@@ -28,6 +37,12 @@ export const UserIconWrapper = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+
+  @media(max-width: 1280px){
+    font-size:1.2rem;
+    padding:0.5rem 0.5rem;
+  }
+  
 `
 export const IconWrapper = styled(FontAwesomeIcon)`
   font-size: 2rem;
@@ -43,6 +58,10 @@ export const Logo = styled.img`
   top: 1rem;
   max-width: 5rem;
   cursor: pointer;
+
+  @media(max-width: 1280px){
+    left:1rem;
+  }
 `;
 
 export const ButtonWrapper = styled.button`
@@ -55,6 +74,11 @@ export const ButtonWrapper = styled.button`
   cursor: pointer;
   font-size: 1.5rem;
   justify-content: center;
+
+  @media(max-width: 1280px){
+    font-size:1.2rem;
+    padding:0.5rem 0.5rem;
+  }
 `
 
 

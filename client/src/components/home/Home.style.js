@@ -7,6 +7,19 @@ export const ContentWrapper = styled.div`
   align-items: center;
   width: 100%;
   padding: 1rem 5rem;
+  
+  @media(max-width: 1280px){
+    padding: 1rem 5rem;
+  }
+  @media(max-width: 1000px){
+    flex-direction: column-reverse;
+  }
+  
+  @media(max-width: 600px){
+    padding:0.5rem 0.5rem;
+    display: flex;
+    flex-direction: column-reverse;
+  }
 `;
 
 export const Title = styled.h1`
@@ -14,10 +27,22 @@ export const Title = styled.h1`
   font-size: 3rem;
   color: #183153;
   margin-bottom: 1rem;
+
+  @media(max-width: 1280px){
+    width: 100%;
+    font-size:2.5rem;
+    padding:1rem;
+  }
+  
+  @media(max-width: 600px){
+    width: 100%;
+    font-size: 1.5rem;
+    padding:1rem;
+  }
 `;
 
 export const AnimationWrapper = styled.div`
-  width: 50%;
+  width: 100%;
   max-height: 30rem;
   display: flex;
   justify-content: flex-end;
@@ -25,6 +50,14 @@ export const AnimationWrapper = styled.div`
   #book-lover {
     max-height: 100%;
     overflow: hidden;
+  }
+  
+  @media(max-width: 1280px){
+    width: 80%;
+  }
+  
+  @media(max-width: 600px){
+    width: 100%;
   }
 `;
 
@@ -38,12 +71,23 @@ export const DescriptionWrapper = styled.div`
     color: #1e3a61;
     font-size:26px;
   }
+  @media(max-width: 1280px){
+    & > p {
+      font-size: 1.5rem;
+      padding: 0 1rem;
+  }
+  @media(max-width: 600px) {
+    & > p {
+      font-size: 1rem;
+      padding: 0 1rem;
+    }
+  }
 `
 export const ButtonWrapper = styled.button`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 20%;
+  width: 30%;
   align-items: center;
   padding:1rem 3rem;
   margin-top:2rem;
@@ -52,5 +96,21 @@ export const ButtonWrapper = styled.button`
   font-size: 20px;
   color:#f1f1f1;
   cursor:pointer;
+  
+  @media(max-width: 1280px){
+    font-size: 20px;
+    margin-left:1rem;
+    padding:1rem 2rem;
+    width: 10rem;
+    margin-bottom: 1rem;
+  }
+  
+  @media(max-width: 600px){
+    font-size: 15px; 
+    margin-left:1rem;
+    padding:1rem 2rem;
+    width: 8rem;
+    margin-bottom: 1rem;
+  }
 `
 

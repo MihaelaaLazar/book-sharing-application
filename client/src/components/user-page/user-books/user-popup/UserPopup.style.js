@@ -12,6 +12,9 @@ export const PopupWrapper = styled.div`
   background-color: #ffffff;
   z-index: 10;
   width: 15rem;
+  @media(max-width: 1280px){
+    right:1rem;
+  }
 `;
 
 export const PopupHeader = styled.div`
