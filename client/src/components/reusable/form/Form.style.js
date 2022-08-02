@@ -8,6 +8,8 @@ export const Container = styled.div`
   padding: 1rem 5rem;
   align-items: center;
   justify-content: center;
+
+  
 `;
 export const FormWrapper = styled.form`
   display: flex;
@@ -18,8 +20,22 @@ export const FormWrapper = styled.form`
   width: 40%;
   gap: 0.7rem;
   box-shadow: inset 0 0 0 2px #eff4f4;
+  border-radius: 10px;
 
-
+  @media(max-width: 1280px){
+    width: 60%;
+    padding:1rem 1rem;
+  }
+  
+  @media(max-width: 1000px){
+    width: 60%;
+    padding:1rem 1rem;
+  }
+  
+  @media(max-width: 600px){
+    width: 100%;
+    padding:1rem 1rem;
+  }
   & > input, textarea {
     display: flex;
     flex-direction: column;

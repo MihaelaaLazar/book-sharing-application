@@ -8,6 +8,11 @@ export const LoginWrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  
+  @media(max-width: 1280px){
+    max-width: 100%;
+    padding:1rem 1rem;
+  }
 `;
 
 export const LoginForm = styled.form`
@@ -19,6 +24,15 @@ export const LoginForm = styled.form`
   width: 40%;
   gap: 0.7rem;
   box-shadow: inset 0 0 0 2px #eff4f4;
+  
+  @media(max-width: 1280px){
+    width: 60%;
+    padding:1rem 5rem;
+  }
+  @media(max-width: 600px){
+    width: 100%;
+    padding:1rem 5rem;
+  }
 
   & > input {
     display: flex;

@@ -13,11 +13,11 @@ export const ContentWrapper = styled.div`
   }
   @media(max-width: 1000px){
     flex-direction: column-reverse;
+    padding:0.5rem 0.5rem;
   }
   
   @media(max-width: 600px){
     padding:0.5rem 0.5rem;
-    display: flex;
     flex-direction: column-reverse;
   }
 `;
@@ -31,6 +31,12 @@ export const Title = styled.h1`
   @media(max-width: 1280px){
     width: 100%;
     font-size:2.5rem;
+    padding:1rem;
+  }
+
+  @media(max-width: 1000px){
+    width: 100%;
+    font-size:1.5rem;
     padding:1rem;
   }
   
@@ -53,7 +59,10 @@ export const AnimationWrapper = styled.div`
   }
   
   @media(max-width: 1280px){
-    width: 80%;
+    width: 100%;
+  }
+  @media(max-width: 1000px){
+    width: 100%;
   }
   
   @media(max-width: 600px){
@@ -76,6 +85,12 @@ export const DescriptionWrapper = styled.div`
       font-size: 1.5rem;
       padding: 0 1rem;
   }
+    @media(max-width: 1000px) {
+      & > p {
+        font-size: 1rem;
+        padding: 0 1rem;
+      }
+    }
   @media(max-width: 600px) {
     & > p {
       font-size: 1rem;
