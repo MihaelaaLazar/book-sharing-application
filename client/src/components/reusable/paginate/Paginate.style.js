@@ -48,6 +48,15 @@ export const ReactPaginateWrapper = styled(ReactPaginate)`
       }
     }
   }
+  
+  @media(max-width: 600px){
+    li {
+      a {
+        font-size: 12px;
+        padding: 0.5rem 0.5rem;
+      }
+    }
+  }
 `
 export const PaginateIconWrapper = styled(FontAwesomeIcon)`
   font-size: 1rem;

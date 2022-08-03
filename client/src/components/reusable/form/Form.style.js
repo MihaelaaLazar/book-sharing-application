@@ -21,20 +21,28 @@ export const FormWrapper = styled.form`
   gap: 0.7rem;
   box-shadow: inset 0 0 0 2px #eff4f4;
   border-radius: 10px;
-
+ 
   @media(max-width: 1280px){
-    width: 60%;
-    padding:1rem 1rem;
-  }
-  
-  @media(max-width: 1000px){
     width: 60%;
     padding:1rem 1rem;
   }
   
   @media(max-width: 600px){
     width: 100%;
-    padding:1rem 1rem;
+
+
+    & > label{
+      font-size:0.9rem;
+    }
+    & > label:nth-child(9){
+      font-size: 0.7rem;
+    }
+    & > input, textarea {
+      font-size: 10px;
+      width: 70%;
+      padding:0 0.5rem;
+    }
+    
   }
   & > input, textarea {
     display: flex;

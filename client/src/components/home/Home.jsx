@@ -1,6 +1,6 @@
-import {AnimationWrapper, ContentWrapper, Title, DescriptionWrapper, RegisterButton, ButtonWrapper} from "./Home.style";
+import {AnimationWrapper, ContentWrapper, Title, DescriptionWrapper, ButtonWrapper} from "./Home.style";
 import Animation from "../reusable/animation/Animation";
-import bookLoverAnimation from '../../assets/animations/bookLoverAnimation.json';
+import bookLoverAnimation from '../../assets/animations/book-lover-animation.json';
 import {useNavigate} from "react-router-dom";
 import {Fragment} from 'react';
 import {useSelector} from "react-redux";

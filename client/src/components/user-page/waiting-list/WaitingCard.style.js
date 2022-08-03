@@ -12,6 +12,10 @@ export const BookContainer = styled.div`
   max-height: 30rem;
   border-radius: 0.5rem;
   
+  @media(max-width: 600px){
+    width: 100%;
+  }
+  
 `
 export const BookCard = styled.div`
   display: flex;

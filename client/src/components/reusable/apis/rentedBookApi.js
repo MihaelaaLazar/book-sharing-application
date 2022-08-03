@@ -4,20 +4,18 @@ headers.append("Content-Type", "application/json");
 
 export default {
     rentBook: async (userId, bookRefId, rentalPeriod) => {
-        const response = await fetch(`http://localhost:8080/api/booksForRent/${userId}/${bookRefId}/`, {
+        return  fetch(`${process.env.REACT_APP_URL}/api/booksForRent/${userId}/${bookRefId}/`, {
             method: "POST",
             headers: headers,
             body: JSON.stringify(rentalPeriod)
         });
-        return  response;
     },
     extendPeriod : async (rentedBookId, rentalPeriod) => {
-        const response = await fetch(`http://localhost:8080/api/rentedBooks/${rentedBookId}`,{
+        return  fetch(`${process.env.REACT_APP_URL}/api/rentedBooks/${rentedBookId}`, {
             method: "PUT",
             headers: headers,
-            body : JSON.stringify(rentalPeriod)
+            body: JSON.stringify(rentalPeriod)
         });
-        return response;
     }
 }
 

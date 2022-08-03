@@ -6,12 +6,13 @@ export const HeaderWrapper = styled.header`
   flex-direction: row;
   justify-content: flex-end;
   background-color: #fff;
-  padding: 1rem 5rem;
+  padding: 1rem 3rem;
   width: 100%;
   
-  @media(max-width: 1280px){
+  @media(max-width: 600px){
     padding:0.5rem 0.5rem;
   }
+
 `;
 
 export const HorizontalLine = styled.div`
@@ -26,7 +27,11 @@ export const LoginIcon = styled(FontAwesomeIcon)`
   color: #de411b;
   padding: 1rem 1rem;
   
-  @media(max-width: 1280px){
+
+  @media(max-width: 1000px){
+    font-size:2rem;
+  }
+  @media(max-width: 600px){
     font-size:1.2rem;
     padding:0.5rem 0.5rem;
   }
@@ -37,10 +42,19 @@ export const UserIconWrapper = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+  gap:1rem;
+  
+  #menu{
+    display: none;
+  }
 
-  @media(max-width: 1280px){
+  @media(max-width: 600px){
     font-size:1.2rem;
     padding:0.5rem 0.5rem;
+    
+    #menu{
+      display: flex;
+    }
   }
   
 `
@@ -58,8 +72,11 @@ export const Logo = styled.img`
   top: 1rem;
   max-width: 5rem;
   cursor: pointer;
-
-  @media(max-width: 1280px){
+  
+  @media(max-width: 1000px){
+    left: 3rem;
+  }
+  @media(max-width: 600px){
     left:1rem;
   }
 `;
@@ -75,7 +92,11 @@ export const ButtonWrapper = styled.button`
   font-size: 1.5rem;
   justify-content: center;
 
-  @media(max-width: 1280px){
+  
+  @media(max-width: 1000px){
+    font-size:1.5rem;
+  }
+  @media(max-width: 600px){
     font-size:1.2rem;
     padding:0.5rem 0.5rem;
   }

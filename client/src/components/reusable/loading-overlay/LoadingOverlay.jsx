@@ -1,5 +1,5 @@
 import Animation from "../animation/Animation";
-import loadingSpinner from '../../../assets/animations/loadingSpinner.json';
+import loadingSpinner from '../../../assets/animations/loading-spinner.json';
 import {LoadingOverlayWrapper} from "./LoadingOverlay.style";
 
 const LoadingOverlay = () => {

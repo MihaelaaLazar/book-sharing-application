@@ -12,6 +12,10 @@ export const BookInfoWrapper = styled.div`
   gap: 1.5rem;
   width: 100%;
   padding:1rem 1rem;
+  
+  @media(max-width: 600px){
+    flex-direction: column;
+  }
 `
 export const BookCardWrapper = styled.div`
   display: flex;
@@ -65,5 +69,30 @@ export const BookInfo = styled.div`
     color: #183153;
     text-align: left;
     width: 50%;
+  }
+  
+  @media(max-width: 600px) {
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: flex-end;
+
+    & > img {
+      max-width: 10rem;
+      max-height: 10rem;
+    }
+
+    table {
+      width: 50%;
+    }
+
+    table,
+    tbody,
+    tr {
+      width: 100%;
+    }
+    table tr:last-child {
+      display: none;
+    }
+    
   }
 `

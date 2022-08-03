@@ -3,7 +3,7 @@ headers.append("Authorization",`Bearer ${localStorage.getItem("token")}`)
 
 export default {
     login : async (values) => {
-       const res = await fetch('http://localhost:8080/api/users/login', {
+       const res = await fetch(`${process.env.REACT_APP_URL}/api/users/login`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -15,20 +15,20 @@ export default {
            const errorMessage = await res.text()
            throw new Error(errorMessage);
        }
-       return await res.json();
+       return res.json();
 
     },
     verify : async (token) => {
-        const res =  await fetch(`http://localhost:8080/api/users/verify/${token}`);
+        const res =  await fetch(`${process.env.REACT_APP_URL}/api/users/verify/${token}`);
         if(res && !res.ok){
             const errorMessage = await res.json()
             throw new Error(errorMessage.message);
         }
-        return await res.json();
+        return  res.json();
 
     },
     addOnWaitingList : async(userId, bookId) =>{
-        const res = await fetch(`http://localhost:8080/api/waiting/${userId}/${bookId}`,{
+        const res = await fetch(`${process.env.REACT_APP_URL}/api/waiting/${userId}/${bookId}`,{
             method: "POST",
             headers: headers,
             body : JSON.stringify({userId, bookId})

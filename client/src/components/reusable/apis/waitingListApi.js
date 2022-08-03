@@ -1,18 +1,23 @@
-const headers = new Headers();
-headers.append("Authorization",`Bearer ${localStorage.getItem("token")}`);
-headers.append("Content-Type", "application/json");
+const getFetchOptions = () => {
+    const headers = new Headers();
+    headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`)
+    return {
+        headers
+    }
+}
 
 export default {
     getInfoByUserId: async (userId) => {
-        const response = await fetch(`http://localhost:8080/api/waiting/${userId}`, {
+        const options = getFetchOptions();
+        const response = await fetch(`${process.env.REACT_APP_URL}/api/waiting/${userId}`, {
+            ...options,
             method: "GET",
-            headers: headers,
         });
         if(response && !response.ok){
             const errorMessage = await response.json()
             throw new Error(errorMessage.message);
         }
-        return await response.json();
+        return response.json();
     },
 }
 

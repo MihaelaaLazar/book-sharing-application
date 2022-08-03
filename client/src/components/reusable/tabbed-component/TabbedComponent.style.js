@@ -16,18 +16,13 @@ export const TabContent = styled.div`
 `
 export const TabWrapper = styled.div`
   display: flex;
-  flex:1 1;
+  flex: 1 1;
   justify-content: center;
   align-items: center;
   padding: 0.8rem 0.5rem;
   border-bottom: ${({isActive}) => isActive ? "1px solid #de411b" : "none"};
   cursor: pointer;
   
-  & > span {
-    color:  #1e3a61;
-    font-size: 20px;
-    font-weight: 600;
-  }
 `
 
 

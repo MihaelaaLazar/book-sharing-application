@@ -13,6 +13,7 @@ import Paginate from "../reusable/paginate/Paginate";
 import BooksInfo from "../reusable/info-card/BooksInfo";
 import useModal from "../../hooks/useModal";
 import SearchBookModal from "./modal-search/SearchBookModal";
+import NoContent from "../../views/no-content/NoContent";
 
 const SearchResults = () => {
     const params = useParams();
@@ -67,7 +68,7 @@ const SearchResults = () => {
                         />
                     })}
                 </BookInfoWrapper>
-                : <div>No results found</div>}
+                : <NoContent/>}
             <Paginate
                 handlePageClick={handlePageClick}
                 pageCount={pageCount}

@@ -36,8 +36,8 @@ export const Title = styled.h1`
 
   @media(max-width: 1000px){
     width: 100%;
-    font-size:1.5rem;
-    padding:1rem;
+    font-size:2rem;
+    padding:1rem 3rem;
   }
   
   @media(max-width: 600px){
@@ -60,9 +60,26 @@ export const AnimationWrapper = styled.div`
   
   @media(max-width: 1280px){
     width: 100%;
+
+    #book-lover {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin:auto;
+      max-height: 100%;
+      overflow: hidden;
+    }
   }
   @media(max-width: 1000px){
     width: 100%;
+    #book-lover {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin:auto;
+      max-height: 100%;
+      overflow: hidden;
+    }
   }
   
   @media(max-width: 600px){
@@ -87,8 +104,8 @@ export const DescriptionWrapper = styled.div`
   }
     @media(max-width: 1000px) {
       & > p {
-        font-size: 1rem;
-        padding: 0 1rem;
+        font-size: 1.5rem;
+        padding: 0 3rem;
       }
     }
   @media(max-width: 600px) {
@@ -115,6 +132,13 @@ export const ButtonWrapper = styled.button`
   @media(max-width: 1280px){
     font-size: 20px;
     margin-left:1rem;
+    padding:1rem 2rem;
+    width: 10rem;
+    margin-bottom: 1rem;
+  }
+  @media(max-width: 1000px){
+    font-size: 20px;
+    margin-left:3rem;
     padding:1rem 2rem;
     width: 10rem;
     margin-bottom: 1rem;

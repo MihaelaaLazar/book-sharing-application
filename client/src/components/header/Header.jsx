@@ -27,6 +27,7 @@ const Header = () => {
         setOpenPopup(false);
     });
 
+
     return (
         <HeaderWrapper>
             <Logo src={logoSrc} onClick={() => handleNavigate("/")}></Logo>
