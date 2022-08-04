@@ -5,13 +5,11 @@ import com.endava.models.*;
 import com.endava.repositories.BooksForRentRepo;
 import com.endava.repositories.RentedBooksRepo;
 import com.endava.repositories.WaitingListRepo;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-
-import org.slf4j.Logger;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +18,7 @@ import static com.endava.utils.Constants.DATE_FORMAT;
 import static com.endava.utils.Constants.DEFAULT_RENT_VALUE;
 
 @Component
+@Slf4j
 public class ScheduledTasks {
     @Autowired
     private RentedBooksRepo rentedBooksRepo;
@@ -29,9 +28,7 @@ public class ScheduledTasks {
     @Autowired
     private WaitingListRepo waitingListRepo;
 
-    private static final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
-
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 0 7 * * *" , zone = "Europe/Bucharest")
     public void deleteTheBookFromTheRentedBooks() {
         List<RentedBooksDto> rentedBooksDtoList = rentedBooksRepo.findAll();
         for (RentedBooksDto rentedBooksDto : rentedBooksDtoList) {
@@ -43,7 +40,7 @@ public class ScheduledTasks {
         log.info("Update rented books task ran at {}", DATE_FORMAT.format(new Date()));
     }
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 0 8 * * *" , zone = "Europe/Bucharest")
     public void assignTheBookToTheUser() {
         List<WaitingListDto> usersInWaitingList = waitingListRepo.findAll();
         for (WaitingListDto _usersInWaitingList : usersInWaitingList) {

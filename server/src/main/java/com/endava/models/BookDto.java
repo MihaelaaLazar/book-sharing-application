@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -35,6 +36,7 @@ public class BookDto {
     private LocalDate dateOfPublication;
 
     @Column(name = "description")
+    @Size(min = 30, max = 255)
     @Schema(description = "Description" ,required = true, example = "The Lord of the Rings is the saga of a group of sometimes reluctant heroes who set forth to save their world from consummate evil. Its many worlds and creatures were drawn from Tolkien's extensive knowledge of philology and folklore.")
     private String description;
 

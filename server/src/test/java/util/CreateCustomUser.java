@@ -13,6 +13,8 @@ public class CreateCustomUser {
         user.setFirstName("John");
         user.setLastName("Doe");
         user.setPassword("password");
+        user.setVerified(false);
+        user.setToken(null);
         return user;
 
     }
