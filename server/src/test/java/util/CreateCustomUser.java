@@ -2,12 +2,9 @@ package util;
 
 import com.endava.models.UserDto;
 
-
 import java.util.UUID;
 
-
 public class CreateCustomUser {
-
     public static UserDto johnDoe() {
         UserDto user = new UserDto();
         user.setUserId(UUID.randomUUID());
@@ -16,8 +13,6 @@ public class CreateCustomUser {
         user.setFirstName("John");
         user.setLastName("Doe");
         user.setPassword("password");
-        user.setVerified(false);
-        user.setToken(null);
         return user;
 
     }
