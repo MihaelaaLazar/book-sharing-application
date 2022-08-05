@@ -23,4 +23,8 @@ public class BooksForRentDto {
     @ManyToOne
     private BooksRefDto bookRef;
 
+    public BooksForRentDto(UUID bookForRentId, UUID bookRefId) {
+        this.bookForRentId = bookForRentId;
+        this.bookRef = new BooksRefDto(bookRefId);
+    }
 }

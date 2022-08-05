@@ -19,7 +19,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 @IntegrationTest
-class UserServiceTest {
+class CreateUserTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
