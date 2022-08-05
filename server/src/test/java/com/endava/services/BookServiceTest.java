@@ -79,7 +79,6 @@ class BookServiceTest {
 
 
     @Test
-    @Ignore("400 Required request part 'body' is not present")
     void createBookSuccessfully() throws Exception {
         final var userId = CreateCustomUser.johnDoe().getUserId();
 
