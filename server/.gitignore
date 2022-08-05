@@ -36,3 +36,7 @@ build/
 
 /src/main/**/*.yml
 /target/
+mvnw.cmd
+mvnw
+.mvn
+book-sharing-application (1).iml
