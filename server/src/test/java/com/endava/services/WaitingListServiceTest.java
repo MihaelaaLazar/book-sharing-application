@@ -15,7 +15,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class WaitingListServiceTest {
+class WaitingListServiceTest {
     @Mock
     private WaitingListRepo waitingListRepo;
 
@@ -26,7 +26,7 @@ public class WaitingListServiceTest {
     private WaitingListService waitingListService;
 
     @Test
-    public void shouldReturnAllUsers() {
+     void shouldReturnAllUsers() {
         when(waitingListRepo.findAll()).thenReturn(List.of(new WaitingListDto()));
 
         List<WaitingListDto> waitingList = waitingListService.getAllUsers();
