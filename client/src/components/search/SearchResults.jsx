@@ -27,11 +27,14 @@ const SearchResults = () => {
 
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true);
             const {query} = params;
             const res = await searchBooks(query, currentPageIndex, pageSize);
             const totalCount = res.totalCount;
+
             setPageCount(Math.ceil(totalCount / pageSize));
             dispatch(addResults(res.searchResults))
+
         }
         fetchData();
     }, [currentPageIndex, params, pageCount]);
@@ -40,12 +43,14 @@ const SearchResults = () => {
         const res = await BookApi.searchBook(_query, currentPage, pageSize);
         const data = await res.json();
         setLoading(false)
+
         return data;
     };
 
     const handlePageClick = async ({query, selected}) => {
         setLoading(true)
         const data = await searchBooks(query, selected, pageSize);
+
         setCurrentPageIndex(selected * pageSize);
         dispatch(addBook(data.books))
     };

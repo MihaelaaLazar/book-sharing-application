@@ -27,24 +27,27 @@ const AvailableBooks = () => {
         const fetchData = async () => {
             const response = await fetchAvailableBooks(currentPageIndex, pageSize);
             const total = response.totalCount;
+
             setPageCount(Math.ceil(total / pageSize));
             dispatch(addAvailableBook(response.availableBook))
             setLoading(false)
         };
+
         fetchData();
-        setLoading(false)
     }, [pageSize])
 
     const fetchAvailableBooks = async (currentPage, _items) => {
         const res = await BookApi.getAvailableBooksWithPagination(currentPage, pageSize);
         const data = res.json();
         setLoading(false);
+
         return data;
     }
 
     const handlePageClick = async ({selected}) => {
         setLoading(true);
         const data = await fetchAvailableBooks(selected, pageSize);
+
         setCurrentPageIndex(selected * pageSize);
         dispatch(addAvailableBook(data.availableBook));
     };

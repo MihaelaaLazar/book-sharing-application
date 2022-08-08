@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {BookCard, BookContainer} from "./WaitingCard.style";
 
 const WaitingCard = ({book}) => {
-    const [remainingTime, setRemainingTime] = useState(0);
+     const [remainingTime, setRemainingTime] = useState(0);
 
     useEffect(() => {
         if (book) {

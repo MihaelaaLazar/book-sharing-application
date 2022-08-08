@@ -1,12 +1,13 @@
 import {HeaderWrapper, Logo, LoginIcon, ButtonWrapper, UserIconWrapper, IconWrapper} from './Header.style';
 import {faArrowRightToBracket, faUser} from '@fortawesome/free-solid-svg-icons'
 import logoSrc from '../../assets/logo.png'
-import Search from "../search/Search";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {useState, useRef} from "react";
 import UserPopup from "../user-page/user-books/user-popup/UserPopup";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
+import {Fragment} from "react";
+import Search from "../search/Search";
 
 
 const Header = () => {
@@ -31,15 +32,16 @@ const Header = () => {
     return (
         <HeaderWrapper>
             <Logo src={logoSrc} onClick={() => handleNavigate("/")}></Logo>
-            <Search/>
-            {
-                user
-                    ? <UserIconWrapper>
+            {user
+                ? <Fragment>
+                    <Search/>
+                    <UserIconWrapper>
                         <IconWrapper icon={faUser} onClick={handleOpenPopup}/>
                         {openPopup && <UserPopup ref={popupRef}/>}
                     </UserIconWrapper>
-                    : (<ButtonWrapper onClick={() => handleNavigate("/login")}>Login
-                        <LoginIcon icon={faArrowRightToBracket}/></ButtonWrapper>)
+                </Fragment>
+                : (<ButtonWrapper onClick={() => handleNavigate("/login")}>Login
+                    <LoginIcon icon={faArrowRightToBracket}/></ButtonWrapper>)
             }
         </HeaderWrapper>
 

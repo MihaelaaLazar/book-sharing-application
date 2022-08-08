@@ -16,9 +16,7 @@ const WaitingList = () => {
     }, []);
 
 
-    return <WaitingCard
-                book={waitingList}
-            />
+    return <WaitingCard book={waitingList}/>
 
 }
 export default WaitingList;

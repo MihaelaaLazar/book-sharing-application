@@ -31,13 +31,13 @@ const UserBooks = () => {
         const fetchData = async (userId) => {
             const response = await fetchBooks(userId, currentPageIndex, pageSize);
             const total = response.totalCount;
+
             dispatch(addUserBook(response.books));
             setLoading(false);
             setPageCount(Math.ceil(total / pageSize));
         }
         if (user?.userId) {
             fetchData(user.userId);
-            setLoading(false);
         }
     }, [user, pageSize]);
 
@@ -45,11 +45,13 @@ const UserBooks = () => {
         const res = await BookApi.getAllBooksWithUserIdAndPagination(userId, currentPage, pageSize);
         const data = await res.json();
         setLoading(false);
+
         return data;
     };
     const handlePageClick = async ({selected}) => {
         setLoading(true);
         const response = await fetchBooks(user.userId, selected, pageSize);
+
         dispatch(addUserBook(response.books));
         setCurrentPageIndex(selected);
     };

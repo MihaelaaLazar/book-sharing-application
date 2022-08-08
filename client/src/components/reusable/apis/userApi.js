@@ -2,6 +2,16 @@ const headers = new Headers();
 headers.append("Authorization",`Bearer ${localStorage.getItem("token")}`)
 
 export default {
+    register : async (values) =>{
+        return fetch(`${process.env.REACT_APP_URL}/api/users/register`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(values)
+        });
+    },
     login : async (values) => {
        const res = await fetch(`${process.env.REACT_APP_URL}/api/users/login`, {
             method: "POST",

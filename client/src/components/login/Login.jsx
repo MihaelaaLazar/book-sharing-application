@@ -26,8 +26,6 @@ const Login = () => {
         message,
         setMessageError,
         setMessageSuccess,
-        setMessageWarning,
-        setMessageInfo
     } = useMessage(initialMessage);
 
 
@@ -45,9 +43,9 @@ const Login = () => {
                 localStorage.setItem("token", data.token);
                 setLoading(false);
                 setMessageSuccess("Login successful");
-                navigate("/")
                 dispatch(updateUser(data))
                 resetForm();
+                navigate("/")
             })
             .catch(err => {
                 console.log(err)
@@ -70,12 +68,13 @@ const Login = () => {
                 <LoginForm onSubmit={submitHandler}>
                     <label>Username</label>
                     <input type="text" name="username" value={values.username} onChange={changeHandler}/>
+
                     <label>Password</label>
                     <input type="password" name="password" value={values.password} onChange={changeHandler}/>
 
                     <button type="submit" disabled={!isValid}>Login</button>
-
                     {message ? <p className={`message-${message.type}`}>{message.message}</p> : null}
+                    
                 </LoginForm>
             </LoginWrapper>
         </Fragment>

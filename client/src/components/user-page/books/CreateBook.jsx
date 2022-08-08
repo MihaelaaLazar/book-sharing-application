@@ -1,4 +1,4 @@
-import {Fragment, useState} from "react";
+import {Fragment, useRef, useState} from "react";
 import BookApi from "../../reusable/apis/bookApi";
 import {useSelector} from "react-redux";
 import useForm, {isRequired} from "../../../hooks/useForm";
@@ -10,6 +10,7 @@ import placeholder from '../../../assets/placeholder.png';
 
 const CreateBook = () => {
     const user = useSelector((state) => state.user);
+    let imageRef = useRef();
 
     const initialMessage = {
         type: "",
@@ -68,10 +69,9 @@ const CreateBook = () => {
         setFiles(event.target.files[0]);
         const reader = new FileReader();
         reader.onload = (e) => {
-            document.getElementById('image-preview').src = e.target.result;
+            imageRef.current.src = e.target.result;
         }
         reader.readAsDataURL(event.target.files[0]);
-
     }
 
     return (
@@ -97,7 +97,7 @@ const CreateBook = () => {
                         Select an image</label>
                     <input id={"file-upload"} className={"file"} type="file" name="file"
                            onChange={onFileChange}/>
-                    <img id={"image-preview"} className={"image-preview"} src={placeholder} alt={"image preview"}/>
+                    <img id={"image-preview"} ref={imageRef} className={"image-preview"} src={placeholder} alt={"image preview"}/>
 
                     <button type="submit" disabled={!isValid}>Add</button>
 
