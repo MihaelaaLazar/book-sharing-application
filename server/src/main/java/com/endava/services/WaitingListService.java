@@ -24,7 +24,7 @@ public class WaitingListService {
         RentedBooksDto rentedBooks = rentedBooksRepo.findOneBookByBookId(bookId);
         if (rentedBooks == null) {
             return ResponseEntity
-                    .status(404)
+                    .status(204)
                     .body("Book not found");
         }
         if (rentedBooks.getBookRef().getUser().getUserId().equals(userId) ||
@@ -55,7 +55,7 @@ public class WaitingListService {
         if (waitingListRepo.findByUserId(userId).isEmpty()) {
             jsonObject.put("message", "User not found in waiting list");
             return ResponseEntity
-                    .status(404)
+                    .status(204)
                     .body(jsonObject.toString());
         } else {
             WaitingListDto waitingListDto = waitingListRepo.findByUserId(userId).orElseThrow(null);

@@ -36,7 +36,7 @@ public class BooksForRentService {
         BooksForRentDto bookAvailable = booksForRentRepo.findByBookRefId(bookRefId).orElse(null);
         if (bookAvailable == null) {
             return ResponseEntity
-                    .status(404)
+                    .status(204)
                     .body("Book not available");
         }
         if (bookAvailable.getBookRef().getUser().getUserId().equals(userId)) {

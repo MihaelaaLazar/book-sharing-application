@@ -6,7 +6,7 @@ export const PopupWrapper = styled.div`
   right: -2.4rem;
   display: flex;
   flex-direction: column;;
-  align-items: flex-end;
+  align-items: center;
   border: 2px solid #e3e1e1;
   border-radius: 5px;
   background-color: #ffffff;
@@ -39,7 +39,6 @@ export const PopupContent = styled.div`
   display: flex;
   flex-direction: column;
   padding:0.5rem 0.5rem;
-
 `;
 export const LogoutButton = styled.button`
   display: flex;

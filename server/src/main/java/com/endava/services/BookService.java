@@ -104,7 +104,7 @@ public class BookService {
         if (bookDto == null) {
             return
                     ResponseEntity
-                            .status(404)
+                            .status(204)
                             .body("Book not found.");
         }
         bookDto.setTitle(book.getTitle());

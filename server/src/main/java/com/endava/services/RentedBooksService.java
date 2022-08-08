@@ -26,7 +26,7 @@ public class RentedBooksService {
         List<RentedBooksDto> rentedBooks = rentedBooksRepo.findBookByUserId(userId);
         if (rentedBooks.isEmpty()) {
             return ResponseEntity
-                    .status(404)
+                    .status(204)
                     .body("No rented books found");
         }
         for (RentedBooksDto rentedBook : rentedBooks) {
@@ -46,7 +46,7 @@ public class RentedBooksService {
         RentedBooksDto rentedBook = rentedBooksRepo.findByRentedBookId(rentedBookId);
         if (rentedBook == null) {
             return ResponseEntity
-                    .status(404)
+                    .status(204)
                     .body("Book not found");
         } else if (rentedBook.isExtended()) {
             return ResponseEntity
@@ -70,7 +70,7 @@ public class RentedBooksService {
         List<RentedBooksDto> rentedBook = rentedBooksRepo.findRentedBookByUserId(userId);
         if (rentedBook == null) {
             return ResponseEntity
-                    .status(404)
+                    .status(204)
                     .body("Book not found");
         } else {
             for (RentedBooksDto book : rentedBook) {

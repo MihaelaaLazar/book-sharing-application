@@ -150,7 +150,9 @@ public class UserService {
                     .status(200)
                     .body(existingUser);
         }
-        return ResponseEntity.status(400).body("User not found");
+        return ResponseEntity
+                .status(204)
+                .body("User not found");
     }
 
     public List<UserDto> getAllUsers() {
@@ -160,7 +162,7 @@ public class UserService {
     public ResponseEntity<?> getUserByUserId(UUID userId) {
         if (userRepo.findByUserId(userId) == null) {
             return ResponseEntity
-                    .status(400)
+                    .status(204)
                     .body("User not found");
         } else {
             UserDto user = userRepo.findByUserId(userId);
@@ -187,7 +189,7 @@ public class UserService {
                 } else {
                     jsonObject.put(message, "User not found");
                     return ResponseEntity
-                            .status(404)
+                            .status(204)
                             .body(jsonObject.toString());
                 }
             }
