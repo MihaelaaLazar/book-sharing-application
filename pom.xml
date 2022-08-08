@@ -2,8 +2,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.endava</groupId>
-    <artifactId>book-sharing-application</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <artifactId>book-sharing-application-v1</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
