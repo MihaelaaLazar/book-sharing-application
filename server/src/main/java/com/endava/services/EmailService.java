@@ -26,6 +26,12 @@ public class EmailService {
     @Autowired
     private SpringTemplateEngine templateEngine;
 
+    /**
+     * Utility method to send simple HTML email
+     * @param body
+     * @param toEmail
+     * @param subject
+     */
     public void sendConfirmationEmail(String body,
                                       String toEmail,
                                       String subject) throws MessagingException {
@@ -40,6 +46,12 @@ public class EmailService {
         javaMailSender.send(mimeMessage);
     }
 
+    /**
+     * Utility method to send simple HTML emails with thymeleaf template
+     * @param to
+     * @param subject
+     * @param template
+     */
     public void sendEmailWithThymeleaf(String to, String subject, Map<String, Object> template) throws MessagingException {
         Context context = new Context();
         context.setVariables(template);

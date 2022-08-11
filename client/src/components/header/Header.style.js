@@ -78,6 +78,8 @@ export const Logo = styled.img`
   }
   @media(max-width: 600px){
     left:1rem;
+    max-width:4rem;
+    top:0.5rem;
   }
 `;
 
