@@ -52,7 +52,7 @@ const SearchResults = () => {
         const data = await searchBooks(query, selected, pageSize);
 
         setCurrentPageIndex(selected * pageSize);
-        dispatch(addBook(data.books))
+        dispatch(addBook(data.books));
     };
 
     const {modal, setModalData} = useModal({

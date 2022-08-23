@@ -1,10 +1,7 @@
 import {Navigate} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {isEmpty} from "lodash";
 
 const RequireAuth = ({children}) => {
-    const user = useSelector(state => state.user);
-    const isAuthenticated = !isEmpty(user);
+    const isAuthenticated = localStorage.getItem("token");
 
     return isAuthenticated ? children : <Navigate to={"/"} replace={true}/>
 }
