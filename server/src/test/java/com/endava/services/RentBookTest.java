@@ -47,14 +47,14 @@ class RentBookTest {
     }
 
     @Test
-    void shouldReturnNoFoundIfTheBookIsntAvailable(){
+    void shouldReturnNoContentIfTheBookIsntAvailable(){
         final var bookRefId = UUID.randomUUID();
 
         when(booksForRentRepo.findByBookRefId(bookRefId)).thenReturn(Optional.empty());
 
         final var rentedBook = booksForRentService.rentBook(UUID.randomUUID(), bookRefId, RentalPeriod.ONE_WEEK);
 
-        assertThat(rentedBook.getStatusCodeValue()).isEqualTo(404);
+        assertThat(rentedBook.getStatusCodeValue()).isEqualTo(204);
         assertThat(rentedBook.getBody()).isEqualTo("Book not available");
 
     }
