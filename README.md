@@ -56,11 +56,15 @@ To start the client in the root path run this:
 <br>
 The client will be available at: `localhost:3000`
 <br>
+<br>
 First of all you have to create an account on route `http://localhost:3000/register`, confirm the account by clicking on the link in the e-mail you should receive, if you did the above configuration correctly. :) 
+<br>
+<br>
+Swagger will be available at: `http://localhost:8080/swagger-ui/index.html`. Don't forget to login first, and then pass the Authorization Token.
+<br>
 <br>
 Now you are free to share your books with anybody.
 <br>
-Swagger will be available at: `http://localhost:8080/swagger-ui/index.html`. Don't forget to login first, and then pass the Authorization Token.
 <br>
 All suggestions and improvements are welcomed. 
 
