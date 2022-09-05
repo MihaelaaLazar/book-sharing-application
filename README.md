@@ -30,12 +30,6 @@ spring.datasource.url=YOUR_HOST
 spring.datasource.username=USERNAME
 spring.datasource.password=PASSWORD
 
-#config for swagger ui
-springdoc.api-docs.path=/api-docs
-springdoc.swagger-ui.path=/swagger-ui.html
-springdoc.swagger-ui.operationsSorter=alpha
-springdoc.swagger-ui.tagsSorter=alpha
-
 #smtp config
 spring.mail.host=YOUR_HOST
 spring.mail.port=587
