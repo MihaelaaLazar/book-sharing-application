@@ -155,8 +155,9 @@ public class UserService {
                 .body("User not found");
     }
 
-    public List<UserDto> getAllUsers() {
-        return userRepo.findAll();
+    public ResponseEntity<?> getAllUsers() {
+        List<UserDto> list = userRepo.findAll();
+        return ResponseEntity.status(200).body(list);
     }
 
     public ResponseEntity<?> getUserByUserId(UUID userId) {

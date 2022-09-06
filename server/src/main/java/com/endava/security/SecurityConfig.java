@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static com.endava.utils.Constants.*;
+
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -35,26 +37,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
-                .authorizeRequests().antMatchers("/api/users/register").permitAll()
+                .authorizeRequests().antMatchers(USER_ROUTES).permitAll()
                 .and()
-                .authorizeRequests().antMatchers("/api/users/confirm?**").permitAll()
+                .authorizeRequests().antMatchers(SWAGGER_ROUTES).permitAll()
                 .and()
-                .authorizeRequests().antMatchers("/api/users/login").permitAll()
-                .and()
-                .authorizeRequests().antMatchers("/api/users/verify/**").permitAll()
-                .and()
-                .authorizeRequests().antMatchers(
-                        "/swagger-ui/index.html/**",
-                        "/swagger-ui/swagger-initializer.js",
-                        "/swagger-ui/index.css",
-                        "/api-docs",
-                        "/swagger-ui/swagger-ui.css",
-                        "/swagger-ui/swagger-ui-bundle.js",
-                        "/swagger-ui/swagger-ui-standalone-preset.js",
-                        "/swagger-ui/favicon-32x32.png",
-                        "/swagger-ui/favicon-16x16.png",
-                        "/api-docs/swagger-config")
-                .permitAll()
+                .authorizeRequests().antMatchers(ACTUATOR_ROUTES).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

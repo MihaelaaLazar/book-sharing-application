@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
@@ -72,7 +71,7 @@ public class UserController {
     @RequestMapping(
             method = RequestMethod.GET,
             produces = {APPLICATION_JSON_VALUE})
-    public List<UserDto> getAllUsers() {
+    public ResponseEntity<?> getAllUsers() {
         return userService.getAllUsers();
     }
 

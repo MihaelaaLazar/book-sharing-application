@@ -21,4 +21,26 @@ public class Constants {
 
     public static final String SECURITY_SCHEME = "bearer";
 
+    public static final String[] SWAGGER_ROUTES = {"/swagger-ui/index.html/**",
+            "/swagger-ui/swagger-initializer.js",
+            "/swagger-ui/index.css",
+            "/api-docs",
+            "/swagger-ui/swagger-ui.css",
+            "/swagger-ui/swagger-ui-bundle.js",
+            "/swagger-ui/swagger-ui-standalone-preset.js",
+            "/swagger-ui/favicon-32x32.png",
+            "/swagger-ui/favicon-16x16.png",
+            "/api-docs/swagger-config"
+    };
+    public static final String[] USER_ROUTES = {
+            "/api/users/register",
+            "/api/users/confirm?**",
+            "/api/users/login",
+            "/api/users/verify/**"
+    };
+
+    public static final String ACTUATOR_ROUTES = "/actuator/**";
+
+
+
 }
